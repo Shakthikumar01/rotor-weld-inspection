@@ -1,0 +1,4 @@
+python-interpreter-path = "C:/Users/DHINESH G/AppData/Local/Python/pythoncore-3.14-64/python.exe"
+search-path = [
+    "C:/Users/DHINESH G/AppData/Local/Python/pythoncore-3.14-64/Lib/site-packages"
+]

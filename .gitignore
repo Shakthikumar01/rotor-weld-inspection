@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+bin/
+uploads/
+*.log
+public_url.txt
+.vscode/
+.idea/

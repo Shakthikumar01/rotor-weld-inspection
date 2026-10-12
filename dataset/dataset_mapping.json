@@ -1,0 +1,407 @@
+{
+  "good1.jpeg": {
+    "class": "good",
+    "original_filename": "good.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good1.jpeg"
+  },
+  "good2.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.14.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good2.jpeg"
+  },
+  "good3.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.24.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good3.jpeg"
+  },
+  "good4.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.33.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good4.jpeg"
+  },
+  "good5.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.36.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good5.jpeg"
+  },
+  "good6.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.38.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good6.jpeg"
+  },
+  "good7.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.51.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good7.jpeg"
+  },
+  "good8.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.52.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good8.jpeg"
+  },
+  "good9.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.58.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good9.jpeg"
+  },
+  "good10.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.04.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good10.jpeg"
+  },
+  "good11.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.15.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good11.jpeg"
+  },
+  "good12.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.38.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good12.jpeg"
+  },
+  "good13.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.41.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good13.jpeg"
+  },
+  "good14.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.42.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good14.jpeg"
+  },
+  "good15.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.46.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good15.jpeg"
+  },
+  "good16.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.47.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good16.jpeg"
+  },
+  "good17.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.52.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good17.jpeg"
+  },
+  "good18.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.53.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good18.jpeg"
+  },
+  "good19.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.56.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good19.jpeg"
+  },
+  "good20.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.01.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good20.jpeg"
+  },
+  "good21.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.03 (1).jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good21.jpeg"
+  },
+  "good22.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.04 (1).jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good22.jpeg"
+  },
+  "good23.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.04 (2).jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good23.jpeg"
+  },
+  "good24.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.06 (1).jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good24.jpeg"
+  },
+  "good25.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.07 (2).jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good25.jpeg"
+  },
+  "good26.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.08 (1).jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good26.jpeg"
+  },
+  "good27.jpeg": {
+    "class": "good",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.08.jpeg",
+    "path": "e:\\Rotor\\dataset\\good\\good27.jpeg"
+  },
+  "bad1.jpeg": {
+    "class": "bad",
+    "original_filename": "bad.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad1.jpeg"
+  },
+  "bad2.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.10.08 (1).jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad2.jpeg"
+  },
+  "bad3.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.10.08.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad3.jpeg"
+  },
+  "bad4.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.10.09.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad4.jpeg"
+  },
+  "bad5.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.10.10.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad5.jpeg"
+  },
+  "bad6.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.10.11.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad6.jpeg"
+  },
+  "bad7.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.10.12.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad7.jpeg"
+  },
+  "bad8.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.10.13.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad8.jpeg"
+  },
+  "bad9.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.11.01.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad9.jpeg"
+  },
+  "bad10.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.11.10.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad10.jpeg"
+  },
+  "bad11.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.11.37.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad11.jpeg"
+  },
+  "bad12.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.11.39.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad12.jpeg"
+  },
+  "bad13.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.19.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad13.jpeg"
+  },
+  "bad14.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.23 (1).jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad14.jpeg"
+  },
+  "bad15.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.23.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad15.jpeg"
+  },
+  "bad16.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.32.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad16.jpeg"
+  },
+  "bad17.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.34.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad17.jpeg"
+  },
+  "bad18.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.40.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad18.jpeg"
+  },
+  "bad19.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.42.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad19.jpeg"
+  },
+  "bad20.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.12.53.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad20.jpeg"
+  },
+  "bad21.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.01.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad21.jpeg"
+  },
+  "bad22.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.02.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad22.jpeg"
+  },
+  "bad23.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.03.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad23.jpeg"
+  },
+  "bad24.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.06.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad24.jpeg"
+  },
+  "bad25.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.07.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad25.jpeg"
+  },
+  "bad26.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.12.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad26.jpeg"
+  },
+  "bad27.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.21.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad27.jpeg"
+  },
+  "bad28.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.22 (1).jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad28.jpeg"
+  },
+  "bad29.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.22.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad29.jpeg"
+  },
+  "bad30.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.25.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad30.jpeg"
+  },
+  "bad31.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.30.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad31.jpeg"
+  },
+  "bad32.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.32.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad32.jpeg"
+  },
+  "bad33.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.34.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad33.jpeg"
+  },
+  "bad34.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.37.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad34.jpeg"
+  },
+  "bad35.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.40.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad35.jpeg"
+  },
+  "bad36.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.49.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad36.jpeg"
+  },
+  "bad37.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.50.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad37.jpeg"
+  },
+  "bad38.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.54.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad38.jpeg"
+  },
+  "bad39.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.57.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad39.jpeg"
+  },
+  "bad40.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.13.59.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad40.jpeg"
+  },
+  "bad41.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.00.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad41.jpeg"
+  },
+  "bad42.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.02.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad42.jpeg"
+  },
+  "bad43.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.03.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad43.jpeg"
+  },
+  "bad44.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.04.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad44.jpeg"
+  },
+  "bad45.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.05 (1).jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad45.jpeg"
+  },
+  "bad46.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.05 (2).jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad46.jpeg"
+  },
+  "bad47.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.05.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad47.jpeg"
+  },
+  "bad48.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.06 (2).jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad48.jpeg"
+  },
+  "bad49.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.06 (3).jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad49.jpeg"
+  },
+  "bad50.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.06.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad50.jpeg"
+  },
+  "bad51.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.07 (1).jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad51.jpeg"
+  },
+  "bad52.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.07.jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad52.jpeg"
+  },
+  "bad53.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.08 (2).jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad53.jpeg"
+  },
+  "bad54.jpeg": {
+    "class": "bad",
+    "original_filename": "WhatsApp Image 2026-09-17 at 23.14.08 (3).jpeg",
+    "path": "e:\\Rotor\\dataset\\bad\\bad54.jpeg"
+  }
+}
