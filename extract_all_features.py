@@ -7,7 +7,7 @@ import cv2
 import matplotlib.pyplot as plt
 
 BASE_DIR = r"e:\Rotor"
-DATASET_DIR = os.path.join(BASE_DIR, "dataset")
+DATASET_DIR = os.path.join(BASE_DIR, "dataset_cropped")
 GOOD_DIR = os.path.join(DATASET_DIR, "good")
 BAD_DIR = os.path.join(DATASET_DIR, "bad")
 OUTPUT_CSV = os.path.join(BASE_DIR, "extracted_features_all.csv")

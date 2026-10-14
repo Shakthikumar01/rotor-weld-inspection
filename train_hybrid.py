@@ -1,65 +1,49 @@
 import os
-import json
+import sys
+import glob
 import numpy as np
+
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8')
 import torch
 import torchvision.models as models
-import torchvision.transforms as transforms
 from PIL import Image
 from sklearn.model_selection import StratifiedKFold
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
-from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix
+import joblib
 
-LABELS_FILE = r"e:\Rotor\dataset_labels.json"
-IMG_DIR = r"e:\Rotor\images"
+BASE_DIR = r"e:\Rotor"
+CROPPED_DIR = os.path.join(BASE_DIR, "dataset_cropped")
+GOOD_DIR = os.path.join(CROPPED_DIR, "good")
+BAD_DIR = os.path.join(CROPPED_DIR, "bad")
+
+MODEL_DEEP_FILE = os.path.join(BASE_DIR, "trained_deep_model.pkl")
 
 def main():
-    with open(LABELS_FILE, "r") as f:
-        labels = json.load(f)
+    good_files = sorted(glob.glob(os.path.join(GOOD_DIR, "*.jpeg")) + glob.glob(os.path.join(GOOD_DIR, "*.jpg")))
+    bad_files = sorted(glob.glob(os.path.join(BAD_DIR, "*.jpeg")) + glob.glob(os.path.join(BAD_DIR, "*.jpg")))
 
-    # Prepare dataset
-    fnames = []
-    y = []
-    for fn, l in labels.items():
-        if l in ["good", "bad"]:
-            p = os.path.join(IMG_DIR, fn)
-            if os.path.exists(p):
-                fnames.append(fn)
-                y.append(0 if l == "good" else 1)
-
-    y = np.array(y)
-    print(f"Loaded {len(fnames)} images. Good: {sum(y==0)}, Bad: {sum(y==1)}")
-
-    # Load pretrained model
-    print("Loading pretrained MobileNetV3 / ResNet-18...")
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    all_files = good_files + bad_files
+    y = np.array([0] * len(good_files) + [1] * len(bad_files))
     
-    # Use MobileNetV3-Small for lightweight, fast extraction
-    try:
-        weights = models.MobileNet_V3_Small_Weights.DEFAULT
-        model = models.mobilenet_v3_small(weights=weights)
-        preprocess = weights.transforms()
-    except Exception as e:
-        print("Falling back to ResNet18:", e)
-        weights = models.ResNet18_Weights.DEFAULT
-        model = models.resnet18(weights=weights)
-        preprocess = weights.transforms()
+    print(f"Training on CROPPED WELD DATASET: {len(good_files)} Good, {len(bad_files)} Bad (Total: {len(all_files)})")
 
-    # Feature extractor (remove final classifier)
-    if hasattr(model, 'classifier'):
-        model.classifier = torch.nn.Identity()
-    elif hasattr(model, 'fc'):
-        model.fc = torch.nn.Identity()
-
+    # Load pretrained MobileNetV3
+    print("Loading pretrained PyTorch MobileNetV3...")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    weights = models.MobileNet_V3_Small_Weights.DEFAULT
+    model = models.mobilenet_v3_small(weights=weights)
+    preprocess = weights.transforms()
+    model.classifier = torch.nn.Identity()
     model = model.to(device)
     model.eval()
 
-    print("Extracting deep vision features for all 81 images...")
+    print("Extracting deep vision embeddings from cropped welds...")
     deep_features = []
     with torch.no_grad():
-        for fn in fnames:
-            p = os.path.join(IMG_DIR, fn)
+        for p in all_files:
             img = Image.open(p).convert("RGB")
             t_img = preprocess(img).unsqueeze(0).to(device)
             feat = model(t_img).squeeze().cpu().numpy()
@@ -68,38 +52,36 @@ def main():
     deep_features = np.array(deep_features)
     print(f"Deep feature matrix shape: {deep_features.shape}")
 
-    # Evaluate using 5-Fold Stratified Cross Validation
+    # 5-Fold Stratified Cross-Validation
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    clf = LogisticRegression(max_iter=1000, C=1.0)
     
-    classifiers = {
-        "Logistic Regression (L2)": LogisticRegression(max_iter=1000, C=1.0),
-        "Support Vector Machine (RBF)": SVC(C=2.0, kernel='rbf', probability=True),
-        "Random Forest (Deep Features)": RandomForestClassifier(n_estimators=100, max_depth=6, random_state=42)
-    }
+    fold_accs = []
+    all_preds = []
+    all_targets = []
+    
+    for train_idx, val_idx in skf.split(deep_features, y):
+        X_tr, X_val = deep_features[train_idx], deep_features[val_idx]
+        y_tr, y_val = y[train_idx], y[val_idx]
+        clf.fit(X_tr, y_tr)
+        preds = clf.predict(X_val)
+        fold_accs.append(accuracy_score(y_val, preds))
+        all_preds.extend(preds)
+        all_targets.extend(y_val)
 
-    print("\n--- 5-FOLD CROSS-VALIDATION RESULTS (PRETRAINED DEEP FEATURES) ---")
-    for name, clf in classifiers.items():
-        fold_accs = []
-        all_preds = []
-        all_targets = []
-        for train_idx, val_idx in skf.split(deep_features, y):
-            X_tr, X_val = deep_features[train_idx], deep_features[val_idx]
-            y_tr, y_val = y[train_idx], y[val_idx]
+    mean_acc = np.mean(fold_accs) * 100
+    cm = confusion_matrix(all_targets, all_preds)
+    
+    print("\n" + "="*50)
+    print(f"🎯 5-FOLD CV ACCURACY ON CROPPED WELDS: {mean_acc:.1f}%")
+    print(f"   True Positives (Defective caught): {cm[1][1]} / 54 ({(cm[1][1]/54)*100:.1f}%)")
+    print(f"   True Negatives (Good passed):      {cm[0][0]} / 27 ({(cm[0][0]/27)*100:.1f}%)")
+    print("="*50)
 
-            clf.fit(X_tr, y_tr)
-            preds = clf.predict(X_val)
-            acc = accuracy_score(y_val, preds)
-            fold_accs.append(acc)
-            all_preds.extend(preds)
-            all_targets.extend(y_val)
-
-        mean_acc = np.mean(fold_accs) * 100
-        print(f"\nModel: {name}")
-        print(f"  CV Accuracy: {mean_acc:.1f}%")
-        print("  Confusion Matrix:")
-        cm = confusion_matrix(all_targets, all_preds)
-        print(f"    [[TN (Good as Good)={cm[0][0]}, FP (Good as Bad)={cm[0][1]}],")
-        print(f"     [FN (Bad as Good) ={cm[1][0]}, TP (Bad as Bad) ={cm[1][1]}]]")
+    # Train final production model on full dataset
+    clf.fit(deep_features, y)
+    joblib.dump(clf, MODEL_DEEP_FILE)
+    print(f"\nSaved updated production model to: {MODEL_DEEP_FILE}")
 
 if __name__ == "__main__":
     main()

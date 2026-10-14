@@ -375,16 +375,16 @@
           <h4 style="font-size: 0.9rem; font-weight: 600;">🤖 Inspection Model</h4>
           <button class="btn-train" id="btn-train" onclick="trainModel()">⚡ Retrain Inspection Model</button>
           <div class="train-results" id="train-results" style="display: block;">
-            <div style="color: #3fb950; font-weight: bold; margin-bottom: 6px;">🎉 Training Complete!</div>
+            <div style="color: #3fb950; font-weight: bold; margin-bottom: 6px;">🎉 Training Complete! (Weld ROI)</div>
             <div style="background: rgba(88, 166, 255, 0.15); border: 1px solid #1f6feb; border-radius: 6px; padding: 6px 8px; margin-bottom: 6px;">
-              <b style="color: #58a6ff;">🚀 Deep Transfer Learning:</b> <span style="font-weight: 800; color: #3fb950;">92.6%</span><br>
-              <span style="font-size: 0.72rem; color: var(--text-muted);">Pretrained PyTorch MobileNetV3 (Angle-invariant)</span>
+              <b style="color: #58a6ff;">🚀 Deep Transfer Learning:</b> <span style="font-weight: 800; color: #3fb950;">90.2%</span><br>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">Trained strictly on Cropped Welds (94.4% Defect Recall)</span>
             </div>
             <div style="background: #21262d; border-radius: 6px; padding: 4px 8px; margin-bottom: 6px;">
-              <b>OpenCV Geometric Baseline:</b> 71.7%
+              <b>OpenCV Geometric Baseline:</b> 74.1%
             </div>
-            <b>Dataset:</b> 81 samples (27 Good, 54 Bad)<br>
-            <div style="margin-top: 4px;"><b>Top Defect Indicators:</b><br>• Slag / Melt %: 17.0%<br>• Void Area %: 13.7%<br>• Aspect Ratio: 13.5%</div>
+            <b>Cropped Dataset:</b> 81 weld ROIs (27 Good, 54 Bad)<br>
+            <div style="margin-top: 4px;"><b>Top Defect Indicators:</b><br>• Circularity Drop: -34.3%<br>• Slag / Melt %: +33.0%<br>• Solidity Concavity: -12.4%</div>
           </div>
         </div>
       </div>
@@ -441,8 +441,9 @@
 
         <div>
           <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 8px;">Inspection Visual Diagnostics:</div>
-          <div class="cert-images">
-            <div><img id="cert-img-orig" src="/images/good.jpeg"><div class="cert-caption">Original Inspection View</div></div>
+          <div class="cert-images" style="grid-template-columns: repeat(5, 1fr);">
+            <div><img id="cert-img-orig" src="/images/good.jpeg"><div class="cert-caption">Raw Capture</div></div>
+            <div><img id="cert-img-crop" src="/images/good1.jpeg"><div class="cert-caption" style="color: #58a6ff; font-weight: bold;">🎯 Extracted Weld ROI</div></div>
             <div><img id="cert-img-contour" src=""><div class="cert-caption">Rim Contour Trace</div></div>
             <div><img id="cert-img-void" src=""><div class="cert-caption">Dark Cavity / Void Mask</div></div>
             <div><img id="cert-img-slag" src=""><div class="cert-caption">Molten Slag / Drip Mask</div></div>
@@ -639,7 +640,9 @@
       document.getElementById('cert-slag').innerText = `${cert.metrics.slag_pct}%`;
       document.getElementById('cert-circ').innerText = cert.metrics.circularity;
 
-      document.getElementById('cert-img-orig').src = cert.image_url;
+      document.getElementById('cert-img-orig').src = cert.raw_image_url || cert.image_url;
+      const cropSrc = cert.overlays.cropped_weld ? `data:image/jpeg;base64,${cert.overlays.cropped_weld}` : (cert.weld_crop_url || cert.image_url);
+      document.getElementById('cert-img-crop').src = cropSrc;
       document.getElementById('cert-img-contour').src = `data:image/jpeg;base64,${cert.overlays.contour}`;
       document.getElementById('cert-img-void').src = `data:image/jpeg;base64,${cert.overlays.void}`;
       document.getElementById('cert-img-slag').src = `data:image/jpeg;base64,${cert.overlays.slag}`;
