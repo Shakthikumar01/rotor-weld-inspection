@@ -120,10 +120,10 @@ To ensure compatibility with manufacturing execution systems (MES) and internati
 
 | Defect Code | Classification | Metallurgical Mechanism | Geometric & Optical Signature | Severity Level | Action Protocol |
 | :--- | :--- | :--- | :--- | :---: | :--- |
-| **DEF-01** | **Molten Slag Runoff** (Burn-Through) | Thermal runaway during end-ring fusion causes copper liquefaction and downward gravity flow. | Aspect Ratio $\ge 1.25$, Slag Protrusion $\ge 1.0\%$, Solidity $\le 0.65$. | **Critical (Class A)** | Immediate rejection. Unbalance exceeds dynamic vibration limits. |
-| **DEF-02** | **Joint Cavitation / Void** | Shielding gas starvation or arc cratering leaving unfilled fusion pockets. | Dark Void Area $\ge 12.5\%$, GLCM Entropy $\ge 4.2$. | **Major (Class B)** | Quarantine for secondary visual inspection / TIG rework. |
-| **DEF-03** | **Perimeter Distortion** | Non-uniform thermal cooling creating ovalization of the shorting ring. | Circularity Index $\le 0.165$. | **Major (Class B)** | Lathe rim skim-pass rework if wall thickness allows. |
-| **DEF-04** | **Thermal Surface Oxidation** | Excessive ambient oxygen contamination during cooling cycle. | Mean HSV Saturation $\ge 42.0$, Intensity Std $\ge 65.0$. | **Minor (Class C)** | Acid-wash pickle or wire-brush cleaning. |
+| **DEF-01** | **Molten Slag Runoff** (Burn-Through) | Thermal runaway during end-ring fusion causes copper liquefaction and downward gravity flow. | Aspect Ratio ≥ 1.25, Slag Protrusion ≥ 1.0%, Solidity ≤ 0.65. | **Critical (Class A)** | Immediate rejection. Unbalance exceeds dynamic vibration limits. |
+| **DEF-02** | **Joint Cavitation / Void** | Shielding gas starvation or arc cratering leaving unfilled fusion pockets. | Dark Void Area ≥ 12.5%, GLCM Entropy ≥ 4.2. | **Major (Class B)** | Quarantine for secondary visual inspection / TIG rework. |
+| **DEF-03** | **Perimeter Distortion** | Non-uniform thermal cooling creating ovalization of the shorting ring. | Circularity Index ≤ 0.165. | **Major (Class B)** | Lathe rim skim-pass rework if wall thickness allows. |
+| **DEF-04** | **Thermal Surface Oxidation** | Excessive ambient oxygen contamination during cooling cycle. | Mean HSV Saturation ≥ 42.0, Intensity Std ≥ 65.0. | **Minor (Class C)** | Acid-wash pickle or wire-brush cleaning. |
 
 ---
 
@@ -165,21 +165,21 @@ Every cropped image is mathematically mapped into a 15-dimensional vector in [`e
 
 | ID | Feature Name | Mathematical Formulation | Metallurgical & Physical Significance | Nominal Mean | Defective Mean | Shift ($\Delta$) |
 | :---: | :--- | :--- | :--- | :---: | :---: | :---: |
-| $f_1$ | **`circularity`** | $C = \frac{4\pi \cdot \text{Area}}{\text{Perimeter}^2}$ | Rim circularity; degraded by jagged molten spatter. | $0.232$ | $0.153$ | <span style="color:#ef4444; font-weight:bold;">-34.3%</span> |
-| $f_2$ | **`solidity`** | $S = \frac{\text{Contour Area}}{\text{Convex Hull Area}}$ | Concavity index; molten droplets create large hull indentations. | $0.728$ | $0.638$ | <span style="color:#ef4444; font-weight:bold;">-12.4%</span> |
-| $f_3$ | **`aspect_ratio`** | $AR = \frac{\text{Width}}{\text{Height}}$ | Downward molten icicles stretch the vertical profile. | $1.082$ | $1.286$ | <span style="color:#ef4444; font-weight:bold;">+18.9%</span> |
-| $f_4$ | **`extent`** | $E = \frac{\text{Contour Area}}{\text{Bounding Box Area}}$ | Filling density of the weld within its enclosing box. | $0.512$ | $0.477$ | -6.8% |
-| $f_5$ | **`slag_protrusion_pct`** | $\frac{\sum \mathbb{I}(S \ge \tau_s \land V \ge \tau_v)}{W \cdot H} \times 100$ | Directly segments high-saturation oxidized molten runoff. | $0.829\%$ | $1.103\%$ | <span style="color:#ef4444; font-weight:bold;">+33.0%</span> |
-| $f_6$ | **`void_area_pct`** | $\frac{\sum \mathbb{I}(I \le \tau_{\text{void}})}{W \cdot H} \times 100$ | Dark missing fusion cavities and cratering pockets. | $14.12\%$ | $12.85\%$ | -9.0% |
-| $f_7$ | **`edge_density_pct`** | $\frac{\text{Canny Pixels}}{\text{Total Pixels}} \times 100$ | High-frequency surface ripples and joint seam boundaries. | $3.81\%$ | $3.37\%$ | -11.5% |
-| $f_8$ | **`glcm_contrast`** | $\sum_{i,j} \|i - j\|^2 P(i,j)$ | Local intensity variation and shadow edges. | $328.4$ | $375.1$ | <span style="color:#ef4444; font-weight:bold;">+14.2%</span> |
-| $f_9$ | **`glcm_homogeneity`**| $\sum_{i,j} \frac{P(i,j)}{1 + \|i - j\|}$ | Surface smoothness across the molten weld pool. | $0.892$ | $0.849$ | -4.8% |
-| $f_{10}$ | **`glcm_energy`** | $\sum_{i,j} P(i,j)^2$ | Textural uniformity; disrupted by spatter and craters. | $0.087$ | $0.073$ | <span style="color:#ef4444; font-weight:bold;">-16.1%</span> |
-| $f_{11}$ | **`glcm_entropy`** | $-\sum_{i,j} P(i,j) \log_2 P(i,j)$ | Micro-surface textural chaos and randomness. | $4.12$ | $4.42$ | <span style="color:#ef4444; font-weight:bold;">+7.3%</span> |
-| $f_{12}$ | **`mean_saturation`** | $\frac{1}{N} \sum S(x,y)$ | Thermal heat-affected zone copper tint intensity. | $31.8$ | $35.6$ | +12.1% |
-| $f_{13}$ | **`std_saturation`** | $\sqrt{\frac{1}{N}\sum (S - \bar{S})^2}$ | Oxidation variability across the end-ring surface. | $28.2$ | $33.4$ | <span style="color:#ef4444; font-weight:bold;">+18.4%</span> |
-| $f_{14}$ | **`mean_hue`** | $\frac{1}{N} \sum H(x,y)$ | Dominant color wavelength of the alloy base. | $38.4^\circ$ | $40.3^\circ$ | +5.1% |
-| $f_{15}$ | **`intensity_contrast_std`**| $\sqrt{\frac{1}{N}\sum (I - \bar{I})^2}$ | Global luminance contrast across the weld bead. | $58.2$ | $63.4$ | +8.9% |
+| $f_1$ | **`circularity`** | $C = \frac{4\pi \cdot \text{Area}}{\text{Perimeter}^2}$ | Rim circularity; degraded by jagged molten spatter. | 0.232 | 0.153 | <span style="color:#ef4444; font-weight:bold;">-34.3%</span> |
+| $f_2$ | **`solidity`** | $S = \frac{\text{Contour Area}}{\text{Hull Area}}$ | Concavity index; molten droplets create large hull indentations. | 0.728 | 0.638 | <span style="color:#ef4444; font-weight:bold;">-12.4%</span> |
+| $f_3$ | **`aspect_ratio`** | $AR = \frac{\text{Width}}{\text{Height}}$ | Downward molten icicles stretch the vertical profile. | 1.082 | 1.286 | <span style="color:#ef4444; font-weight:bold;">+18.9%</span> |
+| $f_4$ | **`extent`** | $E = \frac{\text{Contour Area}}{\text{Box Area}}$ | Filling density of the weld within its enclosing box. | 0.512 | 0.477 | -6.8% |
+| $f_5$ | **`slag_protrusion_pct`** | $\frac{\sum \mathbb{I}(S \ge \tau_s \land V \ge \tau_v)}{W \cdot H} \times 100$ | Directly segments high-saturation oxidized molten runoff. | 0.829% | 1.103% | <span style="color:#ef4444; font-weight:bold;">+33.0%</span> |
+| $f_6$ | **`void_area_pct`** | $\frac{\sum \mathbb{I}(I \le \tau_{\text{void}})}{W \cdot H} \times 100$ | Dark missing fusion cavities and cratering pockets. | 14.12% | 12.85% | -9.0% |
+| $f_7$ | **`edge_density_pct`** | $\frac{\text{Canny Pixels}}{\text{Total Pixels}} \times 100$ | High-frequency surface ripples and joint seam boundaries. | 3.81% | 3.37% | -11.5% |
+| $f_8$ | **`glcm_contrast`** | $\sum_{i,j} (i - j)^2 P(i,j)$ | Local intensity variation and shadow edges. | 328.4 | 375.1 | <span style="color:#ef4444; font-weight:bold;">+14.2%</span> |
+| $f_9$ | **`glcm_homogeneity`**| $\sum_{i,j} \frac{P(i,j)}{1 + (i - j)^2}$ | Surface smoothness across the molten weld pool. | 0.892 | 0.849 | -4.8% |
+| $f_{10}$ | **`glcm_energy`** | $\sum_{i,j} P(i,j)^2$ | Textural uniformity; disrupted by spatter and craters. | 0.087 | 0.073 | <span style="color:#ef4444; font-weight:bold;">-16.1%</span> |
+| $f_{11}$ | **`glcm_entropy`** | $-\sum_{i,j} P(i,j) \log_2 P(i,j)$ | Micro-surface textural chaos and randomness. | 4.12 | 4.42 | <span style="color:#ef4444; font-weight:bold;">+7.3%</span> |
+| $f_{12}$ | **`mean_saturation`** | $\frac{1}{N} \sum S(x,y)$ | Thermal heat-affected zone copper tint intensity. | 31.8 | 35.6 | +12.1% |
+| $f_{13}$ | **`std_saturation`** | $\sigma(S) \text{ in HSV}$ | Oxidation variability across the end-ring surface. | 28.2 | 33.4 | <span style="color:#ef4444; font-weight:bold;">+18.4%</span> |
+| $f_{14}$ | **`mean_hue`** | $\frac{1}{N} \sum H(x,y)$ | Dominant color wavelength of the alloy base. | 38.4° | 40.3° | +5.1% |
+| $f_{15}$ | **`intensity_contrast_std`**| $\sigma(I) \text{ in Grayscale}$ | Global luminance contrast across the weld bead. | 58.2 | 63.4 | +8.9% |
 
 ---
 
@@ -195,14 +195,12 @@ Validation was conducted on the full dataset of **81 rotor captures** (27 Nomina
 | **Explainable Decision Tree** | 15 Physics Descriptors | **80.2%** | 83.3% | 74.1% | 0.849 | **~0.4 ms** | Depth 3 / < 50 KB |
 | **PyTorch MobileNetV3-Small** | 576-dim Deep Latents | <span style="color:#22c55e; font-weight:bold;">90.2%</span> | <span style="color:#22c55e; font-weight:bold;">94.4%</span> | **81.5%** | **0.927** | **~12.4 ms** | 2.54M Params / 9.8 MB |
 
-### Deep Learning Confusion Matrix:
-$$\begin{array}{cc|cc}
-& & \multicolumn{2}{c}{\textbf{Predicted Class (MobileNetV3)}} \\
-& & \textbf{Nominal (PASS)} & \textbf{Defective (REJECT)} \\
-\hline
-\multirow{2}{*}{\textbf{Ground Truth}} & \textbf{Nominal (N=27)} & 22 & 5 \\
-& \textbf{Defective (N=54)} & \mathbf{3} & \mathbf{51} \quad (\mathbf{94.4\% \text{ Recall}}) \\
-\end{array}$$
+### Deep Learning Confusion Matrix (MobileNetV3-Small):
+
+| Ground Truth \ Predicted | Nominal (`PASS`) | Defective (`REJECT`) | Total Units | Class Accuracy / Recall |
+| :--- | :---: | :---: | :---: | :---: |
+| **Nominal Welds (Good)** | **22** *(True Negative)* | 5 *(False Positive)* | 27 | 81.5% Specificity |
+| **Defective Welds (Bad)** | 3 *(False Negative)* | **51** *(True Positive)* | 54 | <span style="color:#22c55e; font-weight:bold;">94.4% Defect Recall</span> |
 
 ### Multi-View Angle Quarantine Protocol:
 Because rotors were imaged from both top-down and 45° side angles, the deployment engine applies **worst-case multi-camera aggregation**:
@@ -230,8 +228,9 @@ This ensures that an over-melted cavity hidden from the top-down perspective is 
    - **PC2 (18.6% Variance)**: Governed by **Surface Texture Chaos** driven by `glcm_entropy` ($+0.48$) and `glcm_contrast` ($+0.34$) versus `glcm_energy` ($-0.39$).
 2. **95% Confidence Ellipses**: The green (nominal) and red (defective) clusters exhibit clean mathematical divergence, proving that physical defects are separable even without deep feature learning.
 3. **Correlation Cross-Coupling**:
-   - $\text{Corr}(\text{circularity}, \text{slag\_protrusion}) = -0.42$: Confirms molten alloy spill tears nominal circularity.
-   - $\text{Corr}(\text{solidity}, \text{aspect\_ratio}) = -0.58$: Downward molten icicles simultaneously elongate aspect ratio and indent the convex hull.
+   - **Circularity vs. Slag Protrusion ($r = -0.42$)**: Confirms that as molten metal drips down the end-ring, contour circularity suffers an immediate collapse.
+   - **Solidity vs. Aspect Ratio ($r = -0.58$)**: Downward molten icicles simultaneously elongate aspect ratio and indent the convex hull.
+   - **GLCM Entropy vs. Contrast ($r = +0.76$)**: Severe burn-through produces irregular, chaotic shadow crevices that sharply increase texture entropy.
 
 <p align="center">
   <img src="analysis_output/pca_feature_loadings.png" alt="PCA Component Loadings" width="860px" style="border-radius: 8px;" />
@@ -264,9 +263,12 @@ IF Void Area Pct >  11.27% THEN:
 ```
 
 ### Industrial Three-Tier Sorting Standard:
-* 🟢 **Tier 1 (Direct Pass)**: $C \ge 0.20 \land S_{\%} \le 0.70\% \land \text{Solidity} \ge 0.70$ $\rightarrow$ Route directly to stator insertion and dynamic balancing.
-* 🟡 **Tier 2 (Rework / Grind)**: $0.16 \le C < 0.20 \land S_{\%} \le 1.10\%$ $\rightarrow$ Route to robotic grinding station for surface deburring.
-* 🔴 **Tier 3 (Permanent Scrap)**: $C < 0.16 \lor S_{\%} > 1.10\% \lor \text{Solidity} < 0.60$ $\rightarrow$ Liquidate for copper scrap recycling.
+
+| Quality Tier | Engineering Tolerance Limits | Production Routing & Action |
+| :--- | :--- | :--- |
+| 🟢 **Tier 1 (Direct Pass)** | `Circularity ≥ 0.20` &nbsp;•&nbsp; `Slag Runoff ≤ 0.70%` &nbsp;•&nbsp; `Solidity ≥ 0.70` | Route directly to motor stator insertion and dynamic balancing. |
+| 🟡 **Tier 2 (Rework / Grind)** | `0.16 ≤ Circularity ≤ 0.20` &nbsp;•&nbsp; `Slag Runoff ≤ 1.10%` | Route to robotic grinding / buffing station for rim deburring. |
+| 🔴 **Tier 3 (Permanent Scrap)** | `Circularity < 0.16` &nbsp;•&nbsp; `Slag Runoff > 1.10%` &nbsp;•&nbsp; `Solidity < 0.60` | Liquidate unit immediately for copper scrap recycling. |
 
 ---
 
@@ -433,7 +435,7 @@ This repository is pre-configured with `render.yaml` for zero-configuration depl
 
 1. Fork or push this repository to GitHub.
 2. Sign in to [Render Dashboard](https://render.com/).
-3. Click **New +** $\rightarrow$ **Web Service** $\rightarrow$ select `rotor-weld-inspection`.
+3. Click **New +** → **Web Service** → select `rotor-weld-inspection`.
 4. Render automatically detects the configuration:
    * **Runtime**: `Python 3`
    * **Build Command**: `pip install -r requirements.txt`
