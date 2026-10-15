@@ -1,0 +1,13 @@
+|--- Void Area Pct <= 11.27
+|   |--- Glcm Homogeneity <= 0.92
+|   |   |--- class: 1
+|   |--- Glcm Homogeneity >  0.92
+|   |   |--- class: 1
+|--- Void Area Pct >  11.27
+|   |--- Mean Saturation <= 35.75
+|   |   |--- class: 0
+|   |--- Mean Saturation >  35.75
+|   |   |--- Intensity Contrast Std <= 63.00
+|   |   |   |--- class: 0
+|   |   |--- Intensity Contrast Std >  63.00
+|   |   |   |--- class: 1
