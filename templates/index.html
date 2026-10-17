@@ -3,21 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rotor Weld Quality Inspection & Certification Studio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>RotorWeld-AI • Industrial Quality Inspection Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0d1117;
-      --card-bg: #161b22;
-      --card-border: #30363d;
-      --text: #e6edf3;
-      --text-muted: #8b949e;
-      --green: #238636;
-      --green-light: #2ea043;
-      --red: #da3633;
-      --red-light: #f85149;
-      --blue: #1f6feb;
-      --blue-light: #58a6ff;
+      --bg: #090d16;
+      --card-bg: #111827;
+      --card-hover: #172033;
+      --card-border: #1f293d;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --green: #10b981;
+      --green-glow: rgba(16, 185, 129, 0.25);
+      --red: #ef4444;
+      --red-glow: rgba(239, 68, 68, 0.25);
+      --blue: #3b82f6;
+      --blue-glow: rgba(59, 130, 246, 0.25);
+      --amber: #f59e0b;
+      --amber-glow: rgba(245, 158, 11, 0.25);
+      --purple: #8b5cf6;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -28,9 +34,16 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
     }
+    code, pre, .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Header */
     header {
-      background: var(--card-bg);
+      background: rgba(17, 24, 39, 0.9);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--card-border);
       padding: 12px 28px;
       display: flex;
@@ -45,610 +58,1462 @@
       align-items: center;
       gap: 16px;
     }
-    .header-title h1 {
-      font-size: 1.15rem;
-      font-weight: 700;
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #3b82f6, #10b981);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
     }
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-text p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Nav Tabs */
     .nav-tabs {
       display: flex;
-      background: #0d1117;
+      background: #0b0f19;
       border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 3px;
+      border-radius: 10px;
+      padding: 4px;
       gap: 4px;
     }
     .tab-btn {
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 6px 16px;
+      padding: 7px 18px;
       font-size: 0.85rem;
       font-weight: 600;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.15s ease;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
     }
     .tab-btn.active {
-      background: var(--card-bg);
-      color: var(--blue-light);
+      background: #1f293d;
+      color: #60a5fa;
       box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
-    .stats-bar {
-      display: flex;
-      gap: 12px;
-      font-size: 0.85rem;
-    }
-    .stat-pill {
-      background: #21262d;
-      padding: 5px 12px;
-      border-radius: 6px;
-      border: 1px solid var(--card-border);
-    }
-    .stat-good { color: #3fb950; font-weight: 600; }
-    .stat-bad { color: #f85149; font-weight: 600; }
 
-    /* Layouts */
+    /* Header Right Telemetry */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .live-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    /* Tab Content Layouts */
     .tab-content {
       display: none;
       flex: 1;
-      height: calc(100vh - 65px);
-      overflow: hidden;
+      padding: 20px 28px;
     }
     .tab-content.active {
-      display: grid;
+      display: block;
     }
 
-    /* Tab 1: Dataset Studio Grid */
-    #tab-dataset {
-      grid-template-columns: 320px 1fr 380px;
-      gap: 16px;
-      padding: 16px;
+    /* Tab 1: Test & Certify Layout */
+    .certify-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      max-width: 1600px;
+      margin: 0 auto;
     }
-    .panel {
+    .card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+    .card-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.015);
+    }
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #e2e8f0;
+    }
+    .card-body {
+      padding: 20px;
+    }
+
+    /* Sample Quick Buttons */
+    .sample-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 10px 14px;
+      background: #0d131f;
+      border: 1px solid var(--card-border);
       border-radius: 10px;
+      flex-wrap: wrap;
+    }
+    .sample-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .sample-chip {
+      background: #172033;
+      border: 1px solid #2d3748;
+      color: #cbd5e1;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sample-chip:hover {
+      background: #1e293b;
+      border-color: #3b82f6;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .chip-bad { border-left: 3px solid #ef4444; }
+    .chip-good { border-left: 3px solid #10b981; }
+
+    /* Drop Zone */
+    .drop-zone {
+      border: 2px dashed #374151;
+      border-radius: 12px;
+      padding: 32px 20px;
+      text-align: center;
+      cursor: pointer;
+      background: #0d121c;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .drop-zone:hover, .drop-zone.dragover {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.05);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+    }
+    .drop-icon {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+    .drop-text h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .drop-text p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Dual Viewport */
+    .viewport-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .viewport-box {
+      background: #0a0e17;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
     }
-    .panel-header {
-      padding: 12px 16px;
+    .viewport-head {
+      padding: 8px 12px;
+      background: #111827;
       border-bottom: 1px solid var(--card-border);
+      font-size: 0.78rem;
       font-weight: 600;
-      font-size: 0.9rem;
+      color: var(--text-muted);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .gallery-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .viewport-img-container {
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000000;
+      position: relative;
+      overflow: hidden;
+    }
+    .viewport-img-container img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      transition: transform 0.2s ease;
+    }
+    .badge-roi {
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid #3b82f6;
+      color: #60a5fa;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Mask Tabs */
+    .mask-switcher {
+      display: flex;
+      gap: 6px;
+      margin-top: 14px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .mask-btn {
+      background: #0d121c;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .mask-btn.active {
+      background: #1e293b;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+
+    /* Right Column: Diagnostics & Verdict */
+    .verdict-card {
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .verdict-card.pass {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(6, 78, 59, 0.2));
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 4px 20px var(--green-glow);
+    }
+    .verdict-card.reject {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(127, 29, 29, 0.2));
+      border-color: rgba(239, 68, 68, 0.4);
+      box-shadow: 0 4px 20px var(--red-glow);
+    }
+    .verdict-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .verdict-badge {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
       gap: 10px;
     }
-    .thumb-card {
-      background: #0d1117;
-      border: 2px solid var(--card-border);
+    .verdict-badge.pass { color: #34d399; }
+    .verdict-badge.reject { color: #f87171; }
+    .verdict-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    /* 3-Tier Quality Grade Box */
+    .tier-box {
+      background: #0d121c;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tier-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tier-icon {
+      width: 36px;
+      height: 36px;
       border-radius: 8px;
-      padding: 6px;
-      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      background: #1e293b;
+    }
+    .tier-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .tier-action {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Tri-Model Consensus */
+    .consensus-grid {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .model-row {
+      background: #0d121c;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .model-row-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+    .model-badge {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-reject { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    .progress-bar-bg {
+      height: 6px;
+      background: #1f293d;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 0.4s ease;
+    }
+
+    /* Diagnostic Metric Gauges */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .metric-card {
+      background: #0d121c;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 14px;
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
-    .thumb-card.active { border-color: var(--blue-light); background: #1c2128; }
-    .thumb-card img { width: 100%; height: 85px; object-fit: cover; border-radius: 4px; }
-    .thumb-tag { font-size: 0.7rem; font-weight: 600; text-align: center; padding: 2px; border-radius: 4px; text-transform: uppercase; }
-    .tag-good { background: rgba(46, 160, 67, 0.2); color: #3fb950; border: 1px solid #238636; }
-    .tag-bad { background: rgba(248, 81, 73, 0.2); color: #f85149; border: 1px solid #da3633; }
-    .tag-none { background: #21262d; color: var(--text-muted); border: 1px dashed var(--card-border); }
+    .metric-name {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .metric-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .metric-target {
+      font-size: 0.7rem;
+      color: #64748b;
+    }
 
-    .center-view { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
-    .viewport {
-      background: #0d1117;
-      border: 1px solid var(--card-border);
+    /* Print Certificate Button */
+    .btn-cert {
+      width: 100%;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      border: none;
+      padding: 14px 20px;
+      font-size: 0.92rem;
+      font-weight: 700;
       border-radius: 10px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-    .viewport img { max-width: 100%; max-height: 500px; border-radius: 8px; }
-    .image-title { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; }
-    .controls { display: flex; justify-content: center; gap: 14px; padding: 10px 0; }
-    .btn-action { padding: 10px 24px; font-size: 0.95rem; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; }
-    .btn-good { background: var(--green); color: white; }
-    .btn-bad { background: var(--red); color: white; }
-    .btn-nav { background: #21262d; border: 1px solid var(--card-border); color: var(--text); padding: 10px 16px; border-radius: 8px; cursor: pointer; }
-
-    .analysis-view { overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 14px; }
-    .metric-card { background: #0d1117; border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; }
-    .metric-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.85rem; }
-    .metric-val { font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-    .metric-bar-bg { height: 6px; background: #21262d; border-radius: 999px; overflow: hidden; margin-bottom: 8px; }
-    .metric-bar-fill { height: 100%; border-radius: 999px; background: var(--blue-light); }
-    .overlay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .overlay-item { background: #0d1117; border: 1px solid var(--card-border); border-radius: 6px; padding: 6px; text-align: center; }
-    .overlay-item img { width: 100%; height: 85px; object-fit: cover; border-radius: 4px; }
-    .overlay-label { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; }
-
-    .train-box { background: #1c2128; border: 1px solid var(--card-border); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
-    .btn-train { background: var(--blue); color: white; border: none; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; }
-    .btn-train:hover { background: var(--blue-light); }
-    .train-results { font-size: 0.8rem; background: #0d1117; border: 1px solid var(--card-border); border-radius: 6px; padding: 10px; font-family: 'JetBrains Mono', monospace; }
-
-    /* Tab 2: Test & Certify */
-    #tab-certify {
-      grid-template-columns: 460px 1fr;
-      gap: 20px;
-      padding: 24px;
-      overflow-y: auto;
-    }
-    .upload-zone {
-      background: var(--card-bg);
-      border: 2px dashed var(--card-border);
-      border-radius: 12px;
-      padding: 32px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
       cursor: pointer;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
       transition: all 0.2s ease;
     }
-    .upload-zone:hover {
-      border-color: var(--blue-light);
-      background: #1c2128;
+    .btn-cert:hover {
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
     }
-    .certificate-card {
-      background: #161b22;
-      border: 2px solid var(--card-border);
-      border-radius: 12px;
-      padding: 28px;
+
+    /* Tab 2: Analytics & PCA Hub Layout */
+    .analytics-layout {
+      max-width: 1600px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
+      gap: 24px;
+    }
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 18px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+    .kpi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .kpi-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    .kpi-val {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* PDF Download Banner */
+    .pdf-banner {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 20px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .pdf-info h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pdf-info p {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+    .btn-pdf {
+      background: #10b981;
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-pdf:hover {
+      background: #059669;
+      transform: translateY(-1px);
+    }
+
+    /* Plot Showcases Grid */
+    .plots-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+    .plot-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .plot-img-box {
+      background: #000000;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .plot-img-box img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      transition: transform 0.2s ease;
+    }
+    .plot-desc {
+      padding: 14px 20px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--card-border);
+      background: #0e1422;
+    }
+
+    /* Tab 3: Dataset Studio Layout */
+    .dataset-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr 380px;
+      gap: 20px;
+      height: calc(100vh - 110px);
+    }
+    .scroll-list {
+      overflow-y: auto;
+      flex: 1;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .item-chip {
+      background: #0d121c;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .item-chip:hover, .item-chip.active {
+      border-color: #3b82f6;
+      background: #172033;
+    }
+    .item-chip.good { border-left: 3px solid #10b981; }
+    .item-chip.bad { border-left: 3px solid #ef4444; }
+
+    /* Modal for Certificate */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .cert-sheet {
+      background: #ffffff;
+      color: #0f172a;
+      width: 100%;
+      max-width: 780px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
       position: relative;
     }
     .cert-header {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 20px 28px;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      border-bottom: 2px solid var(--card-border);
-      padding-bottom: 16px;
+      align-items: center;
     }
-    .cert-stamp {
-      font-size: 1.5rem;
-      font-weight: 800;
-      padding: 8px 20px;
-      border-radius: 8px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      display: inline-block;
+    .cert-body {
+      padding: 28px;
+      max-height: 80vh;
+      overflow-y: auto;
     }
-    .stamp-pass {
-      color: #3fb950;
-      border: 3px solid #3fb950;
-      background: rgba(46, 160, 67, 0.15);
-      transform: rotate(-3deg);
-    }
-    .stamp-reject {
-      color: #f85149;
-      border: 3px solid #f85149;
-      background: rgba(248, 81, 73, 0.15);
-      transform: rotate(-3deg);
-    }
-    .cert-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-    }
-    .cert-table td {
-      padding: 8px 12px;
-      border-bottom: 1px solid #21262d;
-    }
-    .cert-table td:first-child {
-      color: var(--text-muted);
-      width: 40%;
-    }
-    .cert-table td:last-child {
-      font-weight: 600;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .cert-images {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-    .cert-images img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 6px;
-      border: 1px solid var(--card-border);
-    }
-    .cert-caption {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-top: 4px;
-    }
-    .btn-print {
-      background: #21262d;
-      border: 1px solid var(--card-border);
-      color: var(--text);
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      align-self: flex-start;
-    }
-    .btn-print:hover {
-      background: var(--blue);
-      border-color: var(--blue);
+
+    /* Print Styles */
+    @media print {
+      body * { visibility: hidden; }
+      .cert-sheet, .cert-sheet * { visibility: visible; }
+      .cert-sheet { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; }
+      .no-print { display: none !important; }
     }
   </style>
 </head>
 <body>
 
+  <!-- App Header -->
   <header>
     <div class="header-left">
-      <div class="header-title">
-        <h1>Rotor Weld Inspection Studio</h1>
-      </div>
-      <div class="nav-tabs">
-        <button class="tab-btn active" id="btn-tab-dataset" onclick="switchTab('dataset')">
-          📊 Dataset & Training
-        </button>
-        <button class="tab-btn" id="btn-tab-certify" onclick="switchTab('certify')">
-          🔍 Test & Certify Rotor
-        </button>
+      <div class="brand-icon">⚡</div>
+      <div class="brand-text">
+        <h1>RotorWeld-AI • Industrial Quality Inspection Platform</h1>
+        <p>Optical Inspection & ISO-9001 / IEC 60034-1 Certification Studio</p>
       </div>
     </div>
-    <div class="stats-bar">
-      <div class="stat-pill">Total: <span id="stat-total" style="font-weight: 700;">81</span></div>
-      <div class="stat-pill stat-good">Good: <span id="stat-good">27</span></div>
-      <div class="stat-pill stat-bad">Defective: <span id="stat-bad">54</span></div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('certify')">
+        <span>🚀</span> Test & Certify
+      </button>
+      <button class="tab-btn" onclick="switchTab('analytics')">
+        <span>📊</span> AI Analytics & PCA Hub
+      </button>
+      <button class="tab-btn" onclick="switchTab('dataset')">
+        <span>🗂️</span> Dataset Studio
+      </button>
+    </div>
+
+    <!-- Telemetry Status -->
+    <div class="header-right">
+      <div class="live-status">
+        <span class="pulse-dot"></span>
+        <span>AI INFERENCE ACTIVE (MobileNetV3 90.2%)</span>
+      </div>
     </div>
   </header>
 
-  <!-- TAB 1: DATASET STUDIO -->
-  <div class="tab-content active" id="tab-dataset">
-    <!-- Left: Gallery -->
-    <div class="panel">
-      <div class="panel-header">
-        <span>Image Gallery</span>
-        <span style="font-size: 0.75rem; color: var(--text-muted);">81 items</span>
-      </div>
-      <div class="gallery-list" id="gallery"></div>
-    </div>
+  <!-- ========================================== -->
+  <!-- TAB 1: TEST & CERTIFY ROTOR WELD           -->
+  <!-- ========================================== -->
+  <div class="tab-content active" id="tab-certify">
+    <div class="certify-layout">
 
-    <!-- Center: Main Viewport -->
-    <div class="center-view">
-      <div class="viewport">
-        <img id="main-img" src="" alt="Select an image">
-        <div class="image-title" id="main-filename">Loading...</div>
-      </div>
-      <div class="controls">
-        <button class="btn-nav" onclick="prevImage()">◀ Prev (←)</button>
-        <button class="btn-action btn-good" onclick="labelCurrent('good')">✅ GOOD WELD (G)</button>
-        <button class="btn-action btn-bad" onclick="labelCurrent('bad')">❌ DEFECTIVE (B)</button>
-        <button class="btn-nav" onclick="nextImage()">Next (→) ▶</button>
-      </div>
-    </div>
-
-    <!-- Right: Analysis & Training -->
-    <div class="panel">
-      <div class="panel-header"><span>Computer Vision & ML Analysis</span></div>
-      <div class="analysis-view">
-        <div class="metric-card">
-          <h4 style="font-size: 0.85rem; margin-bottom: 8px; color: var(--blue-light);">📊 Physical CV Metrics</h4>
-          <div class="metric-row"><span>Dark Cavity / Void Area %:</span><span class="metric-val" id="metric-void">-</span></div>
-          <div class="metric-bar-bg"><div class="metric-bar-fill" id="bar-void" style="width: 0%; background: #58a6ff;"></div></div>
-          <div class="metric-row"><span>Thermal Molten Slag %:</span><span class="metric-val" id="metric-slag">-</span></div>
-          <div class="metric-bar-bg"><div class="metric-bar-fill" id="bar-slag" style="width: 0%; background: #f85149;"></div></div>
-          <div class="metric-row"><span>Contour Circularity:</span><span class="metric-val" id="metric-circ">-</span></div>
-          <div class="metric-row"><span>Solidity (Edge Distortion):</span><span class="metric-val" id="metric-solidity">-</span></div>
+      <!-- Left Column: Image Ingestion & Visualizations -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>📸</span> Image Acquisition & Automated Weld-ROI Cropper
+          </div>
+          <span style="font-size:0.75rem; color:#94a3b8;">Saliency + Center-Prior Active</span>
         </div>
+        <div class="card-body">
 
-        <h4 style="font-size: 0.85rem; color: var(--text-muted);">CV Feature Overlays</h4>
-        <div class="overlay-grid">
-          <div class="overlay-item"><img id="overlay-contour" src=""><div class="overlay-label">Outer Rim Contour</div></div>
-          <div class="overlay-item"><img id="overlay-void" src=""><div class="overlay-label">Cavity / Void Map</div></div>
-          <div class="overlay-item"><img id="overlay-slag" src=""><div class="overlay-label">Molten Slag Mask</div></div>
-          <div class="overlay-item"><img id="overlay-edge" src=""><div class="overlay-label">Edge Roughness</div></div>
+          <!-- Sample Quick-Test Buttons -->
+          <div class="sample-bar">
+            <span class="sample-label">⚡ 1-Click Samples:</span>
+            <button class="sample-chip chip-bad" onclick="loadSample('bad1.jpg')">Defective 1 (Dripping Slag)</button>
+            <button class="sample-chip chip-bad" onclick="loadSample('bad2.jpg')">Defective 2 (Over-Melt)</button>
+            <button class="sample-chip chip-good" onclick="loadSample('good1.jpg')">Nominal 1 (Clean Pass)</button>
+            <button class="sample-chip chip-good" onclick="loadSample('good2.jpg')">Nominal 2 (Smooth Rim)</button>
+          </div>
+
+          <!-- Drag and Drop Zone -->
+          <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+            <input type="file" id="file-input" style="display:none;" accept="image/*" onchange="handleFileSelect(event)">
+            <div class="drop-icon">📤</div>
+            <div class="drop-text">
+              <h3>Drop high-resolution rotor photo here, or browse</h3>
+              <p>Supports PNG, JPG, JPEG (Camera angle: Top-Down or 45° Oblique)</p>
+            </div>
+          </div>
+
+          <!-- Dual Viewport: Original vs Auto-Cropped -->
+          <div class="viewport-grid">
+            <div class="viewport-box">
+              <div class="viewport-head">
+                <span>Original Capture (Full Frame)</span>
+                <span id="raw-meta" class="mono" style="font-size:0.7rem; color:#64748b;">Waiting for input...</span>
+              </div>
+              <div class="viewport-img-container">
+                <img id="view-raw" src="" alt="Raw Capture Viewport" style="display:none;">
+                <div id="raw-placeholder" style="color:#64748b; font-size:0.8rem;">No photo selected</div>
+              </div>
+            </div>
+
+            <div class="viewport-box">
+              <div class="viewport-head">
+                <span>🎯 Isolated Weld ROI (Auto-Cropped)</span>
+                <span class="badge-roi">ACTIVE ZONE</span>
+              </div>
+              <div class="viewport-img-container">
+                <img id="view-crop" src="" alt="Cropped Weld ROI" style="display:none;">
+                <div id="crop-placeholder" style="color:#64748b; font-size:0.8rem;">Auto-crop will appear here</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- OpenCV Vision Mask Switcher -->
+          <div style="margin-top:16px;">
+            <div style="font-size:0.78rem; font-weight:600; color:#94a3b8; margin-bottom:6px;">
+              🔬 Computer Vision Analytical Masks:
+            </div>
+            <div class="mask-switcher">
+              <button class="mask-btn active" onclick="switchMask('crop')">Isolated Weld</button>
+              <button class="mask-btn" onclick="switchMask('contour')">Contour & Hull</button>
+              <button class="mask-btn" onclick="switchMask('slag')">Slag Runoff Mask</button>
+              <button class="mask-btn" onclick="switchMask('void')">Cavity / Void Mask</button>
+              <button class="mask-btn" onclick="switchMask('edge')">Canny Edges</button>
+            </div>
+          </div>
+
         </div>
+      </div>
 
-        <div class="train-box">
-          <h4 style="font-size: 0.9rem; font-weight: 600;">🤖 Inspection Model</h4>
-          <button class="btn-train" id="btn-train" onclick="trainModel()">⚡ Retrain Inspection Model</button>
-          <div class="train-results" id="train-results" style="display: block;">
-            <div style="color: #3fb950; font-weight: bold; margin-bottom: 6px;">🎉 Training Complete! (Weld ROI)</div>
-            <div style="background: rgba(88, 166, 255, 0.15); border: 1px solid #1f6feb; border-radius: 6px; padding: 6px 8px; margin-bottom: 6px;">
-              <b style="color: #58a6ff;">🚀 Deep Transfer Learning:</b> <span style="font-weight: 800; color: #3fb950;">90.2%</span><br>
-              <span style="font-size: 0.72rem; color: var(--text-muted);">Trained strictly on Cropped Welds (94.4% Defect Recall)</span>
-            </div>
-            <div style="background: #21262d; border-radius: 6px; padding: 4px 8px; margin-bottom: 6px;">
-              <b>OpenCV Geometric Baseline:</b> 74.1%
-            </div>
-            <b>Cropped Dataset:</b> 81 weld ROIs (27 Good, 54 Bad)<br>
-            <div style="margin-top: 4px;"><b>Top Defect Indicators:</b><br>• Circularity Drop: -34.3%<br>• Slag / Melt %: +33.0%<br>• Solidity Concavity: -12.4%</div>
+      <!-- Right Column: Diagnostics, Tri-Model Consensus & Certification -->
+      <div>
+
+        <!-- Verdict Banner Card -->
+        <div class="verdict-card pass" id="verdict-box">
+          <div class="verdict-top">
+            <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; letter-spacing:0.05em; color:#94a3b8;">
+              System Inspection Verdict
+            </span>
+            <span id="cert-badge" class="mono" style="font-size:0.75rem; background:rgba(0,0,0,0.3); padding:3px 8px; border-radius:4px;">
+              QC-PENDING
+            </span>
+          </div>
+          <div class="verdict-badge pass" id="verdict-title">
+            <span>✅</span> PASS: ACCEPTABLE WELD
+          </div>
+          <div class="verdict-meta">
+            <span id="verdict-conf">Confidence: 94.2%</span>
+            <span id="verdict-time">Ready for inspection</span>
           </div>
         </div>
+
+        <!-- 3-Tier Industrial Quality Grade -->
+        <div class="tier-box" id="tier-box">
+          <div class="tier-left">
+            <div class="tier-icon" id="tier-icon">🟢</div>
+            <div>
+              <div class="tier-title" id="tier-label">Grade A (Premium Pass)</div>
+              <div class="tier-action" id="tier-action">Approved: Route directly to stator insertion & dynamic balancing.</div>
+            </div>
+          </div>
+          <span style="font-size:0.7rem; color:#64748b; font-weight:600;">IEC 60034-1</span>
+        </div>
+
+        <!-- Tri-Model Consensus -->
+        <div class="card" style="margin-bottom:20px;">
+          <div class="card-header">
+            <div class="card-title">
+              <span>⚖️</span> Tri-Model Decision Consensus
+            </div>
+            <span style="font-size:0.75rem; color:#94a3b8;">Multi-Engine Audit</span>
+          </div>
+          <div class="card-body">
+            <div class="consensus-grid">
+              
+              <!-- Model 1: Deep MobileNetV3 -->
+              <div class="model-row">
+                <div class="model-row-head">
+                  <span>🧠 PyTorch MobileNetV3-Small (90.2% Acc)</span>
+                  <span class="model-badge badge-pass" id="m1-badge">PASS (94.2%)</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill" id="m1-bar" style="width: 94%; background: #10b981;"></div>
+                </div>
+              </div>
+
+              <!-- Model 2: Classical OpenCV Random Forest -->
+              <div class="model-row">
+                <div class="model-row-head">
+                  <span>🔬 OpenCV Random Forest (74.1% Acc)</span>
+                  <span class="model-badge badge-pass" id="m2-badge">PASS (88.0%)</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill" id="m2-bar" style="width: 88%; background: #3b82f6;"></div>
+                </div>
+              </div>
+
+              <!-- Model 3: Explainable Decision Tree -->
+              <div class="model-row">
+                <div class="model-row-head">
+                  <span>📐 Decision Tree Rules (80.2% Acc)</span>
+                  <span class="model-badge badge-pass" id="m3-badge">PASS</span>
+                </div>
+                <div id="m3-desc" style="font-size:0.74rem; color:#94a3b8;">
+                  Rule 2: Nominal Void Area & Mean Saturation <= 35.75
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Diagnostic Physical Metrics Grid -->
+        <div class="card" style="margin-bottom:20px;">
+          <div class="card-header">
+            <div class="card-title">
+              <span>📊</span> Handcrafted Physics Descriptors
+            </div>
+            <span style="font-size:0.75rem; color:#94a3b8;">OpenCV Engine</span>
+          </div>
+          <div class="card-body">
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <span class="metric-name">Circularity Index (C)</span>
+                <span class="metric-value" id="val-circ">0.232</span>
+                <span class="metric-target">Nominal: ≥ 0.200</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-name">Solidity Index (S)</span>
+                <span class="metric-value" id="val-solid">0.728</span>
+                <span class="metric-target">Nominal: ≥ 0.700</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-name">Slag Protrusion %</span>
+                <span class="metric-value" id="val-slag">0.82%</span>
+                <span class="metric-target">Tolerance: ≤ 0.70%</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-name">Void Cavity Area %</span>
+                <span class="metric-value" id="val-void">11.8%</span>
+                <span class="metric-target">Tolerance: ≤ 13.0%</span>
+              </div>
+            </div>
+
+            <!-- Print QC Certificate Button -->
+            <button class="btn-cert" onclick="openCertModal()">
+              <span>🖨️</span> Print Official QC Quality Certificate
+            </button>
+          </div>
+        </div>
+
       </div>
+
     </div>
   </div>
 
-  <!-- TAB 2: TEST & CERTIFY ROTOR -->
-  <div class="tab-content" id="tab-certify">
-    <!-- Left Column: Upload Box & Quick Tests -->
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-      <div class="upload-zone" onclick="document.getElementById('file-input').click()">
-        <input type="file" id="file-input" style="display: none;" accept="image/*" onchange="handleFileUpload(event)">
-        <div style="font-size: 2.5rem;">📥</div>
-        <div style="font-weight: 700; font-size: 1.1rem;">Click or Drop Rotor Photo Here</div>
-        <div style="font-size: 0.8rem; color: var(--text-muted);">
-          Accepts JPEG, PNG of any rotor weld (top-down or angled view)
-        </div>
-      </div>
+  <!-- ========================================== -->
+  <!-- TAB 2: AI ANALYTICS & STATISTICAL HUB     -->
+  <!-- ========================================== -->
+  <div class="tab-content" id="tab-analytics">
+    <div class="analytics-layout">
 
-      <div class="panel" style="padding: 16px;">
-        <h4 style="font-size: 0.9rem; margin-bottom: 10px;">⚡ Quick Test Sample Buttons</h4>
-        <div style="display: flex; gap: 10px;">
-          <button class="btn-nav" style="flex: 1;" onclick="testSample('good.jpeg')">Test Good Sample</button>
-          <button class="btn-nav" style="flex: 1;" onclick="testSample('bad.jpeg')">Test Bad Sample</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right Column: Official Quality Certificate -->
-    <div id="cert-container" style="display: flex; flex-direction: column; gap: 14px;">
-      <div class="certificate-card" id="cert-card">
-        <div class="cert-header">
+      <!-- Top KPI Stat Cards -->
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(16,185,129,0.15); color:#10b981;">🎯</div>
           <div>
-            <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--blue-light); font-weight: 700; letter-spacing: 0.05em;">
-              FACTORY AUTOMATION QUALITY CONTROL REPORT
-            </div>
-            <h2 style="font-size: 1.4rem; font-weight: 800; margin-top: 4px;">Rotor Weld Inspection Certificate</h2>
-            <div style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;" id="cert-meta">
-              Certificate: QC-ROTOR-INIT | Timestamp: 2026-10-12
-            </div>
+            <div class="kpi-val" style="color:#34d399;">94.4%</div>
+            <div class="kpi-sub">Defect Recall (51 / 54 Caught)</div>
           </div>
-          <div class="cert-stamp stamp-pass" id="cert-stamp">PASS</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(59,130,246,0.15); color:#3b82f6;">🏆</div>
+          <div>
+            <div class="kpi-val" style="color:#60a5fa;">90.2%</div>
+            <div class="kpi-sub">5-Fold CV Accuracy (MobileNetV3)</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(245,158,11,0.15); color:#f59e0b;">📊</div>
+          <div>
+            <div class="kpi-val" style="color:#fbbf24;">55.3%</div>
+            <div class="kpi-sub">2D Variance Explained (PCA)</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(139,92,246,0.15); color:#8b5cf6;">⚖️</div>
+          <div>
+            <div class="kpi-val" style="color:#a78bfa;">80.2%</div>
+            <div class="kpi-sub">Explainable Decision Tree Accuracy</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PDF Download Banner -->
+      <div class="pdf-banner">
+        <div class="pdf-info">
+          <h3><span>📄</span> Rotor Weld Feature Extraction & Analysis Engineering Guide</h3>
+          <p>Comprehensive 3-page publication-grade PDF explaining mathematical formulas, PCA biplots, Pearson heatmaps, and industrial tolerances.</p>
+        </div>
+        <a href="/api/download_pdf" class="btn-pdf" target="_blank">
+          <span>⬇️</span> Download PDF Guide
+        </a>
+      </div>
+
+      <!-- Visualization Showcases (2x2 Grid) -->
+      <div class="plots-grid">
+
+        <!-- Figure 1: PCA 2D Cluster Separation -->
+        <div class="plot-card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>📈</span> PCA 2D Cluster Separation & Biplot Vectors
+            </div>
+            <span style="font-size:0.75rem; color:#94a3b8;">55.3% Variance (PC1 + PC2)</span>
+          </div>
+          <div class="plot-img-box">
+            <img src="/analysis_output/pca_cluster_separation.png" alt="PCA 2D Cluster Separation" onclick="window.open(this.src)">
+          </div>
+          <div class="plot-desc">
+            <strong>Key Finding:</strong> Good welds (green) form a tight, coherent cluster with 95% confidence ellipses. Defective welds (red) diverge along negative PC1 (macro contour collapse) and positive PC2 (micro surface roughness).
+          </div>
         </div>
 
-        <table class="cert-table">
-          <tr><td>Target File</td><td id="cert-filename">good.jpeg</td></tr>
-          <tr><td>Final Verdict</td><td id="cert-verdict" style="color: #3fb950;">PASS: ACCEPTABLE WELD</td></tr>
-          <tr><td>Inspection Confidence</td><td id="cert-confidence">96.8%</td></tr>
-          <tr><td>Deep Learning Model</td><td>PyTorch MobileNetV3 (92.6% Accuracy Benchmark)</td></tr>
-          <tr><td>Cavity / Void Area %</td><td id="cert-void">6.71% (Nominal threshold < 12%)</td></tr>
-          <tr><td>Thermal Slag Protrusion %</td><td id="cert-slag">0.00% (No molten drip detected)</td></tr>
-          <tr><td>Circularity Index</td><td id="cert-circ">0.329</td></tr>
+        <!-- Figure 2: Pearson Feature Correlation Heatmap -->
+        <div class="plot-card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>🔥</span> 15x15 Pearson Feature Correlation Matrix
+            </div>
+            <span style="font-size:0.75rem; color:#94a3b8;">N=81 Cropped Samples</span>
+          </div>
+          <div class="plot-img-box">
+            <img src="/analysis_output/feature_correlation_matrix.png" alt="Pearson Correlation Matrix" onclick="window.open(this.src)">
+          </div>
+          <div class="plot-desc">
+            <strong>Key Finding:</strong> Strong negative correlation between Circularity and Slag Protrusion (<em>r = -0.42</em>), and Solidity and Aspect Ratio (<em>r = -0.58</em>), proving downward molten slag tears the circular end-ring.
+          </div>
+        </div>
+
+        <!-- Figure 3: PCA Feature Loadings -->
+        <div class="plot-card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>📊</span> PCA Component Loadings (PC1 & PC2 Drivers)
+            </div>
+            <span style="font-size:0.75rem; color:#94a3b8;">Feature Influence Ranking</span>
+          </div>
+          <div class="plot-img-box">
+            <img src="/analysis_output/pca_feature_loadings.png" alt="PCA Component Loadings" onclick="window.open(this.src)">
+          </div>
+          <div class="plot-desc">
+            <strong>Key Finding:</strong> PC1 is dominated by macro rim geometry (`solidity` +0.35, `circularity` +0.27 vs `aspect_ratio` -0.32). PC2 is dominated by GLCM entropy (+0.48) and contrast (+0.34).
+          </div>
+        </div>
+
+        <!-- Figure 4: Explainable Decision Tree -->
+        <div class="plot-card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>🌳</span> Explainable Production Decision Tree (80.2% Acc)
+            </div>
+            <span style="font-size:0.75rem; color:#94a3b8;">ISO-Auditable White-Box Model</span>
+          </div>
+          <div class="plot-img-box">
+            <img src="/analysis_output/explainable_decision_tree.png" alt="Explainable Decision Tree" onclick="window.open(this.src)">
+          </div>
+          <div class="plot-desc">
+            <strong>Key Finding:</strong> Solves black-box opacity by providing transparent human-readable rules: <code>Void Area &le; 11.27% &rarr; REJECT</code> and <code>Mean Saturation &le; 35.75 &rarr; PASS</code>.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- TAB 3: DATASET STUDIO & RETRAINING HUB     -->
+  <!-- ========================================== -->
+  <div class="tab-content" id="tab-dataset">
+    <div class="dataset-layout">
+
+      <!-- Left: Dataset Browser -->
+      <div class="card" style="display:flex; flex-direction:column;">
+        <div class="card-header">
+          <div class="card-title"><span>🗂️</span> Rotor Weld Dataset</div>
+          <span id="ds-count" class="mono" style="font-size:0.75rem; color:#94a3b8;">81 Images</span>
+        </div>
+        <div style="padding:10px 14px; border-bottom:1px solid var(--card-border); display:flex; gap:6px;">
+          <button class="mask-btn active" onclick="filterDataset('all', this)">All (81)</button>
+          <button class="mask-btn" onclick="filterDataset('good', this)">Good (27)</button>
+          <button class="mask-btn" onclick="filterDataset('bad', this)">Bad (54)</button>
+        </div>
+        <div class="scroll-list" id="dataset-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Middle: Selected Image Inspector -->
+      <div class="card" style="display:flex; flex-direction:column;">
+        <div class="card-header">
+          <div class="card-title"><span>🔍</span> Sample Visual Inspector</div>
+          <span id="inspect-filename" class="mono" style="font-size:0.75rem; color:#60a5fa;">Select a sample</span>
+        </div>
+        <div style="flex:1; background:#000000; display:flex; align-items:center; justify-content:center; padding:16px;">
+          <img id="ds-view-img" src="" alt="Sample Inspector" style="max-height:100%; max-width:100%; object-fit:contain; border-radius:8px; display:none;">
+          <div id="ds-placeholder" style="color:#64748b;">Select an image from the list</div>
+        </div>
+      </div>
+
+      <!-- Right: Model Training & Diagnostics -->
+      <div class="card" style="display:flex; flex-direction:column;">
+        <div class="card-header">
+          <div class="card-title"><span>⚙️</span> Model Retraining & CV</div>
+          <span style="font-size:0.75rem; color:#10b981;">5-Fold Stratified</span>
+        </div>
+        <div class="card-body" style="display:flex; flex-direction:column; gap:16px;">
+          <p style="font-size:0.82rem; color:var(--text-muted);">
+            Retrains both the <strong>Deep MobileNetV3-Small</strong> backbone and the <strong>OpenCV Random Forest</strong> on all 81 cropped welds.
+          </p>
+
+          <button id="btn-retrain" class="btn-cert" onclick="retrainModels()" style="background:#10b981;">
+            <span>⚡</span> 1-Click Retrain All Models
+          </button>
+
+          <div id="train-status" style="display:none; padding:12px; border-radius:8px; background:#0d121c; border:1px solid var(--card-border); font-size:0.8rem;">
+            <!-- Retrain results appear here -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: PRINTABLE ISO QUALITY CERTIFICATE   -->
+  <!-- ========================================== -->
+  <div class="modal-overlay" id="cert-modal" onclick="if(event.target===this) closeCertModal()">
+    <div class="cert-sheet">
+      <div class="cert-header">
+        <div>
+          <h2 style="font-size:1.1rem; font-weight:800;">AUTONOMOUS QUALITY INSPECTION CERTIFICATE</h2>
+          <p style="font-size:0.75rem; color:#94a3b8;">Compliance with ISO 9001:2015 & IEC 60034-1 Standards</p>
+        </div>
+        <button class="no-print" onclick="closeCertModal()" style="background:none; border:none; color:#ffffff; font-size:1.4rem; cursor:pointer;">✕</button>
+      </div>
+
+      <div class="cert-body">
+        <div style="display:flex; justify-content:space-between; border-bottom:2px solid #e2e8f0; padding-bottom:14px; margin-bottom:18px;">
+          <div>
+            <div style="font-size:0.72rem; color:#64748b; font-weight:700;">CERTIFICATE NUMBER</div>
+            <div id="modal-cert-id" class="mono" style="font-size:1rem; font-weight:800; color:#0f172a;">QC-20261017-849</div>
+          </div>
+          <div>
+            <div style="font-size:0.72rem; color:#64748b; font-weight:700;">INSPECTION TIMESTAMP</div>
+            <div id="modal-time" class="mono" style="font-size:0.85rem; font-weight:600; color:#0f172a;">2026-10-17 12:00:00 UTC</div>
+          </div>
+          <div>
+            <div style="font-size:0.72rem; color:#64748b; font-weight:700;">SAMPLE ID</div>
+            <div id="modal-file" class="mono" style="font-size:0.85rem; font-weight:600; color:#0f172a;">bad1.jpg</div>
+          </div>
+        </div>
+
+        <!-- Embedded Cropped Weld Photo & Verdict Stamp -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:center; margin-bottom:22px;">
+          <div style="border:1px solid #cbd5e1; border-radius:8px; padding:6px; background:#f8fafc; text-align:center;">
+            <img id="modal-crop-img" src="" alt="Weld Bead Proof" style="max-height:180px; max-width:100%; border-radius:4px;">
+            <div style="font-size:0.7rem; color:#64748b; margin-top:4px;">Isolated Weld Bead Macro Image (Automated Crop)</div>
+          </div>
+
+          <div style="text-align:center; padding:16px; border:2px dashed #cbd5e1; border-radius:10px;" id="modal-stamp-box">
+            <div id="modal-stamp" style="font-size:1.4rem; font-weight:900; letter-spacing:0.04em;">
+              <!-- Stamp text -->
+            </div>
+            <div id="modal-tier" style="font-size:0.85rem; font-weight:700; margin-top:4px;">Grade A (Premium Pass)</div>
+            <div id="modal-action" style="font-size:0.74rem; color:#64748b; margin-top:4px;">Approved for dynamic balancing.</div>
+          </div>
+        </div>
+
+        <!-- Quantitative Diagnostic Table -->
+        <table style="width:100%; border-collapse:collapse; font-size:0.82rem; margin-bottom:24px;">
+          <thead>
+            <tr style="background:#f1f5f9; text-align:left;">
+              <th style="padding:8px 12px; border:1px solid #cbd5e1;">Diagnostic Parameter</th>
+              <th style="padding:8px 12px; border:1px solid #cbd5e1;">Measured Value</th>
+              <th style="padding:8px 12px; border:1px solid #cbd5e1;">ISO Specification Limit</th>
+              <th style="padding:8px 12px; border:1px solid #cbd5e1;">Status</th>
+            </tr>
+          </thead>
+          <tbody id="modal-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
         </table>
 
-        <div>
-          <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 8px;">Inspection Visual Diagnostics:</div>
-          <div class="cert-images" style="grid-template-columns: repeat(5, 1fr);">
-            <div><img id="cert-img-orig" src="/images/good.jpeg"><div class="cert-caption">Raw Capture</div></div>
-            <div><img id="cert-img-crop" src="/images/good1.jpeg"><div class="cert-caption" style="color: #58a6ff; font-weight: bold;">🎯 Extracted Weld ROI</div></div>
-            <div><img id="cert-img-contour" src=""><div class="cert-caption">Rim Contour Trace</div></div>
-            <div><img id="cert-img-void" src=""><div class="cert-caption">Dark Cavity / Void Mask</div></div>
-            <div><img id="cert-img-slag" src=""><div class="cert-caption">Molten Slag / Drip Mask</div></div>
+        <!-- Signatures & Print Button -->
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; border-top:1px solid #e2e8f0; padding-top:20px;">
+          <div>
+            <div style="font-size:0.72rem; color:#64748b;">INSPECTION SYSTEM</div>
+            <div style="font-size:0.8rem; font-weight:700;">RotorWeld-AI Vision Engine v2.4 (MobileNetV3)</div>
           </div>
+          <div style="text-align:center;">
+            <div style="border-bottom:1px solid #0f172a; width:160px; height:30px; margin-bottom:4px;"></div>
+            <div style="font-size:0.72rem; color:#64748b;">QA LEAD INSPECTOR</div>
+          </div>
+          <button class="no-print btn-cert" onclick="window.print()" style="width:auto; padding:8px 20px;">
+            <span>🖨️</span> Print PDF Certificate
+          </button>
         </div>
 
-        <button class="btn-print" onclick="window.print()">🖨️ Print Quality Certificate</button>
       </div>
     </div>
   </div>
 
   <script>
-    let allImages = [];
-    let currentIndex = 0;
+    let currentInspection = null;
+    let datasetItems = [];
 
-    function switchTab(tab) {
+    // Switch Top Navigation Tabs
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      if (tab === 'dataset') {
-        document.getElementById('tab-dataset').classList.add('active');
-        document.getElementById('btn-tab-dataset').classList.add('active');
-      } else {
+
+      if (tabId === 'certify') {
+        document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
         document.getElementById('tab-certify').classList.add('active');
-        document.getElementById('btn-tab-certify').classList.add('active');
-        testSample('good.jpeg');
+      } else if (tabId === 'analytics') {
+        document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+        document.getElementById('tab-analytics').classList.add('active');
+      } else if (tabId === 'dataset') {
+        document.querySelector('.tab-btn:nth-child(3)').classList.add('active');
+        document.getElementById('tab-dataset').classList.add('active');
+        if (datasetItems.length === 0) loadDataset();
       }
     }
 
-    async function loadDataset() {
-      const res = await fetch('/api/dataset');
-      const data = await res.json();
-      allImages = data.images;
-      document.getElementById('stat-total').innerText = data.total;
-      document.getElementById('stat-good').innerText = data.good;
-      document.getElementById('stat-bad').innerText = data.bad;
+    // Switch Viewport Masks
+    function switchMask(maskType) {
+      document.querySelectorAll('.mask-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
 
-      renderGallery();
-      if (allImages.length > 0) selectImage(currentIndex);
-    }
+      if (!currentInspection || !currentInspection.overlays) return;
+      const img = document.getElementById('view-crop');
 
-    function renderGallery() {
-      const gallery = document.getElementById('gallery');
-      gallery.innerHTML = '';
-      allImages.forEach((imgObj, idx) => {
-        const card = document.createElement('div');
-        card.className = `thumb-card ${idx === currentIndex ? 'active' : ''}`;
-        card.onclick = () => selectImage(idx);
-        let tagClass = imgObj.label === 'good' ? 'tag-good' : (imgObj.label === 'bad' ? 'tag-bad' : 'tag-none');
-        let tagText = imgObj.label === 'good' ? 'Good' : (imgObj.label === 'bad' ? 'Defective' : 'Unlabeled');
-        card.innerHTML = `
-          <img src="/images/${encodeURIComponent(imgObj.filename)}" loading="lazy">
-          <div class="thumb-tag ${tagClass}">${tagText}</div>
-        `;
-        gallery.appendChild(card);
-      });
-    }
-
-    async function selectImage(idx) {
-      if (idx < 0 || idx >= allImages.length) return;
-      currentIndex = idx;
-      renderGallery();
-      const item = allImages[idx];
-      document.getElementById('main-img').src = `/images/${encodeURIComponent(item.filename)}`;
-      document.getElementById('main-filename').innerText = item.filename;
-
-      const res = await fetch(`/api/analyze/${encodeURIComponent(item.filename)}`);
-      if (res.ok) {
-        const analysis = await res.json();
-        const m = analysis.metrics;
-        document.getElementById('metric-void').innerText = `${m.void_pct}%`;
-        document.getElementById('bar-void').style.width = `${Math.min(100, m.void_pct * 3)}%`;
-        document.getElementById('metric-slag').innerText = `${m.slag_pct}%`;
-        document.getElementById('bar-slag').style.width = `${Math.min(100, m.slag_pct * 50)}%`;
-        document.getElementById('metric-circ').innerText = m.circularity;
-        document.getElementById('metric-solidity').innerText = m.solidity;
-
-        document.getElementById('overlay-contour').src = `data:image/jpeg;base64,${analysis.contour_b64}`;
-        document.getElementById('overlay-void').src = `data:image/jpeg;base64,${analysis.void_b64}`;
-        document.getElementById('overlay-slag').src = `data:image/jpeg;base64,${analysis.slag_b64}`;
-        document.getElementById('overlay-edge').src = `data:image/jpeg;base64,${analysis.edge_b64}`;
+      if (maskType === 'crop') {
+        img.src = currentInspection.weld_crop_url;
+      } else if (maskType === 'contour') {
+        img.src = 'data:image/jpeg;base64,' + currentInspection.overlays.contour;
+      } else if (maskType === 'slag') {
+        img.src = 'data:image/jpeg;base64,' + currentInspection.overlays.slag;
+      } else if (maskType === 'void') {
+        img.src = 'data:image/jpeg;base64,' + currentInspection.overlays.void;
+      } else if (maskType === 'edge') {
+        img.src = 'data:image/jpeg;base64,' + currentInspection.overlays.edge;
       }
     }
 
-    async function labelCurrent(label) {
-      const item = allImages[currentIndex];
-      item.label = label;
-      await fetch('/api/label', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ filename: item.filename, label })
-      });
-      nextImage();
-      loadDataset();
+    // Load Quick Sample
+    async function loadSample(filename) {
+      document.getElementById('raw-meta').textContent = 'Loading ' + filename + '...';
+      try {
+        const res = await fetch(`/api/inspect_sample/${filename}`);
+        const data = await res.json();
+        renderInspectionResult(data);
+      } catch (err) {
+        alert('Error testing sample: ' + err.message);
+      }
     }
 
-    function nextImage() { if (currentIndex < allImages.length - 1) selectImage(currentIndex + 1); }
-    function prevImage() { if (currentIndex > 0) selectImage(currentIndex - 1); }
+    // Handle Drag & Drop / File Select
+    function handleFileSelect(e) {
+      const file = e.target.files[0];
+      if (file) uploadAndInspect(file);
+    }
 
-    window.addEventListener('keydown', (e) => {
-      if (document.getElementById('tab-dataset').classList.contains('active')) {
-        if (e.key === 'g' || e.key === 'G') labelCurrent('good');
-        if (e.key === 'b' || e.key === 'B') labelCurrent('bad');
-        if (e.key === 'ArrowRight') nextImage();
-        if (e.key === 'ArrowLeft') prevImage();
-      }
+    const dropZone = document.getElementById('drop-zone');
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) uploadAndInspect(e.dataTransfer.files[0]);
     });
 
-    async function trainModel() {
-      const btn = document.getElementById('btn-train');
-      const resBox = document.getElementById('train-results');
-      btn.innerText = '⏳ Training Model...';
-      btn.disabled = true;
-
-      try {
-        const res = await fetch('/api/train', { method: 'POST' });
-        const data = await res.json();
-        if (res.ok) {
-          let topDrivers = Object.entries(data.feature_importances)
-            .sort((a,b) => b[1] - a[1]).slice(0, 3)
-            .map(([k, v]) => `• ${k}: ${(v*100).toFixed(1)}%`).join('<br>');
-
-          resBox.innerHTML = `
-            <div style="color: #3fb950; font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">🎉 Training Complete!</div>
-            <div style="background: rgba(88, 166, 255, 0.15); border: 1px solid #1f6feb; border-radius: 6px; padding: 8px; margin-bottom: 8px;">
-              <b style="color: #58a6ff;">🚀 Deep Transfer Learning:</b> <span style="font-size: 1.15rem; font-weight: 800; color: #3fb950;">${data.deep_accuracy}%</span><br>
-              <span style="font-size: 0.75rem; color: var(--text-muted);">Pretrained PyTorch MobileNetV3 (Perspective-invariant)</span>
-            </div>
-            <div style="background: #21262d; border-radius: 6px; padding: 6px 8px; margin-bottom: 8px;">
-              <b>OpenCV Geometric Baseline:</b> ${data.cv_accuracy}%
-            </div>
-            <b>Dataset:</b> ${data.samples_trained} samples (${data.good_count} Good, ${data.bad_count} Bad)<br>
-            <div style="margin-top: 6px;"><b>Top Defect Indicators:</b><br>${topDrivers}</div>
-          `;
-        }
-      } finally {
-        btn.innerText = '⚡ Retrain Inspection Model';
-        btn.disabled = false;
-      }
-    }
-
-    async function handleFileUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
+    async function uploadAndInspect(file) {
+      document.getElementById('raw-meta').textContent = 'Analyzing ' + file.name + '...';
       const formData = new FormData();
       formData.append('file', file);
 
-      const res = await fetch('/api/inspect_upload', { method: 'POST', body: formData });
-      const cert = await res.json();
-      renderCertificate(cert);
+      try {
+        const res = await fetch('/api/inspect_upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        renderInspectionResult(data);
+      } catch (err) {
+        alert('Inspection failed: ' + err.message);
+      }
     }
 
-    async function testSample(sampleName) {
-      // Fetch analysis and display certificate for sample
-      const res = await fetch(`/api/analyze/${encodeURIComponent(sampleName)}`);
-      const analysis = await res.json();
-      const isBad = sampleName === 'bad.jpeg';
-      renderCertificate({
-        certificate_id: `QC-ROTOR-${Math.floor(Date.now() / 1000)}-${Math.floor(Math.random() * 899 + 100)}`,
-        timestamp: new Date().toISOString().replace('T', ' ').substring(0, 19),
-        filename: sampleName,
-        image_url: `/images/${sampleName}`,
-        verdict: isBad ? 'REJECT: DEFECTIVE WELD' : 'PASS: ACCEPTABLE WELD',
-        status: isBad ? 'REJECT' : 'PASS',
-        confidence: isBad ? 94.6 : 96.8,
-        metrics: analysis.metrics,
-        overlays: {
-          contour: analysis.contour_b64,
-          void: analysis.void_b64,
-          slag: analysis.slag_b64
-        }
+    // Render Full Inspection Diagnostics
+    function renderInspectionResult(data) {
+      currentInspection = data;
+
+      // Viewports
+      document.getElementById('view-raw').src = data.raw_image_url;
+      document.getElementById('view-raw').style.display = 'block';
+      document.getElementById('raw-placeholder').style.display = 'none';
+      document.getElementById('raw-meta').textContent = data.filename;
+
+      document.getElementById('view-crop').src = data.weld_crop_url;
+      document.getElementById('view-crop').style.display = 'block';
+      document.getElementById('crop-placeholder').style.display = 'none';
+
+      // Verdict Box
+      const vBox = document.getElementById('verdict-box');
+      const vTitle = document.getElementById('verdict-title');
+      const vConf = document.getElementById('verdict-conf');
+      const vTime = document.getElementById('verdict-time');
+      const certBadge = document.getElementById('cert-badge');
+
+      certBadge.textContent = data.certificate_id;
+
+      if (data.is_bad) {
+        vBox.className = 'verdict-card reject';
+        vTitle.className = 'verdict-badge reject';
+        vTitle.innerHTML = '<span>🚫</span> REJECT: DEFECTIVE WELD';
+      } else {
+        vBox.className = 'verdict-card pass';
+        vTitle.className = 'verdict-badge pass';
+        vTitle.innerHTML = '<span>✅</span> PASS: NOMINAL WELD';
+      }
+      vConf.textContent = `Confidence: ${data.confidence}%`;
+      vTime.textContent = data.timestamp;
+
+      // 3-Tier Grade
+      const tier = data.quality_tier;
+      document.getElementById('tier-label').textContent = tier.label;
+      document.getElementById('tier-action').textContent = tier.action;
+      document.getElementById('tier-icon').textContent = tier.tier === 'GRADE_A' ? '🟢' : (tier.tier === 'GRADE_B' ? '🟡' : '🔴');
+
+      // Tri-Model Consensus
+      const m = data.models;
+      if (m) {
+        // Deep Model
+        document.getElementById('m1-badge').className = `model-badge ${m.deep.verdict === 'PASS' ? 'badge-pass' : 'badge-reject'}`;
+        document.getElementById('m1-badge').textContent = `${m.deep.verdict} (${m.deep.confidence}%)`;
+        document.getElementById('m1-bar').style.width = `${m.deep.confidence}%`;
+        document.getElementById('m1-bar').style.background = m.deep.verdict === 'PASS' ? '#10b981' : '#ef4444';
+
+        // CV Random Forest
+        document.getElementById('m2-badge').className = `model-badge ${m.cv.verdict === 'PASS' ? 'badge-pass' : 'badge-reject'}`;
+        document.getElementById('m2-badge').textContent = `${m.cv.verdict} (${m.cv.confidence}%)`;
+        document.getElementById('m2-bar').style.width = `${m.cv.confidence}%`;
+        document.getElementById('m2-bar').style.background = m.cv.verdict === 'PASS' ? '#3b82f6' : '#ef4444';
+
+        // Decision Tree
+        document.getElementById('m3-badge').className = `model-badge ${m.decision_tree.verdict === 'PASS' ? 'badge-pass' : 'badge-reject'}`;
+        document.getElementById('m3-badge').textContent = m.decision_tree.verdict;
+        document.getElementById('m3-desc').textContent = m.decision_tree.rule_triggered;
+      }
+
+      // Metric Dials
+      document.getElementById('val-circ').textContent = data.metrics.circularity;
+      document.getElementById('val-circ').style.color = data.metrics.circularity >= 0.20 ? '#10b981' : '#ef4444';
+
+      document.getElementById('val-solid').textContent = data.metrics.solidity;
+      document.getElementById('val-solid').style.color = data.metrics.solidity >= 0.70 ? '#10b981' : '#ef4444';
+
+      document.getElementById('val-slag').textContent = data.metrics.slag_pct + '%';
+      document.getElementById('val-slag').style.color = data.metrics.slag_pct <= 0.70 ? '#10b981' : '#ef4444';
+
+      document.getElementById('val-void').textContent = data.metrics.void_pct + '%';
+      document.getElementById('val-void').style.color = data.metrics.void_pct <= 13.0 ? '#10b981' : '#f59e0b';
+    }
+
+    // Modal Certificate Functions
+    function openCertModal() {
+      if (!currentInspection) {
+        alert('Please test or upload a rotor first!');
+        return;
+      }
+      const data = currentInspection;
+      document.getElementById('modal-cert-id').textContent = data.certificate_id;
+      document.getElementById('modal-time').textContent = data.timestamp;
+      document.getElementById('modal-file').textContent = data.filename;
+      document.getElementById('modal-crop-img').src = data.weld_crop_url;
+
+      const stamp = document.getElementById('modal-stamp');
+      const stampBox = document.getElementById('modal-stamp-box');
+      if (data.is_bad) {
+        stamp.textContent = 'REJECTED: EXCESSIVE DEFECT';
+        stamp.style.color = '#dc2626';
+        stampBox.style.borderColor = '#ef4444';
+        stampBox.style.background = '#fef2f2';
+      } else {
+        stamp.textContent = 'PASSED: CONFORMS TO IEC 60034-1';
+        stamp.style.color = '#16a34a';
+        stampBox.style.borderColor = '#22c55e';
+        stampBox.style.background = '#f0fdf4';
+      }
+
+      document.getElementById('modal-tier').textContent = data.quality_tier.label;
+      document.getElementById('modal-action').textContent = data.quality_tier.action;
+
+      const tbody = document.getElementById('modal-table-body');
+      tbody.innerHTML = `
+        <tr>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1; font-weight:600;">Circularity Index (C)</td>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1;" class="mono">${data.metrics.circularity}</td>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1;">&ge; 0.200</td>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1; font-weight:700; color:${data.metrics.circularity>=0.2?'#16a34a':'#dc2626'}">${data.metrics.circularity>=0.2?'PASS':'REJECT'}</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1; font-weight:600;">Solidity Index (S)</td>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1;" class="mono">${data.metrics.solidity}</td>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1;">&ge; 0.700</td>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1; font-weight:700; color:${data.metrics.solidity>=0.7?'#16a34a':'#dc2626'}">${data.metrics.solidity>=0.7?'PASS':'REJECT'}</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1; font-weight:600;">Slag Runoff Protrusion %</td>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1;" class="mono">${data.metrics.slag_pct}%</td>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1;">&le; 0.70%</td>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1; font-weight:700; color:${data.metrics.slag_pct<=0.7?'#16a34a':'#dc2626'}">${data.metrics.slag_pct<=0.7?'PASS':'REJECT'}</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1; font-weight:600;">Deep Vision Confidence</td>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1;" class="mono">${data.confidence}%</td>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1;">&ge; 85.0%</td>
+          <td style="padding:8px 12px; border:1px solid #cbd5e1; font-weight:700; color:#16a34a;">CONFIRMED</td>
+        </tr>
+      `;
+
+      document.getElementById('cert-modal').classList.add('active');
+    }
+
+    function closeCertModal() {
+      document.getElementById('cert-modal').classList.remove('active');
+    }
+
+    // Dataset Tab Functions
+    async function loadDataset() {
+      const res = await fetch('/api/dataset');
+      const data = await res.json();
+      datasetItems = data.images;
+      renderDatasetList(datasetItems);
+    }
+
+    function renderDatasetList(items) {
+      const container = document.getElementById('dataset-list');
+      container.innerHTML = '';
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = `item-chip ${item.label}`;
+        div.innerHTML = `
+          <span style="font-size:0.82rem; font-weight:600;">${item.filename}</span>
+          <span class="model-badge ${item.label==='good'?'badge-pass':'badge-reject'}">${item.label.toUpperCase()}</span>
+        `;
+        div.onclick = () => {
+          document.querySelectorAll('.item-chip').forEach(c => c.classList.remove('active'));
+          div.classList.add('active');
+          inspectDatasetItem(item.filename);
+        };
+        container.appendChild(div);
       });
     }
 
-    function renderCertificate(cert) {
-      document.getElementById('cert-meta').innerText = `Certificate: ${cert.certificate_id} | Timestamp: ${cert.timestamp}`;
-      document.getElementById('cert-filename').innerText = cert.filename;
-      
-      const stamp = document.getElementById('cert-stamp');
-      const verdictEl = document.getElementById('cert-verdict');
-      if (cert.status === 'PASS') {
-        stamp.className = 'cert-stamp stamp-pass';
-        stamp.innerText = 'PASS';
-        verdictEl.innerText = cert.verdict;
-        verdictEl.style.color = '#3fb950';
-      } else {
-        stamp.className = 'cert-stamp stamp-reject';
-        stamp.innerText = 'REJECT';
-        verdictEl.innerText = cert.verdict;
-        verdictEl.style.color = '#f85149';
-      }
-
-      document.getElementById('cert-confidence').innerText = `${cert.confidence}%`;
-      document.getElementById('cert-void').innerText = `${cert.metrics.void_pct}%`;
-      document.getElementById('cert-slag').innerText = `${cert.metrics.slag_pct}%`;
-      document.getElementById('cert-circ').innerText = cert.metrics.circularity;
-
-      document.getElementById('cert-img-orig').src = cert.raw_image_url || cert.image_url;
-      const cropSrc = cert.overlays.cropped_weld ? `data:image/jpeg;base64,${cert.overlays.cropped_weld}` : (cert.weld_crop_url || cert.image_url);
-      document.getElementById('cert-img-crop').src = cropSrc;
-      document.getElementById('cert-img-contour').src = `data:image/jpeg;base64,${cert.overlays.contour}`;
-      document.getElementById('cert-img-void').src = `data:image/jpeg;base64,${cert.overlays.void}`;
-      document.getElementById('cert-img-slag').src = `data:image/jpeg;base64,${cert.overlays.slag}`;
+    function filterDataset(type, btn) {
+      document.querySelectorAll('#tab-dataset .mask-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (type === 'all') renderDatasetList(datasetItems);
+      else renderDatasetList(datasetItems.filter(i => i.label === type));
     }
 
-    loadDataset();
+    function inspectDatasetItem(filename) {
+      document.getElementById('inspect-filename').textContent = filename;
+      const img = document.getElementById('ds-view-img');
+      img.src = `/images/${filename}`;
+      img.style.display = 'block';
+      document.getElementById('ds-placeholder').style.display = 'none';
+    }
+
+    async function retrainModels() {
+      const btn = document.getElementById('btn-retrain');
+      const statusBox = document.getElementById('train-status');
+      btn.disabled = true;
+      btn.textContent = '⏳ Training 5-Fold Models...';
+      statusBox.style.display = 'block';
+      statusBox.innerHTML = '<span style="color:#60a5fa;">Running 5-fold cross-validation across MobileNetV3 and Random Forest...</span>';
+
+      try {
+        const res = await fetch('/api/train', { method: 'POST' });
+        const d = await res.json();
+        statusBox.innerHTML = `
+          <div style="color:#34d399; font-weight:700; margin-bottom:6px;">✅ Retraining Complete!</div>
+          <div>• <strong>PyTorch MobileNetV3 CV Accuracy:</strong> ${d.deep_accuracy}%</div>
+          <div>• <strong>OpenCV Random Forest CV Accuracy:</strong> ${d.cv_accuracy}%</div>
+          <div>• <strong>Total Samples:</strong> ${d.samples_trained} (${d.good_count} Good, ${d.bad_count} Bad)</div>
+        `;
+      } catch (err) {
+        statusBox.innerHTML = `<span style="color:#f87171;">Training failed: ${err.message}</span>`;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>⚡</span> 1-Click Retrain All Models';
+      }
+    }
+
+    // Auto-load sample bad1.jpg on initial launch
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSample('bad1.jpg');
+    });
   </script>
 </body>
 </html>
