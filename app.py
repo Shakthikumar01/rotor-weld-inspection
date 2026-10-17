@@ -239,6 +239,13 @@ def download_pdf():
         return send_from_directory(BASE_DIR, "Rotor_Feature_Extraction_and_Analysis_Guide.pdf", as_attachment=True)
     return jsonify({"error": "PDF report not found"}), 404
 
+@app.route("/api/download_word")
+def download_word():
+    docx_path = os.path.join(BASE_DIR, "Rotor_Weld_Defect_Inspection_Comprehensive_Report_35_Pages.docx")
+    if os.path.exists(docx_path):
+        return send_from_directory(BASE_DIR, "Rotor_Weld_Defect_Inspection_Comprehensive_Report_35_Pages.docx", as_attachment=True)
+    return jsonify({"error": "Word document not found"}), 404
+
 @app.route("/api/dataset")
 def get_dataset():
     good_files = sorted(os.listdir(os.path.join(CROPPED_DIR, "good")))
