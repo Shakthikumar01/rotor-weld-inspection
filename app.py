@@ -231,8 +231,11 @@ def serve_analysis(filename):
 
 @app.route("/api/download_pdf")
 def download_pdf():
-    pdf_path = os.path.join(BASE_DIR, "Rotor_Feature_Extraction_and_Analysis_Guide.pdf")
-    if os.path.exists(pdf_path):
+    comprehensive_pdf = os.path.join(BASE_DIR, "Rotor_Weld_Defect_Inspection_Comprehensive_Report_35_Pages.pdf")
+    if os.path.exists(comprehensive_pdf):
+        return send_from_directory(BASE_DIR, "Rotor_Weld_Defect_Inspection_Comprehensive_Report_35_Pages.pdf", as_attachment=True)
+    guide_pdf = os.path.join(BASE_DIR, "Rotor_Feature_Extraction_and_Analysis_Guide.pdf")
+    if os.path.exists(guide_pdf):
         return send_from_directory(BASE_DIR, "Rotor_Feature_Extraction_and_Analysis_Guide.pdf", as_attachment=True)
     return jsonify({"error": "PDF report not found"}), 404
 
