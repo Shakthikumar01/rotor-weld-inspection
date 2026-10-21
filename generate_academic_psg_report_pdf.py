@@ -782,7 +782,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     img_p19 = 'analysis_output/report_assets/fig_sobel_edge_map.png'
     if os.path.exists(img_p19):
-        story.append(Image(img_p19, width=6.2*72, height=2.4*72))
+        story.append(Image(img_p19, width=6.2*72, height=2.38*72))
         story.append(Paragraph("Fig. 4.1 Saliency Sobel filter edge detection map", fig_caption))
     story.append(PageBreak())
 
@@ -798,7 +798,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     img_smart_preview = 'analysis_output/report_assets/fig_smart_crop_preview.png'
     if os.path.exists(img_smart_preview):
-        story.append(Image(img_smart_preview, width=6.2*72, height=2.7*72))
+        story.append(Image(img_smart_preview, width=6.0*72, height=2.86*72))
         story.append(Paragraph("Fig. 4.2 Smart weld ROI cropper multi-specimen comparison", fig_caption))
     story.append(PageBreak())
 
