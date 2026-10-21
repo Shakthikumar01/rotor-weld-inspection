@@ -307,6 +307,8 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         [Paragraph("4.1", table_cell_hdr), Paragraph("Overall methodology", table_cell), Paragraph("18", table_cell_hdr)],
         [Paragraph("4.2", table_cell_hdr), Paragraph("Configuration parameters", table_cell), Paragraph("18", table_cell_hdr)],
         [Paragraph("4.3", table_cell_hdr), Paragraph("Saliency-guided weld ROI cropper", table_cell), Paragraph("19", table_cell_hdr)],
+        [Paragraph("4.3.1", table_cell_hdr), Paragraph("Adaptive smart cropping verification", table_cell), Paragraph("20", table_cell_hdr)],
+        [Paragraph("4.3.2", table_cell_hdr), Paragraph("Molten droop defect preservation", table_cell), Paragraph("21", table_cell_hdr)],
         [Paragraph("4.4", table_cell_hdr), Paragraph("Mathematical feature extraction formulation", table_cell), Paragraph("22", table_cell_hdr)],
         [Paragraph("4.4.1", table_cell_hdr), Paragraph("Intensity and density descriptors", table_cell), Paragraph("22", table_cell_hdr)],
         [Paragraph("4.4.2", table_cell_hdr), Paragraph("Morphological and geometric contours", table_cell), Paragraph("22", table_cell_hdr)],
@@ -321,8 +323,6 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         [Paragraph("5.1", table_cell_hdr), Paragraph("Experimental setup", table_cell), Paragraph("28", table_cell_hdr)],
         [Paragraph("5.2", table_cell_hdr), Paragraph("Testing procedure", table_cell), Paragraph("28", table_cell_hdr)],
         [Paragraph("5.3", table_cell_hdr), Paragraph("Parameters used during testing", table_cell), Paragraph("29", table_cell_hdr)],
-        [Paragraph("5.4", table_cell_hdr), Paragraph("Observations during testing", table_cell), Paragraph("30", table_cell_hdr)],
-        [Paragraph("5.5", table_cell_hdr), Paragraph("Test record", table_cell), Paragraph("30", table_cell_hdr)],
     ]
     t_toc_p2 = Table(toc_rows_p2, colWidths=[65, 355, 55])
     t_toc_p2.setStyle(TableStyle([
@@ -341,6 +341,8 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(Spacer(1, 4))
     toc_rows_p3 = [
         [Paragraph("<b>Index</b>", table_cell_hdr), Paragraph("<b>Title / Topic</b>", table_cell_hdr), Paragraph("<b>Pg. no.</b>", table_cell_hdr)],
+        [Paragraph("5.4", table_cell_hdr), Paragraph("Observations during testing", table_cell), Paragraph("30", table_cell_hdr)],
+        [Paragraph("5.5", table_cell_hdr), Paragraph("Test record", table_cell), Paragraph("30", table_cell_hdr)],
         [Paragraph("5.6", table_cell_hdr), Paragraph("Scope of experimental verification", table_cell), Paragraph("32", table_cell_hdr)],
         [Paragraph("5.7", table_cell_hdr), Paragraph("Visual analysis and diagnostic plots", table_cell), Paragraph("32", table_cell_hdr)],
         [Paragraph("5.8", table_cell_hdr), Paragraph("MATLAB image intensity profiling & statistical experiments", table_cell), Paragraph("35", table_cell_hdr)],
@@ -384,8 +386,8 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         [Paragraph("3.3", table_cell_hdr), Paragraph("Isolated annular weld seam region of interest (ROI) preserved for feature extraction", table_cell), Paragraph("15", table_cell_hdr)],
         [Paragraph("3.4", table_cell_hdr), Paragraph("Dual computational software environment and integrated technology stack", table_cell), Paragraph("17", table_cell_hdr)],
         [Paragraph("4.1", table_cell_hdr), Paragraph("Saliency Sobel filter edge detection map", table_cell), Paragraph("19", table_cell_hdr)],
-        [Paragraph("4.2", table_cell_hdr), Paragraph("Smart weld ROI cropper multi-specimen comparison", table_cell), Paragraph("20", table_cell_hdr)],
-        [Paragraph("4.3", table_cell_hdr), Paragraph("Full molten droop anomaly boundary preservation", table_cell), Paragraph("21", table_cell_hdr)],
+        [Paragraph("4.2", table_cell_hdr), Paragraph("Multi-specimen adaptive weld ROI cropper verification", table_cell), Paragraph("20", table_cell_hdr)],
+        [Paragraph("4.3", table_cell_hdr), Paragraph("Full molten droop anomaly boundary preservation without clipping", table_cell), Paragraph("21", table_cell_hdr)],
         [Paragraph("5.1", table_cell_hdr), Paragraph("Web inspection studio and AI diagnostic interface", table_cell), Paragraph("28", table_cell_hdr)],
         [Paragraph("5.2", table_cell_hdr), Paragraph("Raw vs. cropped feature distribution comparison", table_cell), Paragraph("33", table_cell_hdr)],
         [Paragraph("5.3", table_cell_hdr), Paragraph("2D Principal Component Analysis (PCA) cluster separation", table_cell), Paragraph("33", table_cell_hdr)],
@@ -787,35 +789,45 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 20: SMART CROPPING GALLERY & FIG 4.2
+    # PAGE 20: 4.3.1 ADAPTIVE SMART CROPPING VERIFICATION
     # =========================================================================
-    story.append(Paragraph("ADAPTIVE SMART CROPPING VERIFICATION", sec_hdr))
+    story.append(Paragraph("4.3.1 ADAPTIVE SMART CROPPING VERIFICATION", sec_hdr))
     story.append(Paragraph(
-        "Figure 4.2 illustrates the multi-specimen performance of the saliency-guided adaptive cropper across both sound and defective rotors. Unlike rigid bounding boxes, the adaptive cropper evaluates local gradient density to center the fusion zone accurately.",
+        "Figure 4.2 illustrates the multi-specimen performance of the saliency-guided adaptive cropper across both sound and defective rotors. Unlike rigid bounding boxes that fail when specimens exhibit minor angular rotations or eccentricities, the adaptive cropper evaluates local gradient density to accurately center and bound the active fusion zone.",
         body_text
     ))
     story.append(Spacer(1, 4))
 
     img_smart_preview = 'analysis_output/report_assets/fig_smart_crop_preview.png'
     if os.path.exists(img_smart_preview):
-        story.append(Image(img_smart_preview, width=6.0*72, height=2.86*72))
-        story.append(Paragraph("Fig. 4.2 Smart weld ROI cropper multi-specimen comparison", fig_caption))
+        story.append(Image(img_smart_preview, width=5.8*72, height=2.76*72))
+        story.append(Paragraph("Fig. 4.2 Multi-specimen adaptive weld ROI cropper verification: (a) Sound rotor bounding box; (b) Sound weld seam ROI; (c) Defective rotor adaptive box; (d) Preserved droop ROI", fig_caption))
+    story.append(Spacer(1, 4))
+    story.append(Paragraph(
+        "For sound specimens (Specimen G-01), the bounding box tightly encloses the uniform annular seam, suppressing background desk reflections and tooth slots. For defective specimens (Specimen D-01) with irregular weld sags, the algorithm automatically adjusts boundary limits, ensuring that all anomaly structures are retained. This adaptive bounding capability provides scale-normalized image tensors for downstream feature extraction.",
+        body_text
+    ))
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 21: MOLTEN DROOP PRESERVATION & FIG 4.3
+    # PAGE 21: 4.3.2 MOLTEN DROOP DEFECT PRESERVATION
     # =========================================================================
-    story.append(Paragraph("MOLTEN DROOP DEFECT PRESERVATION", sec_hdr))
+    story.append(Paragraph("4.3.2 MOLTEN DROOP DEFECT PRESERVATION", sec_hdr))
     story.append(Paragraph(
-        "On specimens exhibiting severe molten droop anomalies (e.g., `bad_1.jpg`), conventional bounding boxes clipped 42% of the protruding droplet. The proposed adaptive cropper dynamically inflates the bottom boundary (+25%), preserving the complete physical anomaly for shape solidity evaluation.",
+        "On rotor specimens exhibiting severe molten metal droop anomalies (such as Specimen D-01), conventional fixed-height bounding boxes clipped up to 42% of the protruding molten metal droplets. Because standard rectangular windowing assumes an ideal circular cylinder, downward liquid metal sag extending past the normal weld bead perimeter is truncated by conventional computer vision algorithms.",
         body_text
     ))
-    story.append(Spacer(1, 6))
+    story.append(Spacer(1, 4))
 
     img_drip = 'analysis_output/report_assets/fig_drip_preservation.jpg'
     if os.path.exists(img_drip):
-        story.append(Image(img_drip, width=5.5*72, height=2.7*72))
-        story.append(Paragraph("Fig. 4.3 Full molten droop anomaly boundary preservation without clipping", fig_caption))
+        story.append(Image(img_drip, width=5.8*72, height=2.36*72))
+        story.append(Paragraph("Fig. 4.3 Full molten droop anomaly boundary preservation: (a) Conventional rigid box causing 42% droplet clipping; (b) Proposed adaptive saliency cropper with +25% bottom margin inflation", fig_caption))
+    story.append(Spacer(1, 4))
+    story.append(Paragraph(
+        "To resolve this critical limitation, the proposed saliency cropper incorporates an adaptive vertical margin expansion parameter (+25% bottom inflation along the radial axis). As visually demonstrated in Fig. 4.3(b), this dynamic expansion successfully preserves 100% of the downward droop anomaly. Preserving the complete physical droplet is critical for accurate defect classification: if the droop were clipped, subsequent contour eccentricity and area-solidity metrics would falsely resemble a sound weld bead, causing catastrophic quality misclassifications.",
+        body_text
+    ))
     story.append(PageBreak())
 
     # =========================================================================
