@@ -380,8 +380,8 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         [Paragraph("1.1", table_cell_hdr), Paragraph("Physical rotor squirrel-cage weld inspection specimens", table_cell), Paragraph("10", table_cell_hdr)],
         [Paragraph("2.1", table_cell_hdr), Paragraph("Optical defect morphology and feature comparison", table_cell), Paragraph("13", table_cell_hdr)],
         [Paragraph("3.1", table_cell_hdr), Paragraph("Proposed cyber-physical system architecture and 4-stage inspection workflow", table_cell), Paragraph("14", table_cell_hdr)],
-        [Paragraph("3.2", table_cell_hdr), Paragraph("Experimental hardware and rotor inspection setup", table_cell), Paragraph("15", table_cell_hdr)],
-        [Paragraph("3.3", table_cell_hdr), Paragraph("Isolated weld seam ROI macro specimen", table_cell), Paragraph("15", table_cell_hdr)],
+        [Paragraph("3.2", table_cell_hdr), Paragraph("Mobile optical acquisition of rotor specimen with candidate weld seam bounding box", table_cell), Paragraph("15", table_cell_hdr)],
+        [Paragraph("3.3", table_cell_hdr), Paragraph("Isolated annular weld seam region of interest (ROI) preserved for feature extraction", table_cell), Paragraph("15", table_cell_hdr)],
         [Paragraph("3.4", table_cell_hdr), Paragraph("Dual computational software environment and integrated technology stack", table_cell), Paragraph("17", table_cell_hdr)],
         [Paragraph("4.1", table_cell_hdr), Paragraph("Saliency Sobel filter edge detection map", table_cell), Paragraph("19", table_cell_hdr)],
         [Paragraph("4.2", table_cell_hdr), Paragraph("Smart weld ROI cropper multi-specimen comparison", table_cell), Paragraph("20", table_cell_hdr)],
@@ -613,19 +613,29 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 15: FIG 3.2 & FIG 3.3
+    # PAGE 15: SPECIMEN PRESENTATION & WELD SEAM EXTRACTION
     # =========================================================================
-    story.append(Spacer(1, 6))
+    story.append(Paragraph("3.1.1 Specimen Presentation and Weld Seam Localization", sec_hdr))
+    story.append(Paragraph(
+        "To evaluate the automated cyber-physical inspection pipeline, squirrel-cage induction motor rotor specimens are mounted on the inspection bench. Macro optical photographs of the circumferential copper-to-end-ring weld seams are captured using a mobile phone camera under uniform ambient illumination.",
+        body_text
+    ))
+    story.append(Spacer(1, 4))
     img_p15_1 = 'analysis_output/report_assets/fig_rotor_specimen_raw.jpg'
     if os.path.exists(img_p15_1):
-        story.append(Image(img_p15_1, width=4.8*72, height=2.3*72))
-        story.append(Paragraph("Fig. 3.2 Experimental hardware and rotor inspection setup", fig_caption))
-    story.append(Spacer(1, 8))
+        story.append(Image(img_p15_1, width=3.3*72, height=2.46*72))
+        story.append(Paragraph("Fig. 3.2 Mobile optical acquisition of rotor specimen with candidate weld seam bounding box", fig_caption))
+    story.append(Spacer(1, 4))
 
+    story.append(Paragraph(
+        "The automated cropping routine isolates the active annular weld seam while rejecting background artifacts. As shown in Fig. 3.3, margin padding ensures protruding molten droops and copper bead irregularities are fully retained for feature analysis.",
+        body_text
+    ))
+    story.append(Spacer(1, 4))
     img_p15_2 = 'analysis_output/report_assets/fig_weld_seam_crop.jpg'
     if os.path.exists(img_p15_2):
-        story.append(Image(img_p15_2, width=4.8*72, height=2.3*72))
-        story.append(Paragraph("Fig. 3.3 Isolated weld seam ROI macro specimen", fig_caption))
+        story.append(Image(img_p15_2, width=3.3*72, height=2.42*72))
+        story.append(Paragraph("Fig. 3.3 Isolated annular weld seam region of interest (ROI) preserved for feature extraction", fig_caption))
     story.append(PageBreak())
 
     # =========================================================================

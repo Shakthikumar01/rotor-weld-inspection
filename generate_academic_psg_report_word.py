@@ -379,8 +379,8 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         ("1.1", "Physical rotor squirrel-cage weld inspection specimens", "10"),
         ("2.1", "Optical defect morphology and feature comparison", "13"),
         ("3.1", "Proposed cyber-physical system architecture and 4-stage inspection workflow", "14"),
-        ("3.2", "Experimental hardware and rotor inspection setup", "15"),
-        ("3.3", "Isolated weld seam ROI macro specimen", "15"),
+        ("3.2", "Mobile optical acquisition of rotor specimen with candidate weld seam bounding box", "15"),
+        ("3.3", "Isolated annular weld seam region of interest (ROI) preserved for feature extraction", "15"),
         ("3.4", "Dual computational software environment and integrated technology stack", "17"),
         ("4.1", "Saliency Sobel filter edge detection map", "19"),
         ("4.2", "Smart weld ROI cropper multi-specimen comparison", "20"),
@@ -541,13 +541,18 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     doc.add_page_break()
 
     # =========================================================================
-    # PAGE 15: FIG 3.2 & FIG 3.3
+    # PAGE 15: SPECIMEN PRESENTATION & WELD SEAM EXTRACTION
     # =========================================================================
-    add_img('analysis_output/report_assets/fig_rotor_specimen_raw.jpg', width_in=4.8)
-    p_fig_caption("Fig. 3.2 Experimental hardware and rotor inspection setup")
+    p_hdr("3.1.1 Specimen Presentation and Weld Seam Localization", size=13, bold=True, center=False, before=0, after=4)
+    p_body("To evaluate the automated cyber-physical inspection pipeline, squirrel-cage induction motor rotor specimens are mounted on the inspection bench. Macro optical photographs of the circumferential copper-to-end-ring weld seams are captured using a mobile phone camera under uniform ambient illumination.")
 
-    add_img('analysis_output/report_assets/fig_weld_seam_crop.jpg', width_in=4.8)
-    p_fig_caption("Fig. 3.3 Isolated weld seam ROI macro specimen")
+    add_img('analysis_output/report_assets/fig_rotor_specimen_raw.jpg', width_in=3.3)
+    p_fig_caption("Fig. 3.2 Mobile optical acquisition of rotor specimen with candidate weld seam bounding box")
+
+    p_body("The automated cropping routine isolates the active annular weld seam while rejecting background artifacts. As shown in Fig. 3.3, margin padding ensures protruding molten droops and copper bead irregularities are fully retained for feature analysis.")
+
+    add_img('analysis_output/report_assets/fig_weld_seam_crop.jpg', width_in=3.3)
+    p_fig_caption("Fig. 3.3 Isolated annular weld seam region of interest (ROI) preserved for feature extraction")
     doc.add_page_break()
 
     # =========================================================================
