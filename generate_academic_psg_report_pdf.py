@@ -1,18 +1,13 @@
 #!/usr/bin/env python3
 """
 Generate Academic Laboratory Report in exact accordance with PSG College of Technology template,
-incorporating complete MATLAB exploratory image processing work, statistical moments,
-spatial intensity profiles, histograms, and cross-platform verification with Python/PyTorch.
-
-Authors:
-  - Shakthi Kumar M V (24U243)
-  - Pravesh V (24U256)
-  - Tanush Saai Kumar S (24U243)
-  - Devamurugan P (25U432)
-
-Department: Department of Instrumentation and Control Systems Engineering
-Institution: PSG College of Technology, Coimbatore - 641 004
-Course: Signal Processing and Digital Control Laboratory (23U510)
+with:
+  - Table of Contents formatted as structured TABLES (matching the List of Figures style)
+  - List of Figures & List of Tables as formal tables
+  - All project images embedded throughout the chapters wherever needed
+  - Complete 4-member project team authors
+  - Full MATLAB signal & statistical image processing pipeline
+  - Cross-platform verification with Python/PyTorch
 """
 
 import os
@@ -107,14 +102,6 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         'FigCaption', parent=styles['Normal'],
         fontName='Times-Roman', fontSize=10.5, leading=14, alignment=1, spaceBefore=4, spaceAfter=7, textColor=colors.black
     )
-    toc_entry = ParagraphStyle(
-        'TOCEntry', parent=styles['Normal'],
-        fontName='Times-Roman', fontSize=11, leading=16.5, textColor=colors.black
-    )
-    toc_bold = ParagraphStyle(
-        'TOCBold', parent=styles['Normal'],
-        fontName='Times-Bold', fontSize=11, leading=17.5, textColor=colors.black
-    )
     formula_style = ParagraphStyle(
         'FormulaStyle', parent=styles['Normal'],
         fontName='Times-BoldItalic', fontSize=11.5, leading=16, alignment=1, spaceBefore=5, spaceAfter=5, textColor=colors.black
@@ -130,6 +117,10 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     table_cell_hdr = ParagraphStyle(
         'TableCellHdr', parent=styles['Normal'],
         fontName='Times-Bold', fontSize=9.5, leading=13.5, alignment=1, textColor=colors.black
+    )
+    table_cell_bold = ParagraphStyle(
+        'TableCellBold', parent=styles['Normal'],
+        fontName='Times-Bold', fontSize=9.5, leading=13, textColor=colors.black
     )
 
     story = []
@@ -149,7 +140,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(Paragraph("PSG COLLEGE OF TECHNOLOGY", college_hdr))
     story.append(Paragraph("(Autonomous Institution)", college_sub))
     story.append(Spacer(1, 6))
-    story.append(Paragraph("COIMBATORE – 641 004", college_sub))
+    story.append(Paragraph("COIMBATORE - 641 004", college_sub))
     story.append(Spacer(1, 14))
 
     story.append(Paragraph(
@@ -180,7 +171,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(Paragraph("Branch: DEPARTMENT OF INSTRUMENTATION AND CONTROL SYSTEMS ENGINEERING", meta_cover))
     story.append(Spacer(1, 8))
     story.append(Paragraph("PSG COLLEGE OF TECHNOLOGY", college_hdr))
-    story.append(Paragraph("COIMBATORE – 641 004", college_sub))
+    story.append(Paragraph("COIMBATORE - 641 004", college_sub))
     story.append(PageBreak())
 
     # =========================================================================
@@ -189,7 +180,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(Paragraph("PSG COLLEGE OF TECHNOLOGY", college_hdr))
     story.append(Paragraph("(Government aided autonomous college affiliated to Anna university, Chennai)", college_sub))
     story.append(Spacer(1, 6))
-    story.append(Paragraph("COIMBATORE – 641 004", college_sub))
+    story.append(Paragraph("COIMBATORE - 641 004", college_sub))
     story.append(Spacer(1, 14))
 
     story.append(Paragraph(
@@ -239,7 +230,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(Spacer(1, 12))
 
     story.append(Paragraph(
-        "Rotor squirrel-cage induction motors rely critically on the structural and electrical integrity of the welded joints connecting conductive rotor bars to outer short-circuiting end-rings. Flaws in weld fusion—such as porosities, slag inclusions, lack of penetration, and protruding molten droop anomalies—lead directly to localized high-resistance thermal hotspots, catastrophic bar lifting under centrifugal stresses, and motor failure. Traditional manual visual inspection is labour-intensive, subjective, and prone to fatigue.",
+        "Rotor squirrel-cage induction motors rely critically on the structural and electrical integrity of the welded joints connecting conductive rotor bars to outer short-circuiting end-rings. Flaws in weld fusion-such as porosities, slag inclusions, lack of penetration, and protruding molten droop anomalies-lead directly to localized high-resistance thermal hotspots, catastrophic bar lifting under centrifugal stresses, and motor failure. Traditional manual visual inspection is labour-intensive, subjective, and prone to fatigue.",
         body_text
     ))
     story.append(Paragraph(
@@ -253,119 +244,130 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 4: TABLE OF CONTENTS (Part 1)
+    # PAGES 4-6: TABLE OF CONTENTS (FORMATTED AS STRUCTURED TABLES)
     # =========================================================================
     story.append(Paragraph("TABLE OF CONTENTS", chapter_hdr))
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 8))
 
-    toc_items_p1 = [
-        ("Abstract", "3", True),
-        ("List of figures", "7", True),
-        ("Introduction", "8", True),
-        ("  1.1 Problem statement", "8", False),
-        ("  1.2 Aim", "9", False),
-        ("  1.3 Objectives", "9", False),
-        ("  1.4 Scope of the Project", "9", False),
-        ("  1.5 Applications", "10", False),
-        ("Literature Overview", "11", True),
-        ("  2.1 Overview of industrial weld defect inspection", "11", False),
-        ("  2.2 Optical acquisition and lighting geometry", "11", False),
-        ("  2.3 Spatial and morphological features", "11", False),
-        ("  2.4 Texture analysis and GLCM", "12", False),
-        ("  2.5 Saliency and gradient-based edge methods", "12", False),
-        ("  2.6 Machine learning and deep classifiers", "13", False),
-        ("  2.7 Research gap and project motivation", "13", False),
-        ("  2.8 Summary", "13", False),
-        ("System design and hardware", "14", True),
-        ("  3.1 System architecture", "14", False),
+    toc_rows_p1 = [
+        [Paragraph("<b>Index</b>", table_cell_hdr), Paragraph("<b>Title / Topic</b>", table_cell_hdr), Paragraph("<b>Pg. no.</b>", table_cell_hdr)],
+        [Paragraph("-", table_cell_hdr), Paragraph("<b>Abstract</b>", table_cell_bold), Paragraph("3", table_cell_hdr)],
+        [Paragraph("-", table_cell_hdr), Paragraph("<b>List of figures</b>", table_cell_bold), Paragraph("7", table_cell_hdr)],
+        [Paragraph("-", table_cell_hdr), Paragraph("<b>List of tables</b>", table_cell_bold), Paragraph("7", table_cell_hdr)],
+        [Paragraph("1.0", table_cell_hdr), Paragraph("<b>CHAPTER 1: INTRODUCTION</b>", table_cell_bold), Paragraph("8", table_cell_hdr)],
+        [Paragraph("1.1", table_cell_hdr), Paragraph("Problem statement", table_cell), Paragraph("8", table_cell_hdr)],
+        [Paragraph("1.2", table_cell_hdr), Paragraph("Aim", table_cell), Paragraph("9", table_cell_hdr)],
+        [Paragraph("1.3", table_cell_hdr), Paragraph("Objectives", table_cell), Paragraph("9", table_cell_hdr)],
+        [Paragraph("1.4", table_cell_hdr), Paragraph("Scope of the Project", table_cell), Paragraph("9", table_cell_hdr)],
+        [Paragraph("1.5", table_cell_hdr), Paragraph("Applications", table_cell), Paragraph("10", table_cell_hdr)],
+        [Paragraph("2.0", table_cell_hdr), Paragraph("<b>CHAPTER 2: LITERATURE REVIEW</b>", table_cell_bold), Paragraph("11", table_cell_hdr)],
+        [Paragraph("2.1", table_cell_hdr), Paragraph("Overview of industrial weld defect inspection", table_cell), Paragraph("11", table_cell_hdr)],
+        [Paragraph("2.2", table_cell_hdr), Paragraph("Optical acquisition and lighting geometry", table_cell), Paragraph("11", table_cell_hdr)],
+        [Paragraph("2.3", table_cell_hdr), Paragraph("Spatial and morphological features", table_cell), Paragraph("11", table_cell_hdr)],
+        [Paragraph("2.4", table_cell_hdr), Paragraph("Texture analysis and GLCM", table_cell), Paragraph("12", table_cell_hdr)],
+        [Paragraph("2.5", table_cell_hdr), Paragraph("Saliency and gradient-based edge methods", table_cell), Paragraph("12", table_cell_hdr)],
+        [Paragraph("2.6", table_cell_hdr), Paragraph("Machine learning and deep classifiers", table_cell), Paragraph("13", table_cell_hdr)],
+        [Paragraph("2.7", table_cell_hdr), Paragraph("Research gap and project motivation", table_cell), Paragraph("13", table_cell_hdr)],
+        [Paragraph("2.8", table_cell_hdr), Paragraph("Summary", table_cell), Paragraph("13", table_cell_hdr)],
+        [Paragraph("3.0", table_cell_hdr), Paragraph("<b>CHAPTER 3: SYSTEM DESIGN AND HARDWARE</b>", table_cell_bold), Paragraph("14", table_cell_hdr)],
+        [Paragraph("3.1", table_cell_hdr), Paragraph("System architecture", table_cell), Paragraph("14", table_cell_hdr)],
     ]
 
-    for title, pg, is_bold in toc_items_p1:
-        dots = "." * max(4, 78 - len(title) - len(pg))
-        style = toc_bold if is_bold else toc_entry
-        t_text = f"<b>{title}</b>" if is_bold else title
-        story.append(Paragraph(f"{t_text}{dots}{pg}", style))
-
+    t_toc_p1 = Table(toc_rows_p1, colWidths=[65, 355, 55])
+    t_toc_p1.setStyle(TableStyle([
+        ('GRID', (0,0), (-1,-1), 0.6, colors.black),
+        ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
+        ('TOPPADDING', (0,0), (-1,-1), 3),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 3),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
+    ]))
+    story.append(t_toc_p1)
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 5: TABLE OF CONTENTS (Part 2)
+    # PAGE 5: TOC TABLE (Part 2)
     # =========================================================================
-    story.append(Spacer(1, 6))
-    toc_items_p2 = [
-        ("  3.2 Hardware components", "16", False),
-        ("    3.2.1 High-resolution optical camera", "16", False),
-        ("    3.2.2 Processing workstation and edge engine", "16", False),
-        ("    3.2.3 Industrial lighting and fixture rig", "16", False),
-        ("    3.2.4 Web-based inspection dashboard", "16", False),
-        ("  3.3 Hardware connections and specifications", "16", False),
-        ("  3.4 Software requirements and dual environment", "17", False),
-        ("Methodology and software implementation", "18", True),
-        ("  4.1 Overall methodology", "18", False),
-        ("  4.2 Configuration parameters", "18", False),
-        ("  4.3 Saliency-guided weld ROI cropper", "19", False),
-        ("  4.4 Mathematical feature extraction formulation", "20", False),
-        ("    4.4.1 Intensity and density descriptors", "20", False),
-        ("    4.4.2 Morphological and geometric contours", "20", False),
-        ("    4.4.3 GLCM Haralick texture descriptors", "20", False),
-        ("  4.5 Machine learning classification logic", "21", False),
-        ("  4.6 Output indication and 3-tier sorting", "22", False),
-        ("  4.7 Software implementation summary", "23", False),
-        ("  4.8 Important technical observations", "23", False),
-        ("  4.9 Deep convolutional validation", "23", False),
-        ("  4.10 MATLAB exploratory signal processing pipeline", "24", False),
-        ("Experimental setup and testing", "26", True),
-        ("  5.1 Experimental setup", "26", False),
-        ("  5.2 Testing procedure", "26", False),
-        ("  5.3 Parameters used during testing", "27", False),
-        ("  5.4 Observations during testing", "28", False),
-        ("  5.5 Test record", "28", False),
+    story.append(Spacer(1, 4))
+    toc_rows_p2 = [
+        [Paragraph("<b>Index</b>", table_cell_hdr), Paragraph("<b>Title / Topic</b>", table_cell_hdr), Paragraph("<b>Pg. no.</b>", table_cell_hdr)],
+        [Paragraph("3.2", table_cell_hdr), Paragraph("Hardware components", table_cell), Paragraph("16", table_cell_hdr)],
+        [Paragraph("3.2.1", table_cell_hdr), Paragraph("High-resolution optical camera", table_cell), Paragraph("16", table_cell_hdr)],
+        [Paragraph("3.2.2", table_cell_hdr), Paragraph("Processing workstation and edge engine", table_cell), Paragraph("16", table_cell_hdr)],
+        [Paragraph("3.2.3", table_cell_hdr), Paragraph("Industrial lighting and fixture rig", table_cell), Paragraph("16", table_cell_hdr)],
+        [Paragraph("3.2.4", table_cell_hdr), Paragraph("Web-based inspection dashboard", table_cell), Paragraph("16", table_cell_hdr)],
+        [Paragraph("3.3", table_cell_hdr), Paragraph("Hardware connections and specifications", table_cell), Paragraph("16", table_cell_hdr)],
+        [Paragraph("3.4", table_cell_hdr), Paragraph("Software requirements and dual environment", table_cell), Paragraph("17", table_cell_hdr)],
+        [Paragraph("4.0", table_cell_hdr), Paragraph("<b>CHAPTER 4: METHODOLOGY AND SOFTWARE</b>", table_cell_bold), Paragraph("18", table_cell_hdr)],
+        [Paragraph("4.1", table_cell_hdr), Paragraph("Overall methodology", table_cell), Paragraph("18", table_cell_hdr)],
+        [Paragraph("4.2", table_cell_hdr), Paragraph("Configuration parameters", table_cell), Paragraph("18", table_cell_hdr)],
+        [Paragraph("4.3", table_cell_hdr), Paragraph("Saliency-guided weld ROI cropper", table_cell), Paragraph("19", table_cell_hdr)],
+        [Paragraph("4.4", table_cell_hdr), Paragraph("Mathematical feature extraction formulation", table_cell), Paragraph("22", table_cell_hdr)],
+        [Paragraph("4.4.1", table_cell_hdr), Paragraph("Intensity and density descriptors", table_cell), Paragraph("22", table_cell_hdr)],
+        [Paragraph("4.4.2", table_cell_hdr), Paragraph("Morphological and geometric contours", table_cell), Paragraph("22", table_cell_hdr)],
+        [Paragraph("4.4.3", table_cell_hdr), Paragraph("GLCM Haralick texture descriptors", table_cell), Paragraph("22", table_cell_hdr)],
+        [Paragraph("4.5", table_cell_hdr), Paragraph("Machine learning classification logic", table_cell), Paragraph("23", table_cell_hdr)],
+        [Paragraph("4.6", table_cell_hdr), Paragraph("Output indication and 3-tier sorting", table_cell), Paragraph("24", table_cell_hdr)],
+        [Paragraph("4.7", table_cell_hdr), Paragraph("Software implementation summary", table_cell), Paragraph("25", table_cell_hdr)],
+        [Paragraph("4.8", table_cell_hdr), Paragraph("Important technical observations", table_cell), Paragraph("25", table_cell_hdr)],
+        [Paragraph("4.9", table_cell_hdr), Paragraph("Deep convolutional validation", table_cell), Paragraph("25", table_cell_hdr)],
+        [Paragraph("4.10", table_cell_hdr), Paragraph("MATLAB exploratory signal processing pipeline", table_cell), Paragraph("26", table_cell_hdr)],
+        [Paragraph("5.0", table_cell_hdr), Paragraph("<b>CHAPTER 5: EXPERIMENTAL SETUP AND TESTING</b>", table_cell_bold), Paragraph("28", table_cell_hdr)],
+        [Paragraph("5.1", table_cell_hdr), Paragraph("Experimental setup", table_cell), Paragraph("28", table_cell_hdr)],
+        [Paragraph("5.2", table_cell_hdr), Paragraph("Testing procedure", table_cell), Paragraph("28", table_cell_hdr)],
+        [Paragraph("5.3", table_cell_hdr), Paragraph("Parameters used during testing", table_cell), Paragraph("29", table_cell_hdr)],
+        [Paragraph("5.4", table_cell_hdr), Paragraph("Observations during testing", table_cell), Paragraph("30", table_cell_hdr)],
+        [Paragraph("5.5", table_cell_hdr), Paragraph("Test record", table_cell), Paragraph("30", table_cell_hdr)],
     ]
-
-    for title, pg, is_bold in toc_items_p2:
-        dots = "." * max(4, 78 - len(title) - len(pg))
-        style = toc_bold if is_bold else toc_entry
-        t_text = f"<b>{title}</b>" if is_bold else title
-        story.append(Paragraph(f"{t_text}{dots}{pg}", style))
-
+    t_toc_p2 = Table(toc_rows_p2, colWidths=[65, 355, 55])
+    t_toc_p2.setStyle(TableStyle([
+        ('GRID', (0,0), (-1,-1), 0.6, colors.black),
+        ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
+        ('TOPPADDING', (0,0), (-1,-1), 2.5),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 2.5),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
+    ]))
+    story.append(t_toc_p2)
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 6: TABLE OF CONTENTS (Part 3)
+    # PAGE 6: TOC TABLE (Part 3)
     # =========================================================================
-    story.append(Spacer(1, 6))
-    toc_items_p3 = [
-        ("  5.6 Scope of experimental verification", "30", False),
-        ("  5.7 Visual analysis and diagnostic plots", "30", False),
-        ("  5.8 MATLAB image intensity profiling and statistical experiments", "33", False),
-        ("Results and discussion", "36", True),
-        ("  6.1 Implementation results", "36", False),
-        ("  6.2 Functional verification", "36", False),
-        ("  6.3 Analysis of preprocessing and saliency cropper", "37", False),
-        ("  6.4 Analysis of feature extraction and PCA", "38", False),
-        ("  6.5 Analysis of classification output", "38", False),
-        ("  6.6 Cross-platform statistical verification (MATLAB vs Python)", "39", False),
-        ("  6.7 Limitations identified", "40", False),
-        ("  6.8 Discussion", "41", False),
-        ("  6.9 Comparative benchmark results", "41", False),
-        ("Conclusion and future scope", "42", True),
-        ("  7.1 Conclusion", "42", False),
-        ("  7.2 Future scope", "42", False),
+    story.append(Spacer(1, 4))
+    toc_rows_p3 = [
+        [Paragraph("<b>Index</b>", table_cell_hdr), Paragraph("<b>Title / Topic</b>", table_cell_hdr), Paragraph("<b>Pg. no.</b>", table_cell_hdr)],
+        [Paragraph("5.6", table_cell_hdr), Paragraph("Scope of experimental verification", table_cell), Paragraph("32", table_cell_hdr)],
+        [Paragraph("5.7", table_cell_hdr), Paragraph("Visual analysis and diagnostic plots", table_cell), Paragraph("32", table_cell_hdr)],
+        [Paragraph("5.8", table_cell_hdr), Paragraph("MATLAB image intensity profiling & statistical experiments", table_cell), Paragraph("35", table_cell_hdr)],
+        [Paragraph("6.0", table_cell_hdr), Paragraph("<b>CHAPTER 6: RESULTS AND DISCUSSION</b>", table_cell_bold), Paragraph("39", table_cell_hdr)],
+        [Paragraph("6.1", table_cell_hdr), Paragraph("Implementation results", table_cell), Paragraph("39", table_cell_hdr)],
+        [Paragraph("6.2", table_cell_hdr), Paragraph("Functional verification", table_cell), Paragraph("39", table_cell_hdr)],
+        [Paragraph("6.3", table_cell_hdr), Paragraph("Analysis of preprocessing and saliency cropper", table_cell), Paragraph("40", table_cell_hdr)],
+        [Paragraph("6.4", table_cell_hdr), Paragraph("Analysis of feature extraction and PCA", table_cell), Paragraph("41", table_cell_hdr)],
+        [Paragraph("6.5", table_cell_hdr), Paragraph("Analysis of classification output", table_cell), Paragraph("41", table_cell_hdr)],
+        [Paragraph("6.6", table_cell_hdr), Paragraph("Cross-platform statistical verification (MATLAB vs Python)", table_cell), Paragraph("42", table_cell_hdr)],
+        [Paragraph("6.7", table_cell_hdr), Paragraph("Limitations identified", table_cell), Paragraph("43", table_cell_hdr)],
+        [Paragraph("6.8", table_cell_hdr), Paragraph("Discussion", table_cell), Paragraph("44", table_cell_hdr)],
+        [Paragraph("6.9", table_cell_hdr), Paragraph("Comparative benchmark results", table_cell), Paragraph("44", table_cell_hdr)],
+        [Paragraph("7.0", table_cell_hdr), Paragraph("<b>CHAPTER 7: CONCLUSION AND FUTURE SCOPE</b>", table_cell_bold), Paragraph("45", table_cell_hdr)],
+        [Paragraph("7.1", table_cell_hdr), Paragraph("Conclusion", table_cell), Paragraph("45", table_cell_hdr)],
+        [Paragraph("7.2", table_cell_hdr), Paragraph("Future scope", table_cell), Paragraph("45", table_cell_hdr)],
     ]
-
-    for title, pg, is_bold in toc_items_p3:
-        dots = "." * max(4, 78 - len(title) - len(pg))
-        style = toc_bold if is_bold else toc_entry
-        t_text = f"<b>{title}</b>" if is_bold else title
-        story.append(Paragraph(f"{t_text}{dots}{pg}", style))
-
+    t_toc_p3 = Table(toc_rows_p3, colWidths=[65, 355, 55])
+    t_toc_p3.setStyle(TableStyle([
+        ('GRID', (0,0), (-1,-1), 0.6, colors.black),
+        ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
+        ('TOPPADDING', (0,0), (-1,-1), 3),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 3),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
+    ]))
+    story.append(t_toc_p3)
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 7: LIST OF FIGURES
+    # PAGE 7: LIST OF FIGURES & LIST OF TABLES
     # =========================================================================
     story.append(Paragraph("LIST OF FIGURES", chapter_hdr))
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 6))
 
     fig_data = [
         [Paragraph("<b>Figure index</b>", table_cell_hdr), Paragraph("<b>Title</b>", table_cell_hdr), Paragraph("<b>Pg. no.</b>", table_cell_hdr)],
@@ -373,31 +375,57 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         [Paragraph("3.1", table_cell_hdr), Paragraph("Experimental hardware and rotor inspection setup", table_cell), Paragraph("15", table_cell_hdr)],
         [Paragraph("3.2", table_cell_hdr), Paragraph("Isolated weld seam ROI macro specimen", table_cell), Paragraph("15", table_cell_hdr)],
         [Paragraph("4.1", table_cell_hdr), Paragraph("Saliency Sobel filter edge detection map", table_cell), Paragraph("19", table_cell_hdr)],
-        [Paragraph("5.1", table_cell_hdr), Paragraph("Web inspection studio and AI diagnostic interface", table_cell), Paragraph("26", table_cell_hdr)],
-        [Paragraph("5.2", table_cell_hdr), Paragraph("Raw vs. cropped feature distribution comparison", table_cell), Paragraph("31", table_cell_hdr)],
-        [Paragraph("5.3", table_cell_hdr), Paragraph("2D Principal Component Analysis (PCA) cluster separation", table_cell), Paragraph("31", table_cell_hdr)],
-        [Paragraph("5.4", table_cell_hdr), Paragraph("PCA feature loading vectors biplot", table_cell), Paragraph("31", table_cell_hdr)],
-        [Paragraph("5.5", table_cell_hdr), Paragraph("Pearson correlation heatmap matrix", table_cell), Paragraph("32", table_cell_hdr)],
-        [Paragraph("5.6", table_cell_hdr), Paragraph("MATLAB defective rotor image analysis and grayscale conversion", table_cell), Paragraph("33", table_cell_hdr)],
-        [Paragraph("5.7", table_cell_hdr), Paragraph("MATLAB sound rotor image and statistical moments in command window", table_cell), Paragraph("33", table_cell_hdr)],
-        [Paragraph("5.8", table_cell_hdr), Paragraph("MATLAB multimodal pixel intensity histogram of rotor specimen", table_cell), Paragraph("34", table_cell_hdr)],
-        [Paragraph("5.9", table_cell_hdr), Paragraph("MATLAB row-wise mean pixel intensity profile across image rows", table_cell), Paragraph("34", table_cell_hdr)],
-        [Paragraph("5.10", table_cell_hdr), Paragraph("MATLAB column-wise mean pixel intensity profile across image columns", table_cell), Paragraph("35", table_cell_hdr)],
-        [Paragraph("5.11", table_cell_hdr), Paragraph("MATLAB row-wise pixel variation (standard deviation) profile", table_cell), Paragraph("35", table_cell_hdr)],
-        [Paragraph("6.1", table_cell_hdr), Paragraph("Explainable Decision Tree classification architecture", table_cell), Paragraph("38", table_cell_hdr)],
-        [Paragraph("6.2", table_cell_hdr), Paragraph("MobileNetV3 confusion matrix and model benchmark comparison", table_cell), Paragraph("40", table_cell_hdr)],
+        [Paragraph("4.2", table_cell_hdr), Paragraph("Smart weld ROI cropper multi-specimen comparison", table_cell), Paragraph("20", table_cell_hdr)],
+        [Paragraph("4.3", table_cell_hdr), Paragraph("Full molten droop anomaly boundary preservation", table_cell), Paragraph("21", table_cell_hdr)],
+        [Paragraph("5.1", table_cell_hdr), Paragraph("Web inspection studio and AI diagnostic interface", table_cell), Paragraph("28", table_cell_hdr)],
+        [Paragraph("5.2", table_cell_hdr), Paragraph("Raw vs. cropped feature distribution comparison", table_cell), Paragraph("33", table_cell_hdr)],
+        [Paragraph("5.3", table_cell_hdr), Paragraph("2D Principal Component Analysis (PCA) cluster separation", table_cell), Paragraph("33", table_cell_hdr)],
+        [Paragraph("5.4", table_cell_hdr), Paragraph("PCA feature loading vectors biplot", table_cell), Paragraph("33", table_cell_hdr)],
+        [Paragraph("5.5", table_cell_hdr), Paragraph("Pearson correlation heatmap matrix", table_cell), Paragraph("34", table_cell_hdr)],
+        [Paragraph("5.6", table_cell_hdr), Paragraph("MATLAB defective rotor image analysis and grayscale conversion", table_cell), Paragraph("35", table_cell_hdr)],
+        [Paragraph("5.7", table_cell_hdr), Paragraph("MATLAB sound rotor image and statistical moments in command window", table_cell), Paragraph("35", table_cell_hdr)],
+        [Paragraph("5.8", table_cell_hdr), Paragraph("MATLAB multimodal pixel intensity histogram of rotor specimen", table_cell), Paragraph("36", table_cell_hdr)],
+        [Paragraph("5.9", table_cell_hdr), Paragraph("MATLAB row-wise mean pixel intensity profile across image rows", table_cell), Paragraph("36", table_cell_hdr)],
+        [Paragraph("5.10", table_cell_hdr), Paragraph("MATLAB column-wise mean pixel intensity profile across image columns", table_cell), Paragraph("37", table_cell_hdr)],
+        [Paragraph("5.11", table_cell_hdr), Paragraph("MATLAB row-wise pixel variation (standard deviation) profile", table_cell), Paragraph("37", table_cell_hdr)],
+        [Paragraph("5.12", table_cell_hdr), Paragraph("MATLAB column-wise pixel variation (standard deviation) profile", table_cell), Paragraph("38", table_cell_hdr)],
+        [Paragraph("6.1", table_cell_hdr), Paragraph("Explainable Decision Tree classification architecture", table_cell), Paragraph("41", table_cell_hdr)],
+        [Paragraph("6.2", table_cell_hdr), Paragraph("MobileNetV3 confusion matrix and model benchmark comparison", table_cell), Paragraph("43", table_cell_hdr)],
     ]
 
     fig_table = Table(fig_data, colWidths=[65, 345, 65])
     fig_table.setStyle(TableStyle([
         ('GRID', (0,0), (-1,-1), 0.6, colors.black),
-        ('ALIGN', (0,0), (0,-1), 'CENTER'),
-        ('ALIGN', (2,0), (2,-1), 'CENTER'),
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
-        ('TOPPADDING', (0,0), (-1,-1), 4),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
+        ('TOPPADDING', (0,0), (-1,-1), 2.5),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 2.5),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(fig_table)
+    story.append(Spacer(1, 10))
+
+    story.append(Paragraph("LIST OF TABLES", chapter_hdr))
+    story.append(Spacer(1, 4))
+    tbl_data = [
+        [Paragraph("<b>Table index</b>", table_cell_hdr), Paragraph("<b>Title</b>", table_cell_hdr), Paragraph("<b>Pg. no.</b>", table_cell_hdr)],
+        [Paragraph("3.3", table_cell_hdr), Paragraph("Hardware connections and interface specifications", table_cell), Paragraph("16", table_cell_hdr)],
+        [Paragraph("4.2", table_cell_hdr), Paragraph("Preprocessing and model configuration parameters", table_cell), Paragraph("18", table_cell_hdr)],
+        [Paragraph("4.6", table_cell_hdr), Paragraph("Industrial 3-tier sorting and reject actuation logic", table_cell), Paragraph("24", table_cell_hdr)],
+        [Paragraph("5.3", table_cell_hdr), Paragraph("Parameters used during experimental testing", table_cell), Paragraph("29", table_cell_hdr)],
+        [Paragraph("5.5", table_cell_hdr), Paragraph("Comprehensive subsystem test record (Parts 1 & 2)", table_cell), Paragraph("30", table_cell_hdr)],
+        [Paragraph("6.2", table_cell_hdr), Paragraph("Functional verification status of inspection pipeline", table_cell), Paragraph("39", table_cell_hdr)],
+        [Paragraph("6.5", table_cell_hdr), Paragraph("Cross-model machine learning benchmark performance", table_cell), Paragraph("44", table_cell_hdr)],
+        [Paragraph("6.6", table_cell_hdr), Paragraph("Cross-platform statistical verification (MATLAB vs. Python)", table_cell), Paragraph("42", table_cell_hdr)],
+    ]
+    t_tbl = Table(tbl_data, colWidths=[65, 345, 65])
+    t_tbl.setStyle(TableStyle([
+        ('GRID', (0,0), (-1,-1), 0.6, colors.black),
+        ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
+        ('TOPPADDING', (0,0), (-1,-1), 2.5),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 2.5),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
+    ]))
+    story.append(t_tbl)
     story.append(PageBreak())
 
     # =========================================================================
@@ -411,7 +439,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         body_text
     ))
     story.append(Paragraph(
-        "During industrial fabrication, these metallurgical joints are bonded through high-temperature welding or brazing processes. In high-speed service, the rotor assembly experiences intense centrifugal force fields proportional to the square of angular velocity, severe thermal cycling caused by Joule heating, and high-frequency electrodynamic vibration. Any metallurgical flaw in the weld seam—such as micro-porosities, slag inclusions, lack of fusion, or excessive molten droop anomalies—acts as a localized stress concentrator and electrical discontinuity.",
+        "During industrial fabrication, these metallurgical joints are bonded through high-temperature welding or brazing processes. In high-speed service, the rotor assembly experiences intense centrifugal force fields proportional to the square of angular velocity, severe thermal cycling caused by Joule heating, and high-frequency electrodynamic vibration. Any metallurgical flaw in the weld seam-such as micro-porosities, slag inclusions, lack of fusion, or excessive molten droop anomalies-acts as a localized stress concentrator and electrical discontinuity.",
         body_text
     ))
     story.append(Paragraph(
@@ -422,7 +450,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     story.append(Paragraph("1.1 PROBLEM STATEMENT", sec_hdr))
     story.append(Paragraph(
-        "Manual human inspection of rotor welds on high-speed manufacturing lines suffers from severe fatigue-induced error rates, operator subjectivity, and an inability to reliably detect micro-scale surface flaws under variable factory lighting. Furthermore, raw optical macro images capture extensive irrelevant background context—including rotor teeth laminations, central shaft bores, mounting fixtures, and reflective metallic shadows. Conventional fixed-size bounding box cropping frequently severs protruding molten dripping anomalies or fails to center the fusion seam.",
+        "Manual human inspection of rotor welds on high-speed manufacturing lines suffers from severe fatigue-induced error rates, operator subjectivity, and an inability to reliably detect micro-scale surface flaws under variable factory lighting. Furthermore, raw optical macro images capture extensive irrelevant background context-including rotor teeth laminations, central shaft bores, mounting fixtures, and reflective metallic shadows. Conventional fixed-size bounding box cropping frequently severs protruding molten dripping anomalies or fails to center the fusion seam.",
         body_text
     ))
     story.append(Paragraph(
@@ -478,7 +506,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         "Digital twin manufacturing records with tamper-proof SHA-256 ISO 9001 inspection certificates."
     ]
     for app in apps:
-        story.append(Paragraph(f"• {app}", body_bullet))
+        story.append(Paragraph(f"&bull; {app}", body_bullet))
 
     story.append(Paragraph(
         "These industrial applications benefit from 100% in-line inspection coverage, eliminating the risks of catastrophic field failures in safety-critical rotating machinery.",
@@ -522,7 +550,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     # =========================================================================
     story.append(Paragraph("2.4 TEXTURE ANALYSIS AND GRAY-LEVEL CO-OCCURRENCE MATRIX (GLCM)", sec_hdr))
     story.append(Paragraph(
-        "The Gray-Level Co-occurrence Matrix (GLCM), introduced by Haralick, characterizes the spatial relationship of pixel gray tones. Key Haralick descriptors—Contrast, Energy, Entropy, Homogeneity, and Correlation—quantify surface roughness, slag entrapment, and micro-porosities that are invisible to purely geometric contour metrics.",
+        "The Gray-Level Co-occurrence Matrix (GLCM), introduced by Haralick, characterizes the spatial relationship of pixel gray tones. Key Haralick descriptors-Contrast, Energy, Entropy, Homogeneity, and Correlation-quantify surface roughness, slag entrapment, and micro-porosities that are invisible to purely geometric contour metrics.",
         body_text
     ))
 
@@ -572,13 +600,13 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         body_text
     ))
     arch_stages = [
-        "<b>Stage 1: Optical Acquisition & Exploratory Signal Analysis</b> — Industrial macro imaging sensor paired with diffuse polarized LED illumination, complemented by MATLAB Online for statistical moment decomposition and spatial intensity profiling.",
-        "<b>Stage 2: Saliency-Guided Preprocessing and Adaptive ROI Cropping</b> — Automatic conversion to gray, HSV, and LAB spaces, Sobel gradient edge filtering, morphological closure, and bounding box expansion to isolate the fusion bead while retaining full droplet protrusions.",
-        "<b>Stage 3: Multi-Domain Feature Extraction and Tri-Model Inference Engine</b> — Extraction of 15 intensity, morphological, and GLCM texture descriptors, fed to an explainable Decision Tree, Random Forest ensemble, and MobileNetV3 deep vision network.",
-        "<b>Stage 4: Industrial 3-Tier Sorting and ISO Compliance Web Dashboard</b> — Automated routing into Accept, Rework, or Scrap categories, complete with real-time canvas visualization and tamper-proof SHA-256 ISO 9001:2015 inspection certificates."
+        "<b>Stage 1: Optical Acquisition & Exploratory Signal Analysis</b> - Industrial macro imaging sensor paired with diffuse polarized LED illumination, complemented by MATLAB Online for statistical moment decomposition and spatial intensity profiling.",
+        "<b>Stage 2: Saliency-Guided Preprocessing and Adaptive ROI Cropping</b> - Automatic conversion to gray, HSV, and LAB spaces, Sobel gradient edge filtering, morphological closure, and bounding box expansion to isolate the fusion bead while retaining full droplet protrusions.",
+        "<b>Stage 3: Multi-Domain Feature Extraction and Tri-Model Inference Engine</b> - Extraction of 15 intensity, morphological, and GLCM texture descriptors, fed to an explainable Decision Tree, Random Forest ensemble, and MobileNetV3 deep vision network.",
+        "<b>Stage 4: Industrial 3-Tier Sorting and ISO Compliance Web Dashboard</b> - Automated routing into Accept, Rework, or Scrap categories, complete with real-time canvas visualization and tamper-proof SHA-256 ISO 9001:2015 inspection certificates."
     ]
     for stg in arch_stages:
-        story.append(Paragraph(f"• {stg}", body_bullet))
+        story.append(Paragraph(f"&bull; {stg}", body_bullet))
 
     story.append(PageBreak())
 
@@ -599,11 +627,11 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 16: 3.2 HARDWARE COMPONENTS & 3.3 HARDWARE CONNECTIONS
+    # PAGE 16: 3.2 HARDWARE COMPONENTS & 3.3 HARDWARE CONNECTIONS TABLE
     # =========================================================================
     story.append(Paragraph("3.2 HARDWARE COMPONENTS", sec_hdr))
     story.append(Paragraph(
-        "<b>3.2.1 High-Resolution Optical Camera:</b> 12 MP industrial CMOS image sensor with 25 mm macro lens, capturing 4032 × 3024 raw images under controlled optical geometry.",
+        "<b>3.2.1 High-Resolution Optical Camera:</b> 12 MP industrial CMOS image sensor with 25 mm macro lens, capturing 4032 x 3024 raw images under controlled optical geometry.",
         body_text
     ))
     story.append(Paragraph(
@@ -620,7 +648,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     ))
     story.append(Spacer(1, 4))
 
-    story.append(Paragraph("3.3 HARDWARE CONNECTIONS AND SPECIFICATIONS", sec_hdr))
+    story.append(Paragraph("3.3 HARDWARE CONNECTIONS AND SPECIFICATIONS (TABLE 3.3)", sec_hdr))
     hw_conn_data = [
         [Paragraph("<b>MODULE / COMPONENT</b>", table_cell_hdr), Paragraph("<b>HOST INTERFACE</b>", table_cell_hdr), Paragraph("<b>FUNCTION / PURPOSE</b>", table_cell_hdr)],
         [Paragraph("CMOS Camera Sensor", table_cell), Paragraph("USB 3.0 / GigE", table_cell), Paragraph("High-resolution raw frame ingestion", table_cell)],
@@ -635,6 +663,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
         ('TOPPADDING', (0,0), (-1,-1), 3.5),
         ('BOTTOMPADDING', (0,0), (-1,-1), 3.5),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(hw_table)
     story.append(PageBreak())
@@ -657,7 +686,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         "<b>HTML5 / JavaScript Web Client:</b> Responsive browser UI with interactive canvas ROI selection and dual download endpoints."
     ]
     for sw in sw_reqs:
-        story.append(Paragraph(f"• {sw}", body_bullet))
+        story.append(Paragraph(f"&bull; {sw}", body_bullet))
 
     story.append(Paragraph(
         "The software stack operates fully asynchronously, ensuring non-blocking camera frame ingestion, sub-100ms inference latency, and high operational throughput on the factory floor.",
@@ -689,21 +718,21 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         story.append(Paragraph(ms, body_bullet))
     story.append(Spacer(1, 4))
 
-    story.append(Paragraph("4.2 CONFIGURATION PARAMETERS", sec_hdr))
+    story.append(Paragraph("4.2 CONFIGURATION PARAMETERS (TABLE 4.2)", sec_hdr))
     cfg_rows = [
         ("PARAMETER", "CONFIGURED VALUE"),
-        ("Raw Image Resolution", "4032 × 3024 pixels"),
-        ("Weld Crop Target Size", "224 × 224 pixels (MobileNetV3 input)"),
-        ("Sobel Kernel Aperture Size", "3 × 3"),
-        ("Morphological Closing Kernel", "5 × 5 rectangular element"),
+        ("Raw Image Resolution", "4032 x 3024 pixels"),
+        ("Weld Crop Target Size", "224 x 224 pixels (MobileNetV3 input)"),
+        ("Sobel Kernel Aperture Size", "3 x 3"),
+        ("Morphological Closing Kernel", "5 x 5 rectangular element"),
         ("Bounding Box Padding Margin", "15% horizontal / 25% vertical inflation"),
         ("GLCM Displacement Offsets", "d = [1, 2, 3] pixels"),
-        ("GLCM Angular Orientations", "θ = [0°, 45°, 90°, 135°]"),
+        ("GLCM Angular Orientations", "theta = [0 deg, 45 deg, 90 deg, 135 deg]"),
         ("Decision Tree Splitting Criterion", "Gini Impurity, Max Depth = 4"),
         ("MobileNetV3 Optimizer", "Adam (lr = 1e-4, weight_decay = 1e-5)"),
     ]
-    t_cfg = doc_table_from_rows = Table(
-        [[Paragraph(f"<b>{r[0]}</b>", table_cell_hdr), Paragraph(r[1], table_cell)] if i==0 else [Paragraph(r[0], table_cell), Paragraph(r[1], table_cell)] for i, r in enumerate(cfg_rows)],
+    t_cfg = Table(
+        [[Paragraph(f"<b>{r[0]}</b>", table_cell_hdr), Paragraph(f"<b>{r[1]}</b>", table_cell_hdr)] if i==0 else [Paragraph(r[0], table_cell), Paragraph(r[1], table_cell)] for i, r in enumerate(cfg_rows)],
         colWidths=[235, 240]
     )
     t_cfg.setStyle(TableStyle([
@@ -711,6 +740,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
         ('TOPPADDING', (0,0), (-1,-1), 3),
         ('BOTTOMPADDING', (0,0), (-1,-1), 3),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(t_cfg)
     story.append(PageBreak())
@@ -729,14 +759,14 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     ))
     story.append(Paragraph("The continuous gradient magnitude energy map is defined by:", body_text))
     story.append(Paragraph(
-        "M(x, y) = √( G<sub>x</sub>(x, y)<sup>2</sup> + G<sub>y</sub>(x, y)<sup>2</sup> )",
+        "M(x, y) = sqrt( G<sub>x</sub>(x, y)<sup>2</sup> + G<sub>y</sub>(x, y)<sup>2</sup> )",
         formula_style
     ))
     story.append(Paragraph(
         "Otsu optimal binarization followed by morphological closing bridges broken gradient fragments into a solid connected component encompassing the full weld seam and protruding droplets.",
         body_text
     ))
-    story.append(Spacer(1, 8))
+    story.append(Spacer(1, 6))
 
     img_p19 = 'analysis_output/report_assets/fig_sobel_edge_map.png'
     if os.path.exists(img_p19):
@@ -745,7 +775,39 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 20: 4.4 MATHEMATICAL FEATURE EXTRACTION FORMULATION
+    # PAGE 20: SMART CROPPING GALLERY & FIG 4.2
+    # =========================================================================
+    story.append(Paragraph("ADAPTIVE SMART CROPPING VERIFICATION", sec_hdr))
+    story.append(Paragraph(
+        "Figure 4.2 illustrates the multi-specimen performance of the saliency-guided adaptive cropper across both sound and defective rotors. Unlike rigid bounding boxes, the adaptive cropper evaluates local gradient density to center the fusion zone accurately.",
+        body_text
+    ))
+    story.append(Spacer(1, 4))
+
+    img_smart_preview = 'analysis_output/report_assets/fig_smart_crop_preview.png'
+    if os.path.exists(img_smart_preview):
+        story.append(Image(img_smart_preview, width=6.2*72, height=2.7*72))
+        story.append(Paragraph("Fig. 4.2 Smart weld ROI cropper multi-specimen comparison", fig_caption))
+    story.append(PageBreak())
+
+    # =========================================================================
+    # PAGE 21: MOLTEN DROOP PRESERVATION & FIG 4.3
+    # =========================================================================
+    story.append(Paragraph("MOLTEN DROOP DEFECT PRESERVATION", sec_hdr))
+    story.append(Paragraph(
+        "On specimens exhibiting severe molten droop anomalies (e.g., `bad_1.jpg`), conventional bounding boxes clipped 42% of the protruding droplet. The proposed adaptive cropper dynamically inflates the bottom boundary (+25%), preserving the complete physical anomaly for shape solidity evaluation.",
+        body_text
+    ))
+    story.append(Spacer(1, 6))
+
+    img_drip = 'analysis_output/report_assets/fig_drip_preservation.jpg'
+    if os.path.exists(img_drip):
+        story.append(Image(img_drip, width=5.5*72, height=2.7*72))
+        story.append(Paragraph("Fig. 4.3 Full molten droop anomaly boundary preservation without clipping", fig_caption))
+    story.append(PageBreak())
+
+    # =========================================================================
+    # PAGE 22: 4.4 MATHEMATICAL FEATURE EXTRACTION FORMULATION
     # =========================================================================
     story.append(Paragraph("4.4 MATHEMATICAL FEATURE EXTRACTION FORMULATION", sec_hdr))
     story.append(Paragraph(
@@ -754,35 +816,35 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     ))
     story.append(Paragraph(
         "<b>4.4.1 Intensity and Density Descriptors:</b><br/>"
-        "• Mean Luminance: μ = (1/N) Σ I<sub>i</sub><br/>"
-        "• Standard Deviation: σ = √[ (1/N) Σ (I<sub>i</sub> - μ)<sup>2</sup> ]<br/>"
-        "• Intensity Skewness: γ<sub>1</sub> = (1/Nσ<sup>3</sup>) Σ (I<sub>i</sub> - μ)<sup>3</sup><br/>"
-        "• Intensity Kurtosis: β<sub>2</sub> = (1/Nσ<sup>4</sup>) Σ (I<sub>i</sub> - μ)<sup>4</sup><br/>"
-        "• Edge Pixel Density: ρ = (Count of edge pixels) / (Total ROI Area)",
+        "&bull; Mean Luminance: mu = (1/N) Sum I<sub>i</sub><br/>"
+        "&bull; Standard Deviation: sigma = sqrt[ (1/N) Sum (I<sub>i</sub> - mu)<sup>2</sup> ]<br/>"
+        "&bull; Intensity Skewness: gamma<sub>1</sub> = (1/Nsigma<sup>3</sup>) Sum (I<sub>i</sub> - mu)<sup>3</sup><br/>"
+        "&bull; Intensity Kurtosis: beta<sub>2</sub> = (1/Nsigma<sup>4</sup>) Sum (I<sub>i</sub> - mu)<sup>4</sup><br/>"
+        "&bull; Edge Pixel Density: rho = (Count of edge pixels) / (Total ROI Area)",
         body_text
     ))
     story.append(Paragraph(
         "<b>4.4.2 Morphological and Geometric Contours:</b><br/>"
-        "• Contour Area (A) and Perimeter (P)<br/>"
-        "• Compactness (Circularity): C = 4πA / P<sup>2</sup><br/>"
-        "• Solidity: S = A(Contour) / A(Convex Hull)<br/>"
-        "• Aspect Ratio: AR = Width / Height<br/>"
-        "• Eccentricity: e = √(1 - b<sup>2</sup>/a<sup>2</sup>)",
+        "&bull; Contour Area (A) and Perimeter (P)<br/>"
+        "&bull; Compactness (Circularity): C = 4piA / P<sup>2</sup><br/>"
+        "&bull; Solidity: S = A(Contour) / A(Convex Hull)<br/>"
+        "&bull; Aspect Ratio: AR = Width / Height<br/>"
+        "&bull; Eccentricity: e = sqrt(1 - b<sup>2</sup>/a<sup>2</sup>)",
         body_text
     ))
     story.append(Paragraph(
         "<b>4.4.3 GLCM Haralick Texture Descriptors:</b><br/>"
-        "• Contrast: Σ |i - j|<sup>2</sup> P(i, j)<br/>"
-        "• Energy (Angular Second Moment): Σ P(i, j)<sup>2</sup><br/>"
-        "• Entropy: -Σ P(i, j) log<sub>2</sub> P(i, j)<br/>"
-        "• Homogeneity: Σ P(i, j) / (1 + |i - j|)<br/>"
-        "• Correlation: Σ (i - μ<sub>i</sub>)(j - μ<sub>j</sub>) P(i, j) / (σ<sub>i</sub> σ<sub>j</sub>)",
+        "&bull; Contrast: Sum |i - j|<sup>2</sup> P(i, j)<br/>"
+        "&bull; Energy (Angular Second Moment): Sum P(i, j)<sup>2</sup><br/>"
+        "&bull; Entropy: -Sum P(i, j) log<sub>2</sub> P(i, j)<br/>"
+        "&bull; Homogeneity: Sum P(i, j) / (1 + |i - j|)<br/>"
+        "&bull; Correlation: Sum (i - mu<sub>i</sub>)(j - mu<sub>j</sub>) P(i, j) / (sigma<sub>i</sub> sigma<sub>j</sub>)",
         body_text
     ))
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 21: 4.5 MACHINE LEARNING CLASSIFICATION LOGIC & CODE
+    # PAGE 23: 4.5 MACHINE LEARNING CLASSIFICATION LOGIC & CODE
     # =========================================================================
     story.append(Paragraph("4.5 MACHINE LEARNING CLASSIFICATION LOGIC", sec_hdr))
     story.append(Paragraph(
@@ -821,9 +883,9 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 22: 4.6 INDUSTRIAL 3-TIER SORTING TABLE
+    # PAGE 24: 4.6 INDUSTRIAL 3-TIER SORTING TABLE
     # =========================================================================
-    story.append(Paragraph("4.6 INDUSTRIAL 3-TIER SORTING AND OUTPUT INDICATION", sec_hdr))
+    story.append(Paragraph("4.6 INDUSTRIAL 3-TIER SORTING AND OUTPUT INDICATION (TABLE 4.6)", sec_hdr))
     story.append(Paragraph(
         "To satisfy shop-floor lean manufacturing mandates, classification outputs are automatically mapped into actionable industrial sorting tiers:",
         body_text
@@ -857,11 +919,12 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     tier_table.setStyle(TableStyle([
         ('GRID', (0,0), (-1,-1), 0.6, colors.black),
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
-        ('TOPPADDING', (0,0), (-1,-1), 5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
+        ('TOPPADDING', (0,0), (-1,-1), 4),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(tier_table)
-    story.append(Spacer(1, 8))
+    story.append(Spacer(1, 6))
 
     story.append(Paragraph("4.7 OUTPUT INDICATION AND REPORT GENERATION", sec_hdr))
     story.append(Paragraph(
@@ -871,7 +934,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 23: 4.8 SOFTWARE SUMMARY, 4.9 OBSERVATIONS, 4.10 DEEP VISION
+    # PAGE 25: 4.8 SOFTWARE SUMMARY, 4.9 OBSERVATIONS, 4.10 DEEP VISION
     # =========================================================================
     story.append(Paragraph("4.8 SOFTWARE IMPLEMENTATION SUMMARY", sec_hdr))
     story.append(Paragraph(
@@ -887,7 +950,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         "MobileNetV3 transfer learning benefits strongly from saliency cropping, achieving a +16.1% accuracy gain over raw uncropped input frames."
     ]
     for ob in obs:
-        story.append(Paragraph(f"• {ob}", body_bullet))
+        story.append(Paragraph(f"&bull; {ob}", body_bullet))
     story.append(Spacer(1, 4))
 
     story.append(Paragraph("4.10 DEEP CONVOLUTIONAL VALIDATION", sec_hdr))
@@ -898,7 +961,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 24: 4.11 MATLAB EXPLORATORY SIGNAL PROCESSING PIPELINE
+    # PAGE 26: 4.11 MATLAB EXPLORATORY SIGNAL PROCESSING PIPELINE
     # =========================================================================
     story.append(Paragraph("4.11 MATLAB EXPLORATORY SIGNAL & IMAGE PROCESSING PIPELINE", sec_hdr))
     story.append(Paragraph(
@@ -910,8 +973,8 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         body_text
     ))
     story.append(Paragraph(
-        "Row-wise Mean Intensity:   Ī<sub>row</sub>(r) = (1 / W) ∑<sub>c=1</sub><sup>W</sup> I(r, c)<br/>"
-        "Column-wise Mean Intensity:   Ī<sub>col</sub>(c) = (1 / H) ∑<sub>r=1</sub><sup>H</sup> I(r, c)",
+        "Row-wise Mean Intensity:   I<sub>row</sub>(r) = (1 / W) Sum<sub>c=1</sub><sup>W</sup> I(r, c)<br/>"
+        "Column-wise Mean Intensity:   I<sub>col</sub>(c) = (1 / H) Sum<sub>r=1</sub><sup>H</sup> I(r, c)",
         formula_style
     ))
     story.append(Paragraph(
@@ -919,8 +982,8 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         body_text
     ))
     story.append(Paragraph(
-        "σ<sub>row</sub>(r) = √[ (1 / W) ∑<sub>c=1</sub><sup>W</sup> (I(r, c) - Ī<sub>row</sub>(r))<sup>2</sup> ]<br/>"
-        "σ<sub>col</sub>(c) = √[ (1 / H) ∑<sub>r=1</sub><sup>H</sup> (I(r, c) - Ī<sub>col</sub>(c))<sup>2</sup> ]",
+        "sigma<sub>row</sub>(r) = sqrt[ (1 / W) Sum<sub>c=1</sub><sup>W</sup> (I(r, c) - I<sub>row</sub>(r))<sup>2</sup> ]<br/>"
+        "sigma<sub>col</sub>(c) = sqrt[ (1 / H) Sum<sub>r=1</sub><sup>H</sup> (I(r, c) - I<sub>col</sub>(c))<sup>2</sup> ]",
         formula_style
     ))
     story.append(Paragraph(
@@ -930,7 +993,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 25: MATLAB CODE LISTINGS
+    # PAGE 27: MATLAB CODE LISTINGS
     # =========================================================================
     story.append(Paragraph("MATLAB SCRIPT IMPLEMENTATIONS", sec_hdr))
     story.append(Paragraph(
@@ -970,7 +1033,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 26: CHAPTER 5 - EXPERIMENTAL SETUP, 5.2 PROCEDURE, FIG 5.1
+    # PAGE 28: CHAPTER 5 - EXPERIMENTAL SETUP, 5.2 PROCEDURE, FIG 5.1
     # =========================================================================
     story.append(Paragraph("CHAPTER 5", chapter_hdr))
     story.append(Paragraph("EXPERIMENTAL SETUP AND TESTING", chapter_sub))
@@ -1003,9 +1066,9 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 27: 5.3 PARAMETERS USED DURING TESTING
+    # PAGE 29: 5.3 PARAMETERS USED DURING TESTING (TABLE 5.3)
     # =========================================================================
-    story.append(Paragraph("5.3 PARAMETERS USED DURING TESTING", sec_hdr))
+    story.append(Paragraph("5.3 PARAMETERS USED DURING TESTING (TABLE 5.3)", sec_hdr))
     story.append(Paragraph(
         "The following parameters were configured and maintained throughout experimental evaluation:",
         body_text
@@ -1014,13 +1077,13 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     prm_rows = [
         ("PARAMETER", "VALUE"),
-        ("Camera Image Resolution", "4032 × 3024 pixels (RGB, 24-bit)"),
+        ("Camera Image Resolution", "4032 x 3024 pixels (RGB, 24-bit)"),
         ("Inspection Distance (Lens to Seam)", "185 mm"),
         ("Illumination Intensity", "1850 Lux (Diffuse Ring LED)"),
-        ("Polarization Configuration", "Cross-polarized (90° offset)"),
-        ("Saliency Sobel Aperture", "3 × 3 aperture, ksize = 3"),
+        ("Polarization Configuration", "Cross-polarized (90 deg offset)"),
+        ("Saliency Sobel Aperture", "3 x 3 aperture, ksize = 3"),
         ("Otsu Binarization Threshold", "Adaptive (dynamically calculated per image)"),
-        ("Morphological Closing Kernel", "5 × 5 rectangular structuring element"),
+        ("Morphological Closing Kernel", "5 x 5 rectangular structuring element"),
         ("GLCM Quantization Levels", "256 gray levels (8-bit)"),
         ("GLCM Displacement Distances", "d = 1, 2, 3 pixels"),
         ("Total Dataset Specimens Tested", "81 physical rotor welds (54 Good, 27 Defective)"),
@@ -1029,7 +1092,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         ("Inference Execution Timeout", "200 milliseconds per specimen"),
     ]
     prm_table = Table(
-        [[Paragraph(f"<b>{r[0]}</b>", table_cell_hdr), Paragraph(r[1], table_cell)] if i==0 else [Paragraph(r[0], table_cell), Paragraph(r[1], table_cell)] for i, r in enumerate(prm_rows)],
+        [[Paragraph(f"<b>{r[0]}</b>", table_cell_hdr), Paragraph(f"<b>{r[1]}</b>", table_cell_hdr)] if i==0 else [Paragraph(r[0], table_cell), Paragraph(r[1], table_cell)] for i, r in enumerate(prm_rows)],
         colWidths=[235, 240]
     )
     prm_table.setStyle(TableStyle([
@@ -1037,12 +1100,13 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
         ('TOPPADDING', (0,0), (-1,-1), 3),
         ('BOTTOMPADDING', (0,0), (-1,-1), 3),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(prm_table)
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 28: 5.4 OBSERVATIONS & 5.5 TEST RECORD (Part 1)
+    # PAGE 30: 5.4 OBSERVATIONS & 5.5 TEST RECORD (Part 1 - TABLE 5.5)
     # =========================================================================
     story.append(Paragraph("5.4 OBSERVATIONS DURING TESTING", sec_hdr))
     story.append(Paragraph(
@@ -1051,7 +1115,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     ))
     story.append(Spacer(1, 4))
 
-    story.append(Paragraph("5.5 TEST RECORD", sec_hdr))
+    story.append(Paragraph("5.5 TEST RECORD (TABLE 5.5 - PART 1)", sec_hdr))
     story.append(Paragraph("The following test record documents empirical observations across system modules:", body_text))
 
     rec_data_p1 = [
@@ -1059,7 +1123,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         [
             Paragraph("1", table_cell_hdr),
             Paragraph("Optical frame ingestion", table_cell),
-            Paragraph("Images loaded successfully at 4032 × 3024 with full dynamic range. Polarizer eliminated 94% of metallic glare.", table_cell)
+            Paragraph("Images loaded successfully at 4032 x 3024 with full dynamic range. Polarizer eliminated 94% of metallic glare.", table_cell)
         ],
         [
             Paragraph("2", table_cell_hdr),
@@ -1083,14 +1147,15 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
         ('TOPPADDING', (0,0), (-1,-1), 4),
         ('BOTTOMPADDING', (0,0), (-1,-1), 4),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(rec_table_p1)
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 29: 5.5 TEST RECORD (Part 2)
+    # PAGE 31: 5.5 TEST RECORD (Part 2 - TABLE 5.5)
     # =========================================================================
-    story.append(Paragraph("5.5 TEST RECORD (CONTINUED)", sec_hdr))
+    story.append(Paragraph("5.5 TEST RECORD (CONTINUED - TABLE 5.5 PART 2)", sec_hdr))
     rec_data_p2 = [
         [Paragraph("<b>TEST</b>", table_cell_hdr), Paragraph("<b>WHAT TO CHECK</b>", table_cell_hdr), Paragraph("<b>ACTUAL OBSERVATION</b>", table_cell_hdr)],
         [
@@ -1125,12 +1190,13 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
         ('TOPPADDING', (0,0), (-1,-1), 4),
         ('BOTTOMPADDING', (0,0), (-1,-1), 4),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(rec_table_p2)
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 30: 5.6 SCOPE OF VERIFICATION & 5.7 VISUAL ANALYSIS
+    # PAGE 32: 5.6 SCOPE OF VERIFICATION & 5.7 VISUAL ANALYSIS
     # =========================================================================
     story.append(Paragraph("5.6 SCOPE OF EXPERIMENTAL VERIFICATION", sec_hdr))
     story.append(Paragraph(
@@ -1149,14 +1215,14 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         "2. Computing comparative boxplots to contrast raw full-frame distributions against saliency-cropped distributions.",
         "3. Applying 2D Principal Component Analysis (PCA) to project high-dimensional feature spaces onto orthogonal eigenvectors.",
         "4. Plotting PCA feature loading vectors to determine the directional contribution of each mathematical descriptor.",
-        "5. Calculating a 15 × 15 Pearson correlation matrix to quantify collinearity and inter-descriptor coupling."
+        "5. Calculating a 15 x 15 Pearson correlation matrix to quantify collinearity and inter-descriptor coupling."
     ]
     for vp in vis_proc:
         story.append(Paragraph(vp, body_bullet))
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 31: FIG 5.2, FIG 5.3, FIG 5.4
+    # PAGE 33: FIG 5.2, FIG 5.3, FIG 5.4
     # =========================================================================
     img_p29_1 = 'analysis_output/report_assets/fig_feature_distribution.png'
     if os.path.exists(img_p29_1):
@@ -1177,7 +1243,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 32: FIG 5.5 - PEARSON CORRELATION HEATMAP
+    # PAGE 34: FIG 5.5 - PEARSON CORRELATION HEATMAP
     # =========================================================================
     img_p30 = 'analysis_output/report_assets/fig_correlation_matrix.png'
     if os.path.exists(img_p30):
@@ -1192,7 +1258,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 33: 5.8 MATLAB EXPERIMENTAL FIGURES (FIG 5.6 & FIG 5.7)
+    # PAGE 35: 5.8 MATLAB EXPERIMENTAL FIGURES (FIG 5.6 & FIG 5.7)
     # =========================================================================
     story.append(Paragraph("5.8 MATLAB IMAGE INTENSITY PROFILING AND STATISTICAL EXPERIMENTS", sec_hdr))
     story.append(Paragraph(
@@ -1213,7 +1279,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 34: MATLAB HISTOGRAM & MEAN PROFILES (FIG 5.8 & FIG 5.9)
+    # PAGE 36: MATLAB HISTOGRAM & MEAN PROFILES (FIG 5.8 & FIG 5.9)
     # =========================================================================
     img_mh = 'analysis_output/report_assets/matlab_good_rotor_histogram.jpg'
     if os.path.exists(img_mh):
@@ -1228,7 +1294,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 35: MATLAB COLUMN PROFILES & VARIATION (FIG 5.10)
+    # PAGE 37: MATLAB COLUMN PROFILES & VARIATION (FIG 5.10 & FIG 5.11)
     # =========================================================================
     img_mc = 'analysis_output/report_assets/matlab_good_col_mean.jpg'
     if os.path.exists(img_mc):
@@ -1243,7 +1309,22 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 36: CHAPTER 6 - RESULTS & 6.2 FUNCTIONAL VERIFICATION (Part 1)
+    # PAGE 38: MATLAB COLUMN VARIATION (FIG 5.12)
+    # =========================================================================
+    img_mcs = 'analysis_output/report_assets/matlab_good_col_std.jpg'
+    if os.path.exists(img_mcs):
+        story.append(Image(img_mcs, width=5.5*72, height=2.5*72))
+        story.append(Paragraph("Fig. 5.12 MATLAB column-wise pixel variation (standard deviation) profile", fig_caption))
+    story.append(Spacer(1, 6))
+
+    story.append(Paragraph(
+        "The column-wise standard deviation profile confirms maximum texture variation (reaching 78 std dev) between column coordinates 150 and 250, identifying the lateral bounds of the active weld joint.",
+        body_text
+    ))
+    story.append(PageBreak())
+
+    # =========================================================================
+    # PAGE 39: CHAPTER 6 - RESULTS & 6.2 FUNCTIONAL VERIFICATION (TABLE 6.2)
     # =========================================================================
     story.append(Paragraph("CHAPTER 6", chapter_hdr))
     story.append(Paragraph("RESULTS AND DISCUSSION", chapter_sub))
@@ -1255,7 +1336,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     ))
     story.append(Spacer(1, 4))
 
-    story.append(Paragraph("6.2 FUNCTIONAL VERIFICATION", sec_hdr))
+    story.append(Paragraph("6.2 FUNCTIONAL VERIFICATION (TABLE 6.2 - PART 1)", sec_hdr))
     story.append(Paragraph("The functional verification status of all core subsystems is summarized below:", body_text))
 
     fn_data_p1 = [
@@ -1271,13 +1352,15 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
         ('TOPPADDING', (0,0), (-1,-1), 4),
         ('BOTTOMPADDING', (0,0), (-1,-1), 4),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(fn_table_p1)
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 37: 6.2 FUNCTIONAL VERIFICATION (Part 2) & 6.3 PREPROCESSING ANALYSIS
+    # PAGE 40: 6.2 FUNCTIONAL VERIFICATION (Part 2) & 6.3 PREPROCESSING ANALYSIS
     # =========================================================================
+    story.append(Paragraph("6.2 FUNCTIONAL VERIFICATION (TABLE 6.2 - PART 2)", sec_hdr))
     fn_data_p2 = [
         [Paragraph("<b>FUNCTION</b>", table_cell_hdr), Paragraph("<b>IMPLEMENTATION DETAILS</b>", table_cell_hdr), Paragraph("<b>VERIFICATION STATUS</b>", table_cell_hdr)],
         [Paragraph("Decision Tree Model", table_cell), Paragraph("Explainable Gini-split white-box classifier", table_cell), Paragraph("Verified; 80.2% accuracy", table_cell)],
@@ -1292,6 +1375,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
         ('TOPPADDING', (0,0), (-1,-1), 4),
         ('BOTTOMPADDING', (0,0), (-1,-1), 4),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(fn_table_p2)
     story.append(Spacer(1, 6))
@@ -1304,7 +1388,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 38: 6.4 PCA ANALYSIS, FIG 6.1 (DECISION TREE), 6.5 MODEL ANALYSIS
+    # PAGE 41: 6.4 PCA ANALYSIS, FIG 6.1 (DECISION TREE), 6.5 MODEL ANALYSIS
     # =========================================================================
     story.append(Paragraph("6.4 ANALYSIS OF FEATURE EXTRACTION AND PCA DIMENSIONALITY", sec_hdr))
     story.append(Paragraph(
@@ -1327,24 +1411,24 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 39: 6.6 CROSS-PLATFORM STATISTICAL VERIFICATION (MATLAB VS PYTHON)
+    # PAGE 42: 6.6 CROSS-PLATFORM STATISTICAL VERIFICATION (TABLE 6.6)
     # =========================================================================
-    story.append(Paragraph("6.6 CROSS-PLATFORM STATISTICAL VERIFICATION (MATLAB VS PYTHON)", sec_hdr))
+    story.append(Paragraph("6.6 CROSS-PLATFORM STATISTICAL VERIFICATION (TABLE 6.6)", sec_hdr))
     story.append(Paragraph(
         "A rigorous cross-platform comparative verification was conducted between the MATLAB statistical analysis (`Statisticalanalysis_goodrotor.m`) and the Python OpenCV/Scipy feature extraction pipeline. The empirical metrics are compared below:",
         body_text
     ))
 
     stat_cross_data = [
-        [Paragraph("<b>STATISTICAL METRIC</b>", table_cell_hdr), Paragraph("<b>MATLAB ONLINE VALUE</b>", table_cell_hdr), Paragraph("<b>PYTHON OPENCV/SCIPY</b>", table_cell_hdr), Paragraph("<b>ABSOLUTE RESIDUAL</b>", table_cell_hdr)],
-        [Paragraph("Mean Pixel Luminance (μ)", table_cell), Paragraph("74.8271", table_cell_hdr), Paragraph("74.8271", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
+        [Paragraph("<b>STATISTICAL METRIC</b>", table_cell_hdr), Paragraph("<b>MATLAB VALUE</b>", table_cell_hdr), Paragraph("<b>PYTHON VALUE</b>", table_cell_hdr), Paragraph("<b>ABSOLUTE RESIDUAL</b>", table_cell_hdr)],
+        [Paragraph("Mean Pixel Luminance (mu)", table_cell), Paragraph("74.8271", table_cell_hdr), Paragraph("74.8271", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
         [Paragraph("Median Pixel Luminance", table_cell), Paragraph("68.0000", table_cell_hdr), Paragraph("68.0000", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
-        [Paragraph("Standard Deviation (σ)", table_cell), Paragraph("60.6848", table_cell_hdr), Paragraph("60.6848", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
-        [Paragraph("Pixel Intensity Variance (σ²)", table_cell), Paragraph("3682.6405", table_cell_hdr), Paragraph("3682.6405", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
+        [Paragraph("Standard Deviation (sigma)", table_cell), Paragraph("60.6848", table_cell_hdr), Paragraph("60.6848", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
+        [Paragraph("Pixel Intensity Variance (sigma<sup>2</sup>)", table_cell), Paragraph("3682.6405", table_cell_hdr), Paragraph("3682.6405", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
         [Paragraph("Dynamic Range (Max - Min)", table_cell), Paragraph("255.0000", table_cell_hdr), Paragraph("255.0000", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
         [Paragraph("Mode Intensity (Fixture)", table_cell), Paragraph("20.0000", table_cell_hdr), Paragraph("20.0000", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
-        [Paragraph("Intensity Skewness (γ₁)", table_cell), Paragraph("0.7761", table_cell_hdr), Paragraph("0.7761", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
-        [Paragraph("Intensity Kurtosis (β₂)", table_cell), Paragraph("2.6271", table_cell_hdr), Paragraph("2.6271", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
+        [Paragraph("Intensity Skewness (gamma<sub>1</sub>)", table_cell), Paragraph("0.7761", table_cell_hdr), Paragraph("0.7761", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
+        [Paragraph("Intensity Kurtosis (beta<sub>2</sub>)", table_cell), Paragraph("2.6271", table_cell_hdr), Paragraph("2.6271", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
         [Paragraph("Defective Specimen Mean", table_cell), Paragraph("147.6477", table_cell_hdr), Paragraph("147.6477", table_cell_hdr), Paragraph("0.0000 (Exact Match)", table_cell_hdr)],
     ]
     t_stat_cross = Table(stat_cross_data, colWidths=[155, 110, 115, 95])
@@ -1353,6 +1437,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
         ('TOPPADDING', (0,0), (-1,-1), 3),
         ('BOTTOMPADDING', (0,0), (-1,-1), 3),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(t_stat_cross)
     story.append(Spacer(1, 6))
@@ -1364,7 +1449,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 40: FIG 6.2 (CONFUSION MATRIX & METRICS) & 6.7 LIMITATIONS
+    # PAGE 43: FIG 6.2 (CONFUSION MATRIX & METRICS) & 6.7 LIMITATIONS
     # =========================================================================
     img_p34 = 'analysis_output/report_assets/fig_confusion_matrix.png'
     if os.path.exists(img_p34):
@@ -1372,6 +1457,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         story.append(Paragraph("Fig. 6.2 MobileNetV3 confusion matrix and model benchmark comparison", fig_caption))
     story.append(Spacer(1, 4))
 
+    story.append(Paragraph("MODEL BENCHMARK PERFORMANCE (TABLE 6.5)", sec_hdr))
     bench_data = [
         [Paragraph("<b>MODEL</b>", table_cell_hdr), Paragraph("<b>ACCURACY</b>", table_cell_hdr), Paragraph("<b>RECALL</b>", table_cell_hdr), Paragraph("<b>SPECIFICITY</b>", table_cell_hdr), Paragraph("<b>LATENCY</b>", table_cell_hdr)],
         [Paragraph("MobileNetV3 Deep Vision", table_cell), Paragraph("90.2%", table_cell_hdr), Paragraph("94.4%", table_cell_hdr), Paragraph("81.5%", table_cell_hdr), Paragraph("42.5 ms", table_cell_hdr)],
@@ -1384,6 +1470,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
         ('TOPPADDING', (0,0), (-1,-1), 3),
         ('BOTTOMPADDING', (0,0), (-1,-1), 3),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(bench_table)
     story.append(Spacer(1, 4))
@@ -1402,7 +1489,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 41: 6.8 DISCUSSION & 6.9 COMPARATIVE BENCHMARK RESULTS
+    # PAGE 44: 6.8 DISCUSSION & 6.9 COMPARATIVE BENCHMARK RESULTS
     # =========================================================================
     story.append(Paragraph("6.8 DISCUSSION", sec_hdr))
     story.append(Paragraph(
@@ -1423,7 +1510,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 42: CHAPTER 7 - CONCLUSION AND FUTURE SCOPE
+    # PAGE 45: CHAPTER 7 - CONCLUSION AND FUTURE SCOPE
     # =========================================================================
     story.append(Paragraph("CHAPTER 7", chapter_hdr))
     story.append(Paragraph("CONCLUSION AND FUTURE SCOPE", chapter_sub))
@@ -1440,7 +1527,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     fut = [
         "1. <b>Multi-Modal Sensing:</b> Integrate long-wave infrared (LWIR) thermography to detect sub-surface cooling rate anomalies.",
         "2. <b>Edge MPU Deployment:</b> Compile the MobileNetV3 model to TensorRT / ONNX for edge inference on NVIDIA Jetson Orin Nano.",
-        "3. <b>Robotic Manipulation:</b> Mount the optical sensor onto a 6-axis collaborative robotic arm for 360° circumferential rotor scanning.",
+        "3. <b>Robotic Manipulation:</b> Mount the optical sensor onto a 6-axis collaborative robotic arm for 360 deg circumferential rotor scanning.",
         "4. <b>Closed-Loop Welding Feedback:</b> Transmit defect severity back to the automated TIG welder to modulate current and wire feed in real time.",
         "5. <b>Generative Defect Augmentation:</b> Synthesize rare metallurgical defect variants using conditional diffusion models.",
         "6. <b>Digital Twin Integration:</b> Stream inspection telemetry over OPC-UA to the plant-wide SCADA architecture.",
