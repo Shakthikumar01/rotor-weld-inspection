@@ -381,6 +381,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         ("3.1", "Proposed cyber-physical system architecture and 4-stage inspection workflow", "14"),
         ("3.2", "Experimental hardware and rotor inspection setup", "15"),
         ("3.3", "Isolated weld seam ROI macro specimen", "15"),
+        ("3.4", "Dual computational software environment and integrated technology stack", "17"),
         ("4.1", "Saliency Sobel filter edge detection map", "19"),
         ("4.2", "Smart weld ROI cropper multi-specimen comparison", "20"),
         ("4.3", "Full molten droop anomaly boundary preservation", "21"),
@@ -576,18 +577,18 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("3.4 SOFTWARE REQUIREMENTS AND DUAL ENVIRONMENT", size=13, bold=True, center=False, before=0, after=4)
     p_body("The project leverages a synergistic dual computational framework combining MATLAB Online for preliminary exploratory analysis and Python for automated production deployment:")
     sw_bullets = [
-        "MATLAB Online (R2024b): Used for rapid signal analysis, row/column intensity profiling, statistical moments calculation (mean, std, var, skewness, kurtosis), histogram plotting, and Excel data export (badrotor_pixel_data.xlsx, goodrotor_statistical_analysis.xlsx).",
-        "OpenCV (cv2 4.10): Production image conversions, Sobel gradient edge maps, Otsu adaptive binarization, and morphological closure.",
-        "PyTorch (2.4.1): Transfer learning, convolutional tensor inference, and forward pass evaluation of the MobileNetV3 deep vision classifier.",
-        "Scikit-Learn (1.5.2): Extraction of 15 mathematical descriptors, 2D Principal Component Analysis (PCA), Decision Tree classification, and Random Forest ensemble.",
-        "Scikit-Image (0.24): Computation of Gray-Level Co-occurrence Matrix (GLCM) and Haralick second-order texture moments.",
-        "ReportLab & python-docx: Automated generation of publication-grade ISO 9001:2015 PDF certificates and academic monograph reports in Word/PDF formats.",
-        "HTML5 / JavaScript Web Client: Responsive browser UI with interactive canvas ROI selection and dual download endpoints."
+        "MATLAB Online (R2024b): Rapid signal profiling, row/column mean intensity sweeps, statistical moments calculation (mean, std, var, skewness, kurtosis), histogram distribution, and Excel export (badrotor_pixel_data.xlsx, goodrotor_statistical_analysis.xlsx).",
+        "OpenCV (cv2 4.10): Image color-space conversions, dual-axis Sobel gradient edge filtering, Otsu adaptive binarization, and morphological closure.",
+        "PyTorch (2.4.1): MobileNetV3 deep vision transfer learning, convolutional tensor inference, and real-time surface defect classification.",
+        "Scikit-Learn (1.5.2) & Scikit-Image (0.24): 15 physical descriptor extraction, GLCM Haralick texture moments, 2D PCA, Decision Tree, and Random Forest ensemble.",
+        "ReportLab & python-docx: Automated generation of ISO 9001:2015 inspection certificates and academic reports.",
+        "HTML5 / JavaScript Web Client: Interactive browser inspection interface displaying weld seam overlays and automated sorting results."
     ]
     for sw in sw_bullets:
         p_bullet(sw)
 
-    p_body("The software stack operates fully asynchronously, ensuring non-blocking camera frame ingestion, sub-100ms inference latency, and high operational throughput on the factory floor.")
+    add_img('analysis_output/report_assets/fig_software_stack_diagram.png', width_in=5.8)
+    p_fig_caption("Fig. 3.4 Dual computational software environment and integrated technology stack")
     doc.add_page_break()
 
     # =========================================================================

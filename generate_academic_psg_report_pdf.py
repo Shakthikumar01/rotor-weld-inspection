@@ -382,6 +382,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         [Paragraph("3.1", table_cell_hdr), Paragraph("Proposed cyber-physical system architecture and 4-stage inspection workflow", table_cell), Paragraph("14", table_cell_hdr)],
         [Paragraph("3.2", table_cell_hdr), Paragraph("Experimental hardware and rotor inspection setup", table_cell), Paragraph("15", table_cell_hdr)],
         [Paragraph("3.3", table_cell_hdr), Paragraph("Isolated weld seam ROI macro specimen", table_cell), Paragraph("15", table_cell_hdr)],
+        [Paragraph("3.4", table_cell_hdr), Paragraph("Dual computational software environment and integrated technology stack", table_cell), Paragraph("17", table_cell_hdr)],
         [Paragraph("4.1", table_cell_hdr), Paragraph("Saliency Sobel filter edge detection map", table_cell), Paragraph("19", table_cell_hdr)],
         [Paragraph("4.2", table_cell_hdr), Paragraph("Smart weld ROI cropper multi-specimen comparison", table_cell), Paragraph("20", table_cell_hdr)],
         [Paragraph("4.3", table_cell_hdr), Paragraph("Full molten droop anomaly boundary preservation", table_cell), Paragraph("21", table_cell_hdr)],
@@ -405,15 +406,15 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     fig_table.setStyle(TableStyle([
         ('GRID', (0,0), (-1,-1), 0.6, colors.black),
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
-        ('TOPPADDING', (0,0), (-1,-1), 2.5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 2.5),
+        ('TOPPADDING', (0,0), (-1,-1), 1.8),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 1.8),
         ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(fig_table)
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 6))
 
     story.append(Paragraph("LIST OF TABLES", chapter_hdr))
-    story.append(Spacer(1, 4))
+    story.append(Spacer(1, 3))
     tbl_data = [
         [Paragraph("<b>Table index</b>", table_cell_hdr), Paragraph("<b>Title</b>", table_cell_hdr), Paragraph("<b>Pg. no.</b>", table_cell_hdr)],
         [Paragraph("3.3", table_cell_hdr), Paragraph("Hardware connections and interface specifications", table_cell), Paragraph("16", table_cell_hdr)],
@@ -429,8 +430,8 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     t_tbl.setStyle(TableStyle([
         ('GRID', (0,0), (-1,-1), 0.6, colors.black),
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
-        ('TOPPADDING', (0,0), (-1,-1), 2.5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 2.5),
+        ('TOPPADDING', (0,0), (-1,-1), 1.8),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 1.8),
         ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(t_tbl)
@@ -678,21 +679,21 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         body_text
     ))
     sw_reqs = [
-        "<b>MATLAB Online (R2024b):</b> Used for rapid signal analysis, row/column intensity profiling, statistical moments calculation (`mean`, `std`, `var`, `skewness`, `kurtosis`), histogram plotting, and Excel data export (`badrotor_pixel_data.xlsx`, `goodrotor_statistical_analysis.xlsx`).",
-        "<b>OpenCV (cv2 4.10):</b> Production image conversions, Sobel gradient edge maps, Otsu adaptive binarization, and morphological closure.",
-        "<b>PyTorch (2.4.1):</b> Transfer learning, convolutional tensor inference, and forward pass evaluation of the MobileNetV3 deep vision classifier.",
-        "<b>Scikit-Learn (1.5.2):</b> Extraction of 15 mathematical descriptors, 2D Principal Component Analysis (PCA), Decision Tree classification, and Random Forest ensemble.",
-        "<b>Scikit-Image (0.24):</b> Computation of Gray-Level Co-occurrence Matrix (GLCM) and Haralick second-order texture moments.",
-        "<b>ReportLab & python-docx:</b> Automated generation of publication-grade ISO 9001:2015 PDF certificates and academic monograph reports in Word/PDF formats.",
-        "<b>HTML5 / JavaScript Web Client:</b> Responsive browser UI with interactive canvas ROI selection and dual download endpoints."
+        "<b>MATLAB Online (R2024b):</b> Rapid signal profiling, row/column mean intensity sweeps, statistical moments calculation (`mean`, `std`, `var`, `skewness`, `kurtosis`), histogram distribution, and Excel export (`badrotor_pixel_data.xlsx`, `goodrotor_statistical_analysis.xlsx`).",
+        "<b>OpenCV (cv2 4.10):</b> Image color-space conversions, dual-axis Sobel gradient edge filtering, Otsu adaptive binarization, and morphological closure.",
+        "<b>PyTorch (2.4.1):</b> MobileNetV3 deep vision transfer learning, convolutional tensor inference, and real-time surface defect classification.",
+        "<b>Scikit-Learn (1.5.2) & Scikit-Image (0.24):</b> 15 physical descriptor extraction, GLCM Haralick texture moments, 2D PCA, Decision Tree, and Random Forest ensemble.",
+        "<b>ReportLab & python-docx:</b> Automated generation of ISO 9001:2015 inspection certificates and academic reports.",
+        "<b>HTML5 / JavaScript Web Client:</b> Interactive browser inspection interface displaying weld seam overlays and automated sorting results."
     ]
     for sw in sw_reqs:
         story.append(Paragraph(f"&bull; {sw}", body_bullet))
 
-    story.append(Paragraph(
-        "The software stack operates fully asynchronously, ensuring non-blocking camera frame ingestion, sub-100ms inference latency, and high operational throughput on the factory floor.",
-        body_text
-    ))
+    story.append(Spacer(1, 4))
+    img_p17 = 'analysis_output/report_assets/fig_software_stack_diagram.png'
+    if os.path.exists(img_p17):
+        story.append(Image(img_p17, width=5.8*72, height=2.87*72))
+        story.append(Paragraph("Fig. 3.4 Dual computational software environment and integrated technology stack", fig_caption))
     story.append(PageBreak())
 
     # =========================================================================
