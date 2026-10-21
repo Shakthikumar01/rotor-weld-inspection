@@ -151,20 +151,29 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     p_hdr("PSG COLLEGE OF TECHNOLOGY", size=16, before=0, after=2)
     p_hdr("(Autonomous Institution)", size=11, bold=False, before=0, after=2)
-    p_hdr("COIMBATORE – 641 004", size=11, bold=False, before=0, after=20)
+    p_hdr("COIMBATORE – 641 004", size=11, bold=False, before=0, after=16)
 
-    p_hdr("ROTOR WELD DEFECT INSPECTION AND QUALITY CLASSIFICATION USING COMPUTER VISION AND MACHINE LEARNING WITH SALIENCY-GUIDED WELD SEAM ANALYSIS", size=14, before=0, after=18)
+    p_hdr("ROTOR WELD DEFECT INSPECTION AND QUALITY CLASSIFICATION USING COMPUTER VISION AND MACHINE LEARNING WITH SALIENCY-GUIDED WELD SEAM ANALYSIS", size=13.5, before=0, after=14)
 
-    p_hdr("SIGNAL PROCESSING AND DIGITAL CONTROL LABORATORY (23U510)", size=11, bold=True, before=0, after=14)
-    p_hdr("SHAKTHIKUMAR D (24U243)", size=13, bold=True, before=0, after=4)
-    p_hdr("3RD YEAR (V SEMESTER)", size=11, bold=True, before=0, after=16)
+    p_hdr("SIGNAL PROCESSING AND DIGITAL CONTROL LABORATORY (23U510)", size=11, bold=True, before=0, after=10)
+
+    team_members = [
+        "SHAKTHI KUMAR M V (24U243)",
+        "PRAVESH V (24U256)",
+        "TANUSH SAAI KUMAR S (24U243)",
+        "DEVAMURUGAN P (25U432)"
+    ]
+    for mem in team_members:
+        p_hdr(mem, size=11.5, bold=True, before=0, after=2)
+
+    p_hdr("3RD YEAR (V SEMESTER)", size=11, bold=True, before=4, after=12)
 
     if has_logo:
-        add_img(logo_path, width_in=1.5)
-    doc.add_paragraph().paragraph_format.space_after = Pt(12)
+        add_img(logo_path, width_in=1.35)
+    doc.add_paragraph().paragraph_format.space_after = Pt(8)
 
-    p_hdr("Programme: B.E. Instrumentation and Control Engineering", size=11, bold=True, before=0, after=4)
-    p_hdr("Branch: DEPARTMENT OF INSTRUMENTATION AND CONTROL SYSTEMS ENGINEERING", size=11, bold=True, before=0, after=10)
+    p_hdr("Programme: B.E. Instrumentation and Control Engineering", size=11, bold=True, before=0, after=3)
+    p_hdr("Branch: DEPARTMENT OF INSTRUMENTATION AND CONTROL SYSTEMS ENGINEERING", size=11, bold=True, before=0, after=8)
     p_hdr("PSG COLLEGE OF TECHNOLOGY", size=15, before=0, after=2)
     p_hdr("COIMBATORE – 641 004", size=11, bold=False, before=0, after=0)
     doc.add_page_break()
@@ -174,22 +183,23 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     p_hdr("PSG COLLEGE OF TECHNOLOGY", size=16, before=0, after=2)
     p_hdr("(Government aided autonomous college affiliated to Anna university, Chennai)", size=11, bold=False, before=0, after=2)
-    p_hdr("COIMBATORE – 641 004", size=11, bold=False, before=0, after=20)
+    p_hdr("COIMBATORE – 641 004", size=11, bold=False, before=0, after=16)
 
-    p_hdr("ROTOR WELD DEFECT INSPECTION AND QUALITY CLASSIFICATION USING COMPUTER VISION AND MACHINE LEARNING WITH SALIENCY-GUIDED WELD SEAM ANALYSIS", size=14, before=0, after=18)
+    p_hdr("ROTOR WELD DEFECT INSPECTION AND QUALITY CLASSIFICATION USING COMPUTER VISION AND MACHINE LEARNING WITH SALIENCY-GUIDED WELD SEAM ANALYSIS", size=13.5, before=0, after=14)
 
-    p_hdr("A REPORT", size=12, before=0, after=2)
-    p_hdr("SUBMITTED BY", size=11, before=0, after=8)
-    p_hdr("SHAKTHIKUMAR D", size=13, before=0, after=2)
-    p_hdr("(24U243)", size=12, before=0, after=16)
+    p_hdr("A REPORT", size=11.5, before=0, after=2)
+    p_hdr("SUBMITTED BY", size=10.5, before=0, after=6)
 
-    p_hdr("In partial fulfilment of the requirement for Signal Processing (23U510)", size=11.5, bold=False, before=0, after=20)
+    for mem in team_members:
+        p_hdr(mem, size=11, bold=True, before=0, after=2)
+
+    p_hdr("In partial fulfilment of the requirement for Signal Processing (23U510)", size=11, bold=False, before=8, after=14)
 
     if has_logo:
-        add_img(logo_path, width_in=1.5)
-    doc.add_paragraph().paragraph_format.space_after = Pt(16)
+        add_img(logo_path, width_in=1.35)
+    doc.add_paragraph().paragraph_format.space_after = Pt(10)
 
-    p_hdr("DEPARTMENT OF INSTRUMENTATION AND CONTROL SYSTEMS ENGINEERING", size=11, bold=True, before=0, after=36)
+    p_hdr("DEPARTMENT OF INSTRUMENTATION AND CONTROL SYSTEMS ENGINEERING", size=11, bold=True, before=0, after=24)
 
     p_fac = doc.add_paragraph()
     p_fac.alignment = WD_ALIGN_PARAGRAPH.RIGHT
