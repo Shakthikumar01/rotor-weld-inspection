@@ -596,7 +596,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         body_text
     ))
     arch_stages = [
-        "<b>Stage 1: Image Acquisition & Exploratory Analysis</b> - An industrial 12 MP CMOS camera captures high-resolution macro images of the cylindrical rotor weld ring. Cross-polarized LED ring lighting eliminates specular glare from reflective copper surfaces, and initial intensity profiles are analyzed in MATLAB Online.",
+        "<b>Stage 1: Optical Acquisition & Exploratory Analysis</b> - High-resolution optical images of the squirrel-cage rotor weld joints are captured using a mobile phone camera under uniform diffused lighting. The raw macro images capture the cylindrical weld seam and end-ring surface, which are transferred to the workstation and analyzed in MATLAB Online for intensity distribution and pixel statistics.",
         "<b>Stage 2: Weld Region Extraction (Adaptive Cropping)</b> - The system automatically isolates the active weld seam from background noise (rotor teeth and mounting fixtures) using Sobel gradient edge maps and Otsu binarization, with bounding box padding to retain protruding molten droop defects without clipping.",
         "<b>Stage 3: Feature Extraction & AI Defect Detection</b> - The system extracts 15 physical descriptors (intensity, contour shape, and GLCM surface texture) and feeds them to an explainable Decision Tree, Random Forest ensemble, and MobileNetV3 deep vision CNN to classify weld soundness.",
         "<b>Stage 4: Industrial 3-Tier Sorting & Quality Reporting</b> - The part is automatically categorized into Tier 1 (Accept / Pass), Tier 2 (Rework / Repair), or Tier 3 (Scrap / Reject), and results are logged on a real-time web dashboard with tamper-proof SHA-256 ISO 9001:2015 certificates."
@@ -632,33 +632,33 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     # =========================================================================
     story.append(Paragraph("3.2 HARDWARE COMPONENTS", sec_hdr))
     story.append(Paragraph(
-        "<b>3.2.1 High-Resolution Optical Camera:</b> 12 MP industrial CMOS image sensor with 25 mm macro lens, capturing 4032 x 3024 raw images under controlled optical geometry.",
+        "<b>3.2.1 Mobile Optical Acquisition Device:</b> A high-resolution smartphone / mobile camera is utilized for capturing optical images of the squirrel-cage rotor weld joints. The camera provides close-range macro focusing to capture surface details, copper weld bead profiles, molten droops, and porosity voids.",
         body_text
     ))
     story.append(Paragraph(
-        "<b>3.2.2 Processing Workstation and Edge Inference Engine:</b> Intel Core multi-threaded host workstation with edge accelerator support (Raspberry Pi 5 / NVIDIA Jetson compatible) for sub-100ms inference.",
+        "<b>3.2.2 Computational Workstation:</b> A personal computer / laptop equipped with an Intel Core multi-threaded processor and 16 GB RAM executes the image preprocessing routines, MATLAB statistical profiling, and Python-based machine learning inference pipelines.",
         body_text
     ))
     story.append(Paragraph(
-        "<b>3.2.3 Industrial Lighting and Fixture Rig:</b> Continuous diffuse ring LED illuminator with cross-polarizing filters mounted on a precision rotary indexing fixture for consistent rotor presentation.",
+        "<b>3.2.3 Inspection Environment and Specimen Stand:</b> Physical rotor specimens are positioned securely on a stable inspection bench under uniform, diffused ambient lighting to prevent heavy directional shadows and specular glare on the reflective copper surfaces.",
         body_text
     ))
     story.append(Paragraph(
-        "<b>3.2.4 Web-Based Inspection Dashboard:</b> Lightweight browser interface rendering client-side HTML5 canvas inspection overlays and asynchronous REST communication.",
+        "<b>3.2.4 Web-Based Inspection Dashboard:</b> A lightweight browser-based graphical user interface provides real-time display of captured rotor images, cropped weld seams, extracted physical features, and classified defect decisions.",
         body_text
     ))
     story.append(Spacer(1, 4))
 
     story.append(Paragraph("3.3 HARDWARE CONNECTIONS AND SPECIFICATIONS (TABLE 3.3)", sec_hdr))
     hw_conn_data = [
-        [Paragraph("<b>MODULE / COMPONENT</b>", table_cell_hdr), Paragraph("<b>HOST INTERFACE</b>", table_cell_hdr), Paragraph("<b>FUNCTION / PURPOSE</b>", table_cell_hdr)],
-        [Paragraph("CMOS Camera Sensor", table_cell), Paragraph("USB 3.0 / GigE", table_cell), Paragraph("High-resolution raw frame ingestion", table_cell)],
-        [Paragraph("LED Illuminator", table_cell), Paragraph("24V DC / PWM GPIO", table_cell), Paragraph("Polarized specular glare elimination", table_cell)],
-        [Paragraph("Rotary Indexer", table_cell), Paragraph("RS-485 / Modbus", table_cell), Paragraph("Automated angular rotor positioning", table_cell)],
-        [Paragraph("Pneumatic Sorting Gate", table_cell), Paragraph("Opto-Isolated Relay", table_cell), Paragraph("3-Tier physical reject actuation", table_cell)],
-        [Paragraph("Host Workstation", table_cell), Paragraph("TCP/IP Ethernet", table_cell), Paragraph("REST API and ISO certificate server", table_cell)],
+        [Paragraph("<b>MODULE / COMPONENT</b>", table_cell_hdr), Paragraph("<b>SYSTEM INTERFACE</b>", table_cell_hdr), Paragraph("<b>FUNCTION / PURPOSE</b>", table_cell_hdr)],
+        [Paragraph("Mobile Phone Camera", table_cell), Paragraph("USB / Wireless Transfer", table_cell), Paragraph("High-resolution optical image capture of rotor welds", table_cell)],
+        [Paragraph("Inspection Bench & Stand", table_cell), Paragraph("Manual Specimen Fixture", table_cell), Paragraph("Stable positioning and orientation of rotor specimens", table_cell)],
+        [Paragraph("Diffused Ambient Lighting", table_cell), Paragraph("Standard Laboratory Light", table_cell), Paragraph("Uniform illumination avoiding heavy shadows and glare", table_cell)],
+        [Paragraph("PC / Laptop Workstation", table_cell), Paragraph("Local System Bus / USB", table_cell), Paragraph("MATLAB analysis, Python preprocessing, and ML inference", table_cell)],
+        [Paragraph("Web Inspection Dashboard", table_cell), Paragraph("Browser / Localhost", table_cell), Paragraph("Visual inspection display and 3-tier classification output", table_cell)],
     ]
-    hw_table = Table(hw_conn_data, colWidths=[130, 110, 235])
+    hw_table = Table(hw_conn_data, colWidths=[130, 120, 225])
     hw_table.setStyle(TableStyle([
         ('GRID', (0,0), (-1,-1), 0.6, colors.black),
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
@@ -1041,7 +1041,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     story.append(Paragraph("5.1 EXPERIMENTAL SETUP", sec_hdr))
     story.append(Paragraph(
-        "The experimental setup comprises an industrial rotor inspection testbed featuring a 12 MP CMOS optical sensor mounted orthogonally over a precision rotary chuck. Diffuse 5500K LED ring illumination with cross-polarizing filters illuminates the rotor end-ring.",
+        "The experimental setup comprises squirrel-cage induction motor rotor specimens examined under controlled optical conditions. Optical images of the rotor end-ring and weld seams are captured using a high-resolution mobile camera positioned over the rotor inspection stand under uniform diffused ambient illumination.",
         body_text
     ))
     story.append(Spacer(1, 4))
@@ -1054,8 +1054,8 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     story.append(Paragraph("5.2 TESTING PROCEDURE", sec_hdr))
     proc = [
-        "1. Mount the rotor specimen onto the indexing spindle under polarized LED illumination.",
-        "2. Trigger optical frame capture via the web inspection studio or camera API.",
+        "1. Position the rotor specimen securely on the inspection stand under uniform diffused lighting.",
+        "2. Capture high-resolution macro optical photographs of the circumferential weld seams using the mobile camera.",
         "3. Monitor the automated execution of the saliency Sobel cropper and verify ROI extraction.",
         "4. Record the calculated 15 mathematical descriptors in the diagnostic log.",
         "5. Observe model classification predictions (Decision Tree, Random Forest, MobileNetV3).",

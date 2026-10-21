@@ -527,7 +527,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("3.1 SYSTEM ARCHITECTURE", size=13, bold=True, center=False, before=4, after=4)
     p_body("The rotor weld defect inspection system is designed as an automated cyber-physical pipeline that inspects squirrel-cage induction motor rotor welds step-by-step-from optical image acquisition to physical reject sorting. The inspection workflow operates across four sequential stages:")
     arch_s = [
-        "Stage 1: Image Acquisition & Exploratory Analysis - An industrial 12 MP CMOS camera captures high-resolution macro images of the cylindrical rotor weld ring. Cross-polarized LED ring lighting eliminates specular glare from reflective copper surfaces, and initial intensity profiles are analyzed in MATLAB Online.",
+        "Stage 1: Optical Acquisition & Exploratory Analysis - High-resolution optical images of the squirrel-cage rotor weld joints are captured using a mobile phone camera under uniform diffused lighting. The raw macro images capture the cylindrical weld seam and end-ring surface, which are transferred to the workstation and analyzed in MATLAB Online for intensity distribution and pixel statistics.",
         "Stage 2: Weld Region Extraction (Adaptive Cropping) - The system automatically isolates the active weld seam from background noise (rotor teeth and mounting fixtures) using Sobel gradient edge maps and Otsu binarization, with bounding box padding to retain protruding molten droop defects without clipping.",
         "Stage 3: Feature Extraction & AI Defect Detection - The system extracts 15 physical descriptors (intensity, contour shape, and GLCM surface texture) and feeds them to an explainable Decision Tree, Random Forest ensemble, and MobileNetV3 deep vision CNN to classify weld soundness.",
         "Stage 4: Industrial 3-Tier Sorting & Quality Reporting - The part is automatically categorized into Tier 1 (Accept / Pass), Tier 2 (Rework / Repair), or Tier 3 (Scrap / Reject), and results are logged on a real-time web dashboard with tamper-proof SHA-256 ISO 9001:2015 certificates."
@@ -553,19 +553,19 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # PAGE 16: 3.2 HARDWARE COMPONENTS & 3.3 HARDWARE CONNECTIONS TABLE
     # =========================================================================
     p_hdr("3.2 HARDWARE COMPONENTS", size=13, bold=True, center=False, before=0, after=4)
-    p_body("3.2.1 High-Resolution Optical Camera: 12 MP industrial CMOS image sensor with 25 mm macro lens, capturing 4032 x 3024 raw images under controlled optical geometry.")
-    p_body("3.2.2 Processing Workstation and Edge Inference Engine: Intel Core multi-threaded host workstation with edge accelerator support (Raspberry Pi 5 / NVIDIA Jetson compatible) for sub-100ms inference.")
-    p_body("3.2.3 Industrial Lighting and Fixture Rig: Continuous diffuse ring LED illuminator with cross-polarizing filters mounted on a precision rotary indexing fixture for consistent rotor presentation.")
-    p_body("3.2.4 Web-Based Inspection Dashboard: Lightweight browser interface rendering client-side HTML5 canvas inspection overlays and asynchronous REST communication.")
+    p_body("3.2.1 Mobile Optical Acquisition Device: A high-resolution smartphone / mobile camera is utilized for capturing optical images of the squirrel-cage rotor weld joints. The camera provides close-range macro focusing to capture surface details, copper weld bead profiles, molten droops, and porosity voids.")
+    p_body("3.2.2 Computational Workstation: A personal computer / laptop equipped with an Intel Core multi-threaded processor and 16 GB RAM executes the image preprocessing routines, MATLAB statistical profiling, and Python-based machine learning inference pipelines.")
+    p_body("3.2.3 Inspection Environment and Specimen Stand: Physical rotor specimens are positioned securely on a stable inspection bench under uniform, diffused ambient lighting to prevent heavy directional shadows and specular glare on the reflective copper surfaces.")
+    p_body("3.2.4 Web-Based Inspection Dashboard: A lightweight browser-based graphical user interface provides real-time display of captured rotor images, cropped weld seams, extracted physical features, and classified defect decisions.")
 
     p_hdr("3.3 HARDWARE CONNECTIONS AND SPECIFICATIONS (TABLE 3.3)", size=12, bold=True, center=False, before=6, after=4)
     hw_rows = [
-        ("MODULE / COMPONENT", "HOST INTERFACE", "FUNCTION / PURPOSE"),
-        ("CMOS Camera Sensor", "USB 3.0 / GigE", "High-resolution raw frame ingestion"),
-        ("LED Illuminator", "24V DC / PWM GPIO", "Polarized specular glare elimination"),
-        ("Rotary Indexer", "RS-485 / Modbus", "Automated angular rotor positioning"),
-        ("Pneumatic Sorting Gate", "Opto-Isolated Relay", "3-Tier physical reject actuation"),
-        ("Host Workstation", "TCP/IP Ethernet", "REST API and ISO certificate server"),
+        ("MODULE / COMPONENT", "SYSTEM INTERFACE", "FUNCTION / PURPOSE"),
+        ("Mobile Phone Camera", "USB / Wireless Transfer", "High-resolution optical image capture of rotor welds"),
+        ("Inspection Bench & Stand", "Manual Specimen Fixture", "Stable positioning and orientation of rotor specimens"),
+        ("Diffused Ambient Lighting", "Standard Laboratory Light", "Uniform illumination avoiding heavy shadows and glare"),
+        ("PC / Laptop Workstation", "Local System Bus / USB", "MATLAB analysis, Python preprocessing, and ML inference"),
+        ("Web Inspection Dashboard", "Browser / Localhost", "Visual inspection display and 3-tier classification output"),
     ]
     make_table(hw_rows, [Inches(1.8), Inches(1.5), Inches(3.4)], align_center_cols=(1,))
     doc.add_page_break()
@@ -812,12 +812,12 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("EXPERIMENTAL SETUP AND TESTING", size=14, before=0, after=12)
 
     p_hdr("5.1 EXPERIMENTAL SETUP", size=13, bold=True, center=False, before=4, after=4)
-    p_body("The experimental setup comprises an industrial rotor inspection testbed featuring a 12 MP CMOS optical sensor mounted orthogonally over a precision rotary chuck. Diffuse 5500K LED ring illumination with cross-polarizing filters illuminates the rotor end-ring.")
+    p_body("The experimental setup comprises squirrel-cage induction motor rotor specimens examined under controlled optical conditions. Optical images of the rotor end-ring and weld seams are captured using a high-resolution mobile camera positioned over the rotor inspection stand under uniform diffused ambient illumination.")
 
     p_hdr("5.2 TESTING PROCEDURE", size=13, bold=True, center=False, before=6, after=4)
     p_steps = [
-        "1. Mount the rotor specimen onto the indexing spindle under polarized LED illumination.",
-        "2. Trigger optical frame capture via the web inspection studio or camera API.",
+        "1. Position the rotor specimen securely on the inspection stand under uniform diffused lighting.",
+        "2. Capture high-resolution macro optical photographs of the circumferential weld seams using the mobile camera.",
         "3. Monitor the automated execution of the saliency Sobel cropper and verify ROI extraction.",
         "4. Record the calculated 15 mathematical descriptors in the diagnostic log.",
         "5. Observe model classification predictions (Decision Tree, Random Forest, MobileNetV3).",
