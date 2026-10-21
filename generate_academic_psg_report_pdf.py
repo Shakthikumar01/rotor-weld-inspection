@@ -421,6 +421,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         [Paragraph("<b>Table index</b>", table_cell_hdr), Paragraph("<b>Title</b>", table_cell_hdr), Paragraph("<b>Pg. no.</b>", table_cell_hdr)],
         [Paragraph("3.3", table_cell_hdr), Paragraph("Hardware connections and interface specifications", table_cell), Paragraph("16", table_cell_hdr)],
         [Paragraph("4.2", table_cell_hdr), Paragraph("Preprocessing and model configuration parameters", table_cell), Paragraph("18", table_cell_hdr)],
+        [Paragraph("4.4", table_cell_hdr), Paragraph("Mathematical formulation of the 15 extracted visual feature descriptors", table_cell), Paragraph("22", table_cell_hdr)],
         [Paragraph("4.6", table_cell_hdr), Paragraph("Industrial 3-tier sorting and reject actuation logic", table_cell), Paragraph("24", table_cell_hdr)],
         [Paragraph("5.3", table_cell_hdr), Paragraph("Parameters used during experimental testing", table_cell), Paragraph("29", table_cell_hdr)],
         [Paragraph("5.5", table_cell_hdr), Paragraph("Comprehensive subsystem test record (Parts 1 & 2)", table_cell), Paragraph("30", table_cell_hdr)],
@@ -831,38 +832,59 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 22: 4.4 MATHEMATICAL FEATURE EXTRACTION FORMULATION
+    # PAGE 22: 4.4 MATHEMATICAL FEATURE EXTRACTION FORMULATION & TABLE 4.4
     # =========================================================================
     story.append(Paragraph("4.4 MATHEMATICAL FEATURE EXTRACTION FORMULATION", sec_hdr))
     story.append(Paragraph(
-        "A quantitative feature vector of 15 descriptors is formulated across three complementary analytical domains:",
+        "A quantitative feature vector of 15 descriptors is formulated across three complementary analytical domains to characterize the physical soundness of the rotor weld joint. Table 4.4 details the mathematical formulation and physical inspection significance of each extracted feature.",
         body_text
     ))
+    story.append(Spacer(1, 4))
+
+    table_group_hdr = ParagraphStyle('TGH', fontName='Times-Bold', fontSize=9, leading=11, textColor=colors.HexColor('#1F4E79'))
+
+    t44_data = [
+        [Paragraph("<b>DESCRIPTOR & SYMBOL</b>", table_cell_hdr), Paragraph("<b>MATHEMATICAL FORMULATION</b>", table_cell_hdr), Paragraph("<b>PHYSICAL SIGNIFICANCE</b>", table_cell_hdr)],
+        # Domain 1
+        [Paragraph("<b>Domain 1: Statistical Intensity & Density Descriptors</b>", table_group_hdr), "", ""],
+        [Paragraph("f<sub>1</sub>: Mean Luminance (&mu;)", table_cell_bold), Paragraph("&mu; = (1/N) &Sigma; I<sub>i</sub>", table_cell), Paragraph("Baseline surface reflectance & copper shine", table_cell)],
+        [Paragraph("f<sub>2</sub>: Standard Deviation (&sigma;)", table_cell_bold), Paragraph("&sigma; = &radic;[ (1/N) &Sigma; (I<sub>i</sub> - &mu;)<sup>2</sup> ]", table_cell), Paragraph("Surface roughness & local intensity variations", table_cell)],
+        [Paragraph("f<sub>3</sub>: Intensity Skewness (&gamma;<sub>1</sub>)", table_cell_bold), Paragraph("&gamma;<sub>1</sub> = (1/N&sigma;<sup>3</sup>) &Sigma; (I<sub>i</sub> - &mu;)<sup>3</sup>", table_cell), Paragraph("Intensity asymmetry (shadows vs. bright glints)", table_cell)],
+        [Paragraph("f<sub>4</sub>: Intensity Kurtosis (&beta;<sub>2</sub>)", table_cell_bold), Paragraph("&beta;<sub>2</sub> = (1/N&sigma;<sup>4</sup>) &Sigma; (I<sub>i</sub> - &mu;)<sup>4</sup>", table_cell), Paragraph("Sharp spatter peaks & steep porosity voids", table_cell)],
+        [Paragraph("f<sub>5</sub>: Edge Pixel Density (&rho;)", table_cell_bold), Paragraph("&rho; = N<sub>edge</sub> / N<sub>total</sub>", table_cell), Paragraph("Boundary sharpness & edge discontinuity ratio", table_cell)],
+        # Domain 2
+        [Paragraph("<b>Domain 2: Morphological & Geometric Contour Descriptors</b>", table_group_hdr), "", ""],
+        [Paragraph("f<sub>6</sub>: Contour Area (A)", table_cell_bold), Paragraph("A = &Sigma; 1 for (x, y) &isin; Contour", table_cell), Paragraph("Total enclosed physical area of weld fusion zone", table_cell)],
+        [Paragraph("f<sub>7</sub>: Contour Perimeter (P)", table_cell_bold), Paragraph("P = &Sigma; ds along boundary", table_cell), Paragraph("Circumferential boundary length of weld seam", table_cell)],
+        [Paragraph("f<sub>8</sub>: Compactness / Circularity (C)", table_cell_bold), Paragraph("C = 4&pi;A / P<sup>2</sup>", table_cell), Paragraph("Circular symmetry & uniform circular bead shape", table_cell)],
+        [Paragraph("f<sub>9</sub>: Solidity (S)", table_cell_bold), Paragraph("S = A(Contour) / A(Convex Hull)", table_cell), Paragraph("Detects protruding molten droops & severe sag", table_cell)],
+        [Paragraph("f<sub>10</sub>: Eccentricity (e)", table_cell_bold), Paragraph("e = &radic;[ 1 - (b<sup>2</sup>/a<sup>2</sup>) ]", table_cell), Paragraph("Oblong deformation & elliptical weld distortion", table_cell)],
+        # Domain 3
+        [Paragraph("<b>Domain 3: GLCM Haralick Texture Descriptors</b>", table_group_hdr), "", ""],
+        [Paragraph("f<sub>11</sub>: GLCM Contrast", table_cell_bold), Paragraph("&Sigma; |i - j|<sup>2</sup> P(i, j)", table_cell), Paragraph("Local micro-roughness & bead ripple ridges", table_cell)],
+        [Paragraph("f<sub>12</sub>: GLCM Energy (ASM)", table_cell_bold), Paragraph("&Sigma; P(i, j)<sup>2</sup>", table_cell), Paragraph("Textural uniformity across fusion boundary", table_cell)],
+        [Paragraph("f<sub>13</sub>: GLCM Entropy", table_cell_bold), Paragraph("- &Sigma; P(i, j) log<sub>2</sub> P(i, j)", table_cell), Paragraph("Chaotic disorder, roughness & micro-porosity", table_cell)],
+        [Paragraph("f<sub>14</sub>: GLCM Homogeneity", table_cell_bold), Paragraph("&Sigma; P(i, j) / (1 + |i - j|)", table_cell), Paragraph("Closeness of elemental distribution to diagonal", table_cell)],
+        [Paragraph("f<sub>15</sub>: GLCM Correlation", table_cell_bold), Paragraph("&Sigma; (i-&mu;<sub>i</sub>)(j-&mu;<sub>j</sub>)P(i,j) / (&sigma;<sub>i</sub>&sigma;<sub>j</sub>)", table_cell), Paragraph("Linear structural pattern along weld seam axis", table_cell)],
+    ]
+    t44 = Table(t44_data, colWidths=[125, 155, 195])
+    t44.setStyle(TableStyle([
+        ('GRID', (0,0), (-1,-1), 0.5, colors.black),
+        ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
+        ('TOPPADDING', (0,0), (-1,-1), 2),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 2),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
+        ('SPAN', (0,1), (2,1)),
+        ('BACKGROUND', (0,1), (2,1), colors.HexColor('#EBF3FA')),
+        ('SPAN', (0,7), (2,7)),
+        ('BACKGROUND', (0,7), (2,7), colors.HexColor('#EAF7ED')),
+        ('SPAN', (0,13), (2,13)),
+        ('BACKGROUND', (0,13), (2,13), colors.HexColor('#F3EDFA')),
+    ]))
+    story.append(t44)
+    story.append(Spacer(1, 4))
     story.append(Paragraph(
-        "<b>4.4.1 Intensity and Density Descriptors:</b><br/>"
-        "&bull; Mean Luminance: mu = (1/N) Sum I<sub>i</sub><br/>"
-        "&bull; Standard Deviation: sigma = sqrt[ (1/N) Sum (I<sub>i</sub> - mu)<sup>2</sup> ]<br/>"
-        "&bull; Intensity Skewness: gamma<sub>1</sub> = (1/Nsigma<sup>3</sup>) Sum (I<sub>i</sub> - mu)<sup>3</sup><br/>"
-        "&bull; Intensity Kurtosis: beta<sub>2</sub> = (1/Nsigma<sup>4</sup>) Sum (I<sub>i</sub> - mu)<sup>4</sup><br/>"
-        "&bull; Edge Pixel Density: rho = (Count of edge pixels) / (Total ROI Area)",
-        body_text
-    ))
-    story.append(Paragraph(
-        "<b>4.4.2 Morphological and Geometric Contours:</b><br/>"
-        "&bull; Contour Area (A) and Perimeter (P)<br/>"
-        "&bull; Compactness (Circularity): C = 4piA / P<sup>2</sup><br/>"
-        "&bull; Solidity: S = A(Contour) / A(Convex Hull)<br/>"
-        "&bull; Aspect Ratio: AR = Width / Height<br/>"
-        "&bull; Eccentricity: e = sqrt(1 - b<sup>2</sup>/a<sup>2</sup>)",
-        body_text
-    ))
-    story.append(Paragraph(
-        "<b>4.4.3 GLCM Haralick Texture Descriptors:</b><br/>"
-        "&bull; Contrast: Sum |i - j|<sup>2</sup> P(i, j)<br/>"
-        "&bull; Energy (Angular Second Moment): Sum P(i, j)<sup>2</sup><br/>"
-        "&bull; Entropy: -Sum P(i, j) log<sub>2</sub> P(i, j)<br/>"
-        "&bull; Homogeneity: Sum P(i, j) / (1 + |i - j|)<br/>"
-        "&bull; Correlation: Sum (i - mu<sub>i</sub>)(j - mu<sub>j</sub>) P(i, j) / (sigma<sub>i</sub> sigma<sub>j</sub>)",
+        "These 15 numerical features serve as the standardized input vector for Principal Component Analysis (PCA) and subsequent machine learning classification models.",
         body_text
     ))
     story.append(PageBreak())

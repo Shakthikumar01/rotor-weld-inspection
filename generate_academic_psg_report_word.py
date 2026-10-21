@@ -410,6 +410,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         ("Table index", "Title", "Pg. no."),
         ("3.3", "Hardware connections and interface specifications", "16"),
         ("4.2", "Preprocessing and model configuration parameters", "18"),
+        ("4.4", "Mathematical formulation of the 15 extracted visual feature descriptors", "22"),
         ("4.6", "Industrial 3-tier sorting and reject actuation logic", "24"),
         ("5.3", "Parameters used during experimental testing", "29"),
         ("5.5", "Comprehensive subsystem test record (Parts 1 & 2)", "30"),
@@ -684,31 +685,37 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     doc.add_page_break()
 
     # =========================================================================
-    # PAGE 22: 4.4 MATHEMATICAL FEATURE EXTRACTION FORMULATION
+    # PAGE 22: 4.4 MATHEMATICAL FEATURE EXTRACTION FORMULATION & TABLE 4.4
     # =========================================================================
     p_hdr("4.4 MATHEMATICAL FEATURE EXTRACTION FORMULATION", size=13, bold=True, center=False, before=0, after=4)
-    p_body("A quantitative feature vector of 15 descriptors is formulated across three complementary analytical domains:")
+    p_body("A quantitative feature vector of 15 descriptors is formulated across three complementary analytical domains to characterize the physical soundness of the rotor weld joint. Table 4.4 details the mathematical formulation and physical inspection significance of each extracted feature.")
 
-    p_body("4.4.1 Intensity and Density Descriptors:\n"
-           "- Mean Luminance: mu = (1/N) Sum I_i\n"
-           "- Standard Deviation: sigma = sqrt[ (1/N) Sum (I_i - mu)^2 ]\n"
-           "- Intensity Skewness: gamma_1 = (1/N sigma^3) Sum (I_i - mu)^3\n"
-           "- Intensity Kurtosis: beta_2 = (1/N sigma^4) Sum (I_i - mu)^4\n"
-           "- Edge Pixel Density: rho = (Count of edge pixels) / (Total ROI Area)")
+    p_hdr("Table 4.4 Mathematical formulation and physical significance of the 15 extracted visual feature descriptors", size=11, bold=True, center=False, before=4, after=4)
 
-    p_body("4.4.2 Morphological and Geometric Contours:\n"
-           "- Contour Area (A) and Perimeter (P)\n"
-           "- Compactness (Circularity): C = 4*pi*A / P^2\n"
-           "- Solidity: S = A(Contour) / A(Convex Hull)\n"
-           "- Aspect Ratio: AR = Width / Height\n"
-           "- Eccentricity: e = sqrt(1 - b^2 / a^2)")
+    t44_rows = [
+        ("DESCRIPTOR & SYMBOL", "MATHEMATICAL FORMULATION", "PHYSICAL SIGNIFICANCE"),
+        ("Domain 1: Statistical Intensity & Density Descriptors", "", ""),
+        ("f1: Mean Luminance (mu)", "mu = (1/N) Sum I_i", "Baseline surface reflectance & copper shine"),
+        ("f2: Standard Deviation (sigma)", "sigma = sqrt[ (1/N) Sum (I_i - mu)^2 ]", "Surface roughness & local intensity variations"),
+        ("f3: Intensity Skewness (gamma_1)", "gamma_1 = (1/N sigma^3) Sum (I_i - mu)^3", "Intensity asymmetry (shadows vs. bright glints)"),
+        ("f4: Intensity Kurtosis (beta_2)", "beta_2 = (1/N sigma^4) Sum (I_i - mu)^4", "Sharp spatter peaks & steep porosity voids"),
+        ("f5: Edge Pixel Density (rho)", "rho = N_edge / N_total", "Boundary sharpness & edge discontinuity ratio"),
+        ("Domain 2: Morphological & Geometric Contour Descriptors", "", ""),
+        ("f6: Contour Area (A)", "A = Sum 1 for (x, y) in Contour", "Total enclosed physical area of weld fusion zone"),
+        ("f7: Contour Perimeter (P)", "P = Sum ds along boundary", "Circumferential boundary length of weld seam"),
+        ("f8: Compactness (Circularity)", "C = 4*pi*A / P^2", "Circular symmetry & uniform circular bead shape"),
+        ("f9: Solidity (S)", "S = A(Contour) / A(Convex Hull)", "Detects protruding molten droops & severe sag"),
+        ("f10: Eccentricity (e)", "e = sqrt[ 1 - (b^2 / a^2) ]", "Oblong deformation & elliptical weld distortion"),
+        ("Domain 3: GLCM Haralick Texture Descriptors", "", ""),
+        ("f11: GLCM Contrast", "Sum |i - j|^2 P(i, j)", "Local micro-roughness & bead ripple ridges"),
+        ("f12: GLCM Energy (ASM)", "Sum P(i, j)^2", "Textural uniformity across fusion boundary"),
+        ("f13: GLCM Entropy", "- Sum P(i, j) log2(P(i, j))", "Chaotic disorder, roughness & micro-porosity"),
+        ("f14: GLCM Homogeneity", "Sum P(i, j) / (1 + |i - j|)", "Closeness of distribution to diagonal"),
+        ("f15: GLCM Correlation", "Sum (i-mu_i)(j-mu_j)P(i,j) / (sigma_i sigma_j)", "Linear structural pattern along weld seam axis"),
+    ]
+    make_table(t44_rows, [Inches(1.8), Inches(2.2), Inches(2.7)], bold_first_col_headers=False)
 
-    p_body("4.4.3 GLCM Haralick Texture Descriptors:\n"
-           "- Contrast: Sum |i - j|^2 P(i, j)\n"
-           "- Energy (Angular Second Moment): Sum P(i, j)^2\n"
-           "- Entropy: -Sum P(i, j) log2(P(i, j))\n"
-           "- Homogeneity: Sum P(i, j) / (1 + |i - j|)\n"
-           "- Correlation: Sum (i - mu_i)(j - mu_j) P(i, j) / (sigma_i sigma_j)")
+    p_body("These 15 numerical features serve as the standardized input vector for Principal Component Analysis (PCA) and subsequent machine learning classification models.")
     doc.add_page_break()
 
     # =========================================================================
