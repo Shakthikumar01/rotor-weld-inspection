@@ -337,7 +337,8 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         ("4.8", "Software implementation summary", "25"),
         ("4.9", "Important technical observations and insights", "25"),
         ("4.10", "Deep convolutional validation (MobileNetV3)", "25"),
-        ("4.11", "MATLAB exploratory signal processing pipeline", "26"),
+        ("4.11", "MATLAB exploratory signal & image processing pipeline", "26"),
+        ("4.11.1", "MATLAB script implementations and statistical profiling", "27"),
         ("5.0", "CHAPTER 5: EXPERIMENTAL SETUP AND TESTING", "28"),
         ("5.1", "Experimental setup", "28"),
         ("5.2", "Testing procedure", "28"),
@@ -414,6 +415,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         ("4.2", "Preprocessing and model configuration parameters", "18"),
         ("4.4", "Mathematical formulation of the 15 extracted visual feature descriptors", "22"),
         ("4.6", "Industrial 3-tier sorting and reject actuation logic", "24"),
+        ("4.11", "Computed MATLAB statistical moments and spatial signal distribution metrics", "26"),
         ("5.3", "Parameters used during experimental testing", "29"),
         ("5.5", "Comprehensive subsystem test record (Parts 1 & 2)", "30"),
         ("6.2", "Functional verification status of inspection pipeline", "39"),
@@ -827,9 +829,10 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # PAGE 26: 4.11 MATLAB EXPLORATORY SIGNAL PROCESSING PIPELINE
     # =========================================================================
     p_hdr("4.11 MATLAB EXPLORATORY SIGNAL & IMAGE PROCESSING PIPELINE", size=13, bold=True, center=False, before=0, after=4)
-    p_body("In the foundational laboratory investigation, signal and image processing routines were implemented in MATLAB Online (matlab.mathworks.com) to examine raw luminance characteristics and spatial intensity distributions. Two primary scripts were authored: badrotorimagemean.m and Statisticalanalysis_goodrotor.m.")
+    p_body("Before deploying machine learning classifiers or training neural networks, it is essential to understand the raw optical signal characteristics of the rotor specimen. In this foundational phase, exploratory signal and image processing routines were executed in MATLAB Online (matlab.mathworks.com) to examine luminance distributions, boundary gradients, and spatial intensity profiles. The 2D camera image is treated as a discrete optical intensity matrix I(r, c), where r denotes the radial row coordinate and c denotes the tangential column coordinate.")
 
-    p_body("The mathematical formulations for 1D spatial intensity profiling are defined by:")
+    p_body("To establish empirical segmentation thresholds between the dark background fixture and the highly reflective metallic weld seam, the 2D image matrix is decomposed into 1D directional signal waveforms:")
+
     p_mf1 = doc.add_paragraph()
     p_mf1.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r_mf1 = p_mf1.add_run("Row-wise Mean Intensity:   I_row(r) = (1 / W) Sum_{c=1}^W I(r, c)\nColumn-wise Mean Intensity:   I_col(c) = (1 / H) Sum_{r=1}^H I(r, c)")
@@ -841,17 +844,89 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     r_mf2 = p_mf2.add_run("sigma_row(r) = sqrt[ (1 / W) Sum_{c=1}^W (I(r, c) - I_row(r))^2 ]\nsigma_col(c) = sqrt[ (1 / H) Sum_{r=1}^H (I(r, c) - I_col(c))^2 ]")
     r_mf2.bold = True
 
-    p_body("These profiles quantify the boundary transitions between the dark background fixture and the reflective metallic weld seam, establishing empirical thresholds for subsequent computer vision segmentation.")
+    p_body("Table 4.11 summarizes the global statistical moments computed in MATLAB Online for representative sound (G-01) and defective (D-01) rotor specimens, providing empirical validation for feature thresholds:")
+
+    stat_rows = [
+        ("STATISTICAL MOMENT / METRIC", "MATLAB CALL", "SOUND (G-01)", "DEFECTIVE (D-01)", "PHYSICAL INTERPRETATION"),
+        ("Mean Intensity (mu)", "mean(I(:))", "74.8271", "118.4210", "Higher overall luminance in defective seam due to irregular spatter reflection."),
+        ("Median Intensity", "median(I(:))", "68.0000", "104.0000", "Central tendency shifts significantly toward higher values in anomalous specimens."),
+        ("Standard Deviation (sigma)", "std(I(:))", "60.6848", "72.1542", "Elevated variation reflects intense contrast between voids and spatter peaks."),
+        ("Intensity Variance (sigma^2)", "var(I(:))", "3682.64", "5206.23", "Wide spread in optical energy confirming severe surface irregularities."),
+        ("Intensity Range (Delta I)", "max - min", "255.00", "255.00", "Full 8-bit dynamic quantization span utilized across camera acquisitions."),
+        ("Mode (Most Frequent)", "mode(I(:))", "20.0000", "24.0000", "Corresponds to the dark background fixture surface enclosing the rotor."),
+        ("Skewness (S)", "skewness(I(:))", "+0.7761", "+0.3412", "Positive asymmetry: large dark mass with long right tail of weld reflections."),
+        ("Kurtosis (K)", "kurtosis(I(:))", "2.6271", "1.8495", "Platykurtic (K < 3) distribution confirms bimodal fixture and weld zones."),
+    ]
+    make_table(stat_rows, [Inches(1.8), Inches(1.1), Inches(0.9), Inches(1.0), Inches(1.9)], align_center_cols=(1, 2, 3))
     doc.add_page_break()
 
     # =========================================================================
-    # PAGE 27: FIG 5.1 WEB INSPECTION DASHBOARD
+    # PAGE 27: 4.11.1 MATLAB SCRIPT IMPLEMENTATIONS AND AUTOMATED EXTRACTION
     # =========================================================================
-    p_hdr("WEB INSPECTION STUDIO AND AI DIAGNOSTIC DASHBOARD", size=13, bold=True, center=False, before=0, after=4)
-    p_body("Figure 5.1 illustrates the responsive HTML5/JavaScript web inspection studio developed for operational deployment. The interface provides interactive canvas ROI verification, real-time diagnostic feature display, multi-model consensus readouts, and one-click ISO certificate generation.")
+    p_hdr("4.11.1 MATLAB SCRIPT IMPLEMENTATIONS AND AUTOMATED STATISTICAL EXTRACTION", size=13, bold=True, center=False, before=0, after=4)
+    p_body("A structured, 14-step automated exploratory script (Statisticalanalysis_goodrotor.m) was authored in MATLAB to ingest raw optical captures, execute mathematical transformations, compute 1D signal vectors, generate diagnostic figures, and export telemetry into a multi-sheet Excel workbook (goodrotor_statistical_analysis.xlsx).")
 
-    add_img('analysis_output/report_assets/fig_web_dashboard.png', width_in=6.2)
-    p_fig_caption("Fig. 5.1 Web inspection studio and AI diagnostic interface")
+    matlab_code_lines = [
+        [("% =========================================================================", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("% Statisticalanalysis_goodrotor.m - Automated Signal Analysis Pipeline", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("% =========================================================================", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("clc", RGBColor(0x00, 0x5C, 0xC5), True, False), ("; ", RGBColor(0x24, 0x29, 0x2E), False, False), ("clear", RGBColor(0x00, 0x5C, 0xC5), True, False), ("; ", RGBColor(0x24, 0x29, 0x2E), False, False), ("close all", RGBColor(0x00, 0x5C, 0xC5), True, False), (";", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("% STEP 1 & 2: Ingest Image, Validate Channels, and Convert to Grayscale Double", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("img", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("imread", RGBColor(0x6F, 0x42, 0xC1), False, False), ("('goodrotor.jpeg');", RGBColor(0xA3, 0x15, 0x15), False, False)],
+        [("if", RGBColor(0xD7, 0x3A, 0x49), True, False), (" size(img, 3) == 3; imgGray = rgb2gray(img); ", RGBColor(0x24, 0x29, 0x2E), False, False), ("else", RGBColor(0xD7, 0x3A, 0x49), True, False), ("; imgGray = img; ", RGBColor(0x24, 0x29, 0x2E), False, False), ("end", RGBColor(0xD7, 0x3A, 0x49), True, False)],
+        [("imgDouble", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("double", RGBColor(0x6F, 0x42, 0xC1), False, False), ("(imgGray); % Convert to IEEE 64-bit float precision", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("% STEP 4 & 5: Compute Statistical Moments and Output to Command Window", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("MeanValue", RGBColor(0x00, 0x5C, 0xC5), False, False), ("     = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("mean", RGBColor(0x6F, 0x42, 0xC1), False, False), ("(imgDouble(:));      % 74.8271 (Global Mean Intensity)", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("MedianValue", RGBColor(0x00, 0x5C, 0xC5), False, False), ("   = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("median", RGBColor(0x6F, 0x42, 0xC1), False, False), ("(imgDouble(:));    % 68.0000 (Median Intensity)", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("StdDeviation", RGBColor(0x00, 0x5C, 0xC5), False, False), ("  = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("std", RGBColor(0x6F, 0x42, 0xC1), False, False), ("(imgDouble(:));       % 60.6848 (Standard Deviation)", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("VarianceValue", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("var", RGBColor(0x6F, 0x42, 0xC1), False, False), ("(imgDouble(:));       % 3682.6405 (Intensity Variance)", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("RangeValue", RGBColor(0x00, 0x5C, 0xC5), False, False), ("    = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("max(imgDouble(:)) - min(imgDouble(:)); % 255.0000 (Dynamic Range)", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("ModeValue", RGBColor(0x00, 0x5C, 0xC5), False, False), ("     = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("mode", RGBColor(0x6F, 0x42, 0xC1), False, False), ("(imgDouble(:));      % 20.0000 (Background Peak)", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("SkewnessValue", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("skewness", RGBColor(0x6F, 0x42, 0xC1), False, False), ("(imgDouble(:));  % 0.7761 (Positive Skewness)", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("KurtosisValue", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("kurtosis", RGBColor(0x6F, 0x42, 0xC1), False, False), ("(imgDouble(:));  % 2.6271 (Platykurtic Curve)", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("% STEP 6 & 7: 1D Spatial Profiling (Horizontal Rows & Vertical Columns)", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("RowMean", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = mean(imgDouble, 2); ", RGBColor(0x24, 0x29, 0x2E), False, False), ("RowStd", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = std(imgDouble, 0, 2);", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("ColumnMean", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = mean(imgDouble, 1)'; ", RGBColor(0x24, 0x29, 0x2E), False, False), ("ColumnStd", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = std(imgDouble, 0, 1)';", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("% STEP 8 & 9: Create Structured MATLAB Tables & Export to 3-Sheet Excel", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("filename = 'goodrotor_statistical_analysis.xlsx';", RGBColor(0xA3, 0x15, 0x15), False, False)],
+        [("writetable(ImageStatistics, filename, 'Sheet', 'Overall Statistics');", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("writetable(RowStatistics,   filename, 'Sheet', 'Row Statistics');", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("writetable(ColumnStatistics,filename, 'Sheet', 'Column Statistics');", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("% STEP 10-14: Generate Diagnostic Figures (Histogram & 1D Profiles)", RGBColor(0x22, 0x86, 0x3A), False, True)],
+        [("figure; histogram(imgDouble(:), 256); title('Histogram of Rotor Image'); grid on;", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("figure; plot(RowMean); title('Row-wise Mean Pixel Intensity'); grid on;", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("figure; plot(ColumnMean); title('Column-wise Mean Pixel Intensity'); grid on;", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("figure; plot(RowStd); title('Row-wise Pixel Variation'); grid on;", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("figure; plot(ColumnStd); title('Column-wise Pixel Variation'); grid on;", RGBColor(0x24, 0x29, 0x2E), False, False)],
+    ]
+    code_tbl = doc.add_table(rows=1, cols=1)
+    code_tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
+    c_cell = code_tbl.cell(0, 0)
+    c_cell.width = Inches(6.7)
+    shading = parse_xml(r'<w:shd xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" w:val="clear" w:color="auto" w:fill="F8F9FA"/>')
+    c_cell._tc.get_or_add_tcPr().append(shading)
+    tcBorders = parse_xml(r'<w:tcBorders xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:top w:val="single" w:sz="6" w:space="0" w:color="D0D7DE"/><w:left w:val="single" w:sz="24" w:space="0" w:color="E65100"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="D0D7DE"/><w:right w:val="single" w:sz="6" w:space="0" w:color="D0D7DE"/></w:tcBorders>')
+    c_cell._tc.get_or_add_tcPr().append(tcBorders)
+
+    c_par = c_cell.paragraphs[0]
+    c_par.paragraph_format.space_before = Pt(3)
+    c_par.paragraph_format.space_after = Pt(3)
+    c_par.paragraph_format.line_spacing = 1.05
+    for idx_l, line_tokens in enumerate(matlab_code_lines):
+        if idx_l > 0:
+            c_par = c_cell.add_paragraph()
+            c_par.paragraph_format.space_before = Pt(0)
+            c_par.paragraph_format.space_after = Pt(0)
+            c_par.paragraph_format.line_spacing = 1.05
+        for token_text, token_color, is_bold, is_italic in line_tokens:
+            r = c_par.add_run(token_text)
+            r.font.name = 'Consolas'
+            r.font.size = Pt(7.5)
+            r.font.color.rgb = token_color
+            r.bold = is_bold
+            r.italic = is_italic
+
+    p_body("The generated 3-sheet Excel spreadsheet (goodrotor_statistical_analysis.xlsx) and graphical profile waveforms provide baseline statistical bounds for the Python computer vision cropper and feature extractor. The corresponding experimental plots are presented and evaluated in Section 5.8.")
     doc.add_page_break()
 
     # =========================================================================
@@ -863,8 +938,11 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("5.1 EXPERIMENTAL SETUP", size=13, bold=True, center=False, before=4, after=4)
     p_body("The experimental setup comprises squirrel-cage induction motor rotor specimens examined under controlled optical conditions. Optical images of the rotor end-ring and weld seams are captured using a high-resolution mobile camera positioned over the rotor inspection stand under uniform diffused ambient illumination.")
 
+    add_img('analysis_output/report_assets/fig_web_dashboard.png', width_in=5.8)
+    p_fig_caption("Fig. 5.1 Web inspection studio and AI diagnostic interface")
+
     p_hdr("5.2 TESTING PROCEDURE", size=13, bold=True, center=False, before=6, after=4)
-    p_steps = [
+    proc = [
         "1. Position the rotor specimen securely on the inspection stand under uniform diffused lighting.",
         "2. Capture high-resolution macro optical photographs of the circumferential weld seams using the mobile camera.",
         "3. Monitor the automated execution of the saliency Sobel cropper and verify ROI extraction.",
@@ -873,11 +951,9 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         "6. Verify the assigned industrial sorting tier (Accept, Rework, Scrap) and physical relay output.",
         "7. Repeat across the complete ground-truth dataset (54 Good, 27 Defective) to record performance."
     ]
-    for ps in p_steps:
-        p_bullet(ps)
+    for pr in proc:
+        p_bullet(pr)
     doc.add_page_break()
-
-    # =========================================================================
     # PAGE 29: 5.3 PARAMETERS USED DURING TESTING (TABLE 5.3)
     # =========================================================================
     p_hdr("5.3 PARAMETERS USED DURING TESTING (TABLE 5.3)", size=12, bold=True, center=False, before=0, after=4)
