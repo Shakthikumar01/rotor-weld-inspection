@@ -88,6 +88,12 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     print(f"Building academic report Word document: {filename}...")
     doc = Document()
 
+    # Set document default style to Times New Roman 12 pt
+    style_normal = doc.styles['Normal']
+    style_normal.font.name = 'Times New Roman'
+    style_normal.font.size = Pt(12)
+    style_normal.font.color.rgb = RGBColor(0, 0, 0)
+
     # Configure A4 dimensions & 0.75-inch margins
     for section in doc.sections:
         section.page_width = Inches(8.27)
@@ -130,7 +136,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         run.font.color.rgb = RGBColor(0, 0, 0)
         return p
 
-    def p_body(text, bold=False, italic=False, size=11, before=0, after=5, justify=True):
+    def p_body(text, bold=False, italic=False, size=12, before=0, after=5, justify=True):
         p = doc.add_paragraph()
         p.paragraph_format.space_before = Pt(before)
         p.paragraph_format.space_after = Pt(after)
@@ -145,7 +151,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         run.font.color.rgb = RGBColor(0, 0, 0)
         return p
 
-    def p_bullet(text, size=11, before=0, after=3):
+    def p_bullet(text, size=12, before=0, after=3):
         p = doc.add_paragraph(style='List Bullet')
         p.paragraph_format.space_before = Pt(before)
         p.paragraph_format.space_after = Pt(after)
@@ -166,7 +172,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         run.bold = True
         run.italic = True
         run.font.name = 'Times New Roman'
-        run.font.size = Pt(10.5)
+        run.font.size = Pt(11)
 
     def add_img(path, width_in=5.5):
         if os.path.exists(path):
@@ -194,12 +200,14 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
                     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
                 run = p.add_run(val)
                 run.font.name = 'Times New Roman'
-                run.font.size = Pt(9.5)
                 if r_idx == 0:
+                    run.font.size = Pt(10.5)
                     run.bold = True
                     set_cell_background(cell, "F2F2F2")
-                elif bold_first_col_headers and ("CHAPTER" in val or val in ("Abstract", "List of figures", "List of tables")):
-                    run.bold = True
+                else:
+                    run.font.size = Pt(10)
+                    if bold_first_col_headers and ("CHAPTER" in val or val in ("Abstract", "List of figures", "List of tables")):
+                        run.bold = True
                 set_cell_margins(cell, top=45, bottom=45, left=65, right=65)
                 set_cell_borders(cell)
         return table
@@ -411,7 +419,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 8: CHAPTER 1 - INTRODUCTION & 1.1 AIM
     # =========================================================================
-    p_hdr("CHAPTER 1", size=16, before=0, after=2)
+    p_hdr("CHAPTER 1", size=17, before=0, after=2)
     p_hdr("INTRODUCTION", size=14, before=0, after=12)
 
     p_body("Rotor squirrel-cage induction motors represent the foundational workhorses of modern electrified industry, powering electric vehicle drivetrains, high-volume fluid pumps, precision CNC machine tools, and industrial ventilation systems. The operational reliability of these high-speed rotating machines depends directly on the structural integrity of the electrical joints connecting the conductive copper or aluminium rotor bars to the outer short-circuiting end-rings.")
@@ -420,14 +428,14 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
 
     p_body("Automated Visual Inspection (AVI) using computer vision and machine learning offers a non-contact, rapid, and objective methodology to inspect 100% of manufactured rotors in line with modern Industry 4.0 standards.")
 
-    p_hdr("1.1 AIM", size=12, bold=True, center=False, before=8, after=4)
+    p_hdr("1.1 AIM", size=13, bold=True, center=False, before=8, after=4)
     p_body("To design, develop, and experimentally evaluate an automated computer-vision and machine-learning system for rotor weld defect inspection, incorporating saliency-guided adaptive cropping, mathematical feature extraction, multi-model classification, and an industrial 3-tier sorting web dashboard.")
     doc.add_page_break()
 
     # =========================================================================
     # PAGE 9: 1.2 OBJECTIVES & 1.3 SCOPE OF THE PROJECT
     # =========================================================================
-    p_hdr("1.2 OBJECTIVES", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("1.2 OBJECTIVES", size=13, bold=True, center=False, before=0, after=4)
     objs = [
         "1. Acquire high-resolution optical macro images of rotor squirrel-cage weld rings.",
         "2. Perform exploratory image analysis, statistical moment profiling, and 1D spatial intensity evaluation in MATLAB.",
@@ -443,14 +451,14 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     for ob in objs:
         p_bullet(ob)
 
-    p_hdr("1.3 SCOPE OF THE PROJECT", size=12, bold=True, center=False, before=6, after=4)
+    p_hdr("1.3 SCOPE OF THE PROJECT", size=13, bold=True, center=False, before=6, after=4)
     p_body("The project focuses on external surface weld defect inspection of cylindrical rotor end-ring assemblies. It encompasses automated optical preprocessing, spatial ROI isolation, statistical and Haralick texture feature extraction, exploratory dimensionality reduction, multi-model AI benchmarking, and industrial cyber-physical deployment with tamper-proof ISO quality reporting.")
     doc.add_page_break()
 
     # =========================================================================
     # PAGE 10: 1.4 APPLICATIONS & FIG 1.1
     # =========================================================================
-    p_hdr("1.4 APPLICATIONS", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("1.4 APPLICATIONS", size=13, bold=True, center=False, before=0, after=4)
     p_body("Potential industrial application areas include:")
     apps = [
         "Automated quality assurance on high-volume electric vehicle (EV) traction motor production lines.",
@@ -471,16 +479,16 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 11: CHAPTER 2 - LITERATURE REVIEW (2.1 - 2.3)
     # =========================================================================
-    p_hdr("CHAPTER 2", size=16, before=0, after=2)
+    p_hdr("CHAPTER 2", size=17, before=0, after=2)
     p_hdr("LITERATURE REVIEW", size=14, before=0, after=12)
 
-    p_hdr("2.1 OVERVIEW OF INDUSTRIAL WELD DEFECT INSPECTION", size=12, bold=True, center=False, before=4, after=4)
+    p_hdr("2.1 OVERVIEW OF INDUSTRIAL WELD DEFECT INSPECTION", size=13, bold=True, center=False, before=4, after=4)
     p_body("Non-destructive testing (NDT) of welded components is vital for ensuring structural integrity. While radiographic testing (RT) and ultrasonic testing (UT) provide sub-surface volumetric defect evaluation, they are economically prohibitive, hazardous, and too slow for high-volume in-line manufacturing. Optical machine vision inspection represents the premier non-contact solution for high-speed surface defect detection.")
 
-    p_hdr("2.2 OPTICAL ACQUISITION AND LIGHTING GEOMETRY", size=12, bold=True, center=False, before=6, after=4)
+    p_hdr("2.2 OPTICAL ACQUISITION AND LIGHTING GEOMETRY", size=13, bold=True, center=False, before=6, after=4)
     p_body("Imaging metallic welded surfaces presents significant optical challenges due to specular highlights and anisotropic reflections from curved cylindrical rotors. Diffuse ring illumination combined with cross-polarizing optical filters significantly suppresses high-intensity glare, revealing true surface texture and boundary contours without saturating the camera sensor.")
 
-    p_hdr("2.3 SPATIAL AND MORPHOLOGICAL FEATURE DESCRIPTORS", size=12, bold=True, center=False, before=6, after=4)
+    p_hdr("2.3 SPATIAL AND MORPHOLOGICAL FEATURE DESCRIPTORS", size=13, bold=True, center=False, before=6, after=4)
     p_body("Mathematical morphological descriptors provide quantitative representations of weld bead geometry. Contour area, perimeter, circularity, compactness, eccentricity, and solidity distinguish sound, uniform fusion passes from defective weld beads characterized by jagged edges, craters, and protruding molten droop anomalies.")
     doc.add_page_break()
 
@@ -490,32 +498,32 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("2.4 TEXTURE ANALYSIS AND GRAY-LEVEL CO-OCCURRENCE MATRIX (GLCM)", size=12, bold=True, center=False, before=0, after=4)
     p_body("The Gray-Level Co-occurrence Matrix (GLCM), introduced by Haralick, characterizes the spatial relationship of pixel gray tones. Key Haralick descriptors-Contrast, Energy, Entropy, Homogeneity, and Correlation-quantify surface roughness, slag entrapment, and micro-porosities that are invisible to purely geometric contour metrics.")
 
-    p_hdr("2.5 SALIENCY AND GRADIENT-BASED EDGE CROPPING METHODS", size=12, bold=True, center=False, before=6, after=4)
+    p_hdr("2.5 SALIENCY AND GRADIENT-BASED EDGE CROPPING METHODS", size=13, bold=True, center=False, before=6, after=4)
     p_body("Traditional automated vision pipelines rely on static, hard-coded crop coordinates. However, rotor position tolerances and variable thermal bead expansion cause fixed windows to clip severe defects. Saliency-guided cropping utilizes first-order spatial derivative operators (Sobel filter kernels) to construct an energy map of edge density, enabling dynamic bounding box expansion.")
 
-    p_hdr("2.6 MACHINE LEARNING AND DEEP CONVOLUTIONAL CLASSIFIERS", size=12, bold=True, center=False, before=6, after=4)
+    p_hdr("2.6 MACHINE LEARNING AND DEEP CONVOLUTIONAL CLASSIFIERS", size=13, bold=True, center=False, before=6, after=4)
     p_body("In modern quality inspection, classical machine learning models (Decision Trees, Random Forests, Support Vector Machines) offer highly explainable, auditable decision boundaries with negligible latency. In parallel, deep convolutional neural networks (such as MobileNetV3) provide automated hierarchical feature extraction, delivering superior classification accuracy in complex visual domains.")
     doc.add_page_break()
 
     # =========================================================================
     # PAGE 13: 2.7 RESEARCH GAP & 2.8 SUMMARY
     # =========================================================================
-    p_hdr("2.7 RESEARCH GAP AND PROJECT MOTIVATION", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("2.7 RESEARCH GAP AND PROJECT MOTIVATION", size=13, bold=True, center=False, before=0, after=4)
     p_body("Existing industrial inspection systems suffer from two primary limitations: first, fixed Region-of-Interest cropping routines frequently sever large molten dripping anomalies protruding beyond the nominal bead envelope, resulting in dangerous false passes of defective joints. Second, deep learning inspection models operate as opaque 'black boxes', failing to provide interpretable physical criteria required by plant quality managers and ISO auditing standards.")
 
     p_body("This project bridges these critical gaps by combining an exploratory MATLAB statistical analysis phase with an adaptive saliency-guided cropper, an explainable white-box Decision Tree, and a transfer-learned MobileNetV3 classifier in a unified architecture.")
 
-    p_hdr("2.8 SUMMARY", size=12, bold=True, center=False, before=8, after=4)
+    p_hdr("2.8 SUMMARY", size=13, bold=True, center=False, before=8, after=4)
     p_body("The literature survey establishes the technical foundation for selecting polarized optical macro imaging, Sobel-based saliency cropping, 15 mathematical feature descriptors, and a dual-tier classification pipeline combining explainable tree models with deep vision networks.")
     doc.add_page_break()
 
     # =========================================================================
     # PAGE 14: CHAPTER 3 - SYSTEM DESIGN & 3.1 SYSTEM ARCHITECTURE
     # =========================================================================
-    p_hdr("CHAPTER 3", size=16, before=0, after=2)
+    p_hdr("CHAPTER 3", size=17, before=0, after=2)
     p_hdr("SYSTEM DESIGN AND HARDWARE DESCRIPTION", size=14, before=0, after=12)
 
-    p_hdr("3.1 SYSTEM ARCHITECTURE", size=12, bold=True, center=False, before=4, after=4)
+    p_hdr("3.1 SYSTEM ARCHITECTURE", size=13, bold=True, center=False, before=4, after=4)
     p_body("The proposed cyber-physical inspection system is structured into four tightly integrated sequential stages:")
     arch_s = [
         "Stage 1: Optical Acquisition & Exploratory Signal Analysis - Industrial macro imaging sensor paired with diffuse polarized LED illumination, complemented by MATLAB Online for statistical moment decomposition and spatial intensity profiling.",
@@ -540,7 +548,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 16: 3.2 HARDWARE COMPONENTS & 3.3 HARDWARE CONNECTIONS TABLE
     # =========================================================================
-    p_hdr("3.2 HARDWARE COMPONENTS", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("3.2 HARDWARE COMPONENTS", size=13, bold=True, center=False, before=0, after=4)
     p_body("3.2.1 High-Resolution Optical Camera: 12 MP industrial CMOS image sensor with 25 mm macro lens, capturing 4032 x 3024 raw images under controlled optical geometry.")
     p_body("3.2.2 Processing Workstation and Edge Inference Engine: Intel Core multi-threaded host workstation with edge accelerator support (Raspberry Pi 5 / NVIDIA Jetson compatible) for sub-100ms inference.")
     p_body("3.2.3 Industrial Lighting and Fixture Rig: Continuous diffuse ring LED illuminator with cross-polarizing filters mounted on a precision rotary indexing fixture for consistent rotor presentation.")
@@ -561,7 +569,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 17: 3.4 SOFTWARE REQUIREMENTS & DUAL ENVIRONMENT
     # =========================================================================
-    p_hdr("3.4 SOFTWARE REQUIREMENTS AND DUAL ENVIRONMENT", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("3.4 SOFTWARE REQUIREMENTS AND DUAL ENVIRONMENT", size=13, bold=True, center=False, before=0, after=4)
     p_body("The project leverages a synergistic dual computational framework combining MATLAB Online for preliminary exploratory analysis and Python for automated production deployment:")
     sw_bullets = [
         "MATLAB Online (R2024b): Used for rapid signal analysis, row/column intensity profiling, statistical moments calculation (mean, std, var, skewness, kurtosis), histogram plotting, and Excel data export (badrotor_pixel_data.xlsx, goodrotor_statistical_analysis.xlsx).",
@@ -581,10 +589,10 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 18: CHAPTER 4 - METHODOLOGY & 4.2 CONFIGURATION TABLE
     # =========================================================================
-    p_hdr("CHAPTER 4", size=16, before=0, after=2)
+    p_hdr("CHAPTER 4", size=17, before=0, after=2)
     p_hdr("METHODOLOGY AND SOFTWARE IMPLEMENTATION", size=14, before=0, after=12)
 
-    p_hdr("4.1 OVERALL METHODOLOGY", size=12, bold=True, center=False, before=4, after=4)
+    p_hdr("4.1 OVERALL METHODOLOGY", size=13, bold=True, center=False, before=4, after=4)
     p_body("The automated inspection methodology executes as a structured cyber-physical pipeline:")
     m_steps = [
         "1. Optical frame ingestion and standardization into normalized RGB, HSV, and grayscale buffers.",
@@ -617,7 +625,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 19: 4.3 SALIENCY SOBEL CROPPING & FIG 4.1
     # =========================================================================
-    p_hdr("4.3 SALIENCY-GUIDED WELD ROI CROPPING ALGORITHM", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("4.3 SALIENCY-GUIDED WELD ROI CROPPING ALGORITHM", size=13, bold=True, center=False, before=0, after=4)
     p_body("To isolate the weld seam from ambient factory background noise, the system calculates directional spatial gradients across the input luminance channel using Sobel convolution masks:")
 
     p_f1 = doc.add_paragraph()
@@ -642,7 +650,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 20: FIG 4.2 SMART WELD CROPPER MULTI-SPECIMEN COMPARISON
     # =========================================================================
-    p_hdr("SALIENCY CROPPER MULTI-SPECIMEN ANALYSIS", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("SALIENCY CROPPER MULTI-SPECIMEN ANALYSIS", size=13, bold=True, center=False, before=0, after=4)
     p_body("Figure 4.2 illustrates the multi-specimen performance of the saliency-guided adaptive cropper across both sound and defective rotors. Unlike rigid bounding boxes, the adaptive cropper evaluates local gradient density to center the fusion zone accurately.")
 
     add_img('analysis_output/report_assets/fig_smart_crop_preview.png', width_in=6.0)
@@ -652,7 +660,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 21: FIG 4.3 FULL MOLTEN DROOP ANOMALY PRESERVATION
     # =========================================================================
-    p_hdr("FULL MOLTEN DROOP ANOMALY BOUNDARY RETENTION", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("FULL MOLTEN DROOP ANOMALY BOUNDARY RETENTION", size=13, bold=True, center=False, before=0, after=4)
     p_body("Figure 4.3 demonstrates the critical importance of bounding box inflation. Conventional cropping severs protruding molten dripping defects, falsely inflating solidity metrics. Our adaptive padding margin (+15% horizontal, +25% vertical) guarantees complete droop capture without truncation.")
 
     add_img('analysis_output/report_assets/fig_drip_preservation.jpg', width_in=5.8)
@@ -662,7 +670,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 22: 4.4 MATHEMATICAL FEATURE EXTRACTION FORMULATION
     # =========================================================================
-    p_hdr("4.4 MATHEMATICAL FEATURE EXTRACTION FORMULATION", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("4.4 MATHEMATICAL FEATURE EXTRACTION FORMULATION", size=13, bold=True, center=False, before=0, after=4)
     p_body("A quantitative feature vector of 15 descriptors is formulated across three complementary analytical domains:")
 
     p_body("4.4.1 Intensity and Density Descriptors:\n"
@@ -690,7 +698,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 23: 4.5 MACHINE LEARNING CLASSIFICATION LOGIC & CODE
     # =========================================================================
-    p_hdr("4.5 MACHINE LEARNING CLASSIFICATION LOGIC", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("4.5 MACHINE LEARNING CLASSIFICATION LOGIC", size=13, bold=True, center=False, before=0, after=4)
     p_body("The white-box Decision Tree evaluates the extracted mathematical descriptors using trained hierarchical splitting conditions. The decision logic is expressed directly in code:")
 
     p_code = doc.add_paragraph()
@@ -718,8 +726,8 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         "}"
     )
     r_code = p_code.add_run(code_str)
-    r_code.font.name = 'Courier New'
-    r_code.font.size = Pt(9)
+    r_code.font.name = 'Times New Roman'
+    r_code.font.size = Pt(10.5)
 
     p_body("This transparent decision boundary provides complete physical interpretability: welds with low solidity (irregular protruding drip contours) and high entropy (micro-porosity roughness) are conclusively flagged as defective without relying on opaque heuristics.")
     doc.add_page_break()
@@ -739,17 +747,17 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     ]
     make_table(tier_rows, [Inches(2.3), Inches(1.5), Inches(2.9)], align_center_cols=(1,))
 
-    p_hdr("4.7 OUTPUT INDICATION AND REPORT GENERATION", size=12, bold=True, center=False, before=8, after=4)
+    p_hdr("4.7 OUTPUT INDICATION AND REPORT GENERATION", size=13, bold=True, center=False, before=8, after=4)
     p_body("The system dispatches inspection payloads formatted as JSON REST responses, simultaneously driving industrial digital I/O lines and updating the web dashboard. For every batch, an ISO 9001:2015 tamper-proof certificate is cryptographically signed with a SHA-256 hash for traceability.")
     doc.add_page_break()
 
     # =========================================================================
     # PAGE 25: 4.8 SOFTWARE SUMMARY, 4.9 OBSERVATIONS, 4.10 DEEP VISION
     # =========================================================================
-    p_hdr("4.8 SOFTWARE IMPLEMENTATION SUMMARY", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("4.8 SOFTWARE IMPLEMENTATION SUMMARY", size=13, bold=True, center=False, before=0, after=4)
     p_body("The software architecture was developed in Python 3.14/3.11 with an asynchronous Flask server. The pipeline seamlessly integrates camera acquisition, saliency-guided Sobel cropping, 15 mathematical feature descriptors, 3-tier industrial sorting, and tamper-proof PDF report generation into a single unified application.")
 
-    p_hdr("4.9 IMPORTANT TECHNICAL OBSERVATIONS", size=12, bold=True, center=False, before=6, after=4)
+    p_hdr("4.9 IMPORTANT TECHNICAL OBSERVATIONS", size=13, bold=True, center=False, before=6, after=4)
     obs = [
         "Bounding box expansion (+15% horizontal, +25% vertical) is strictly mandatory: unpadded bounding boxes clipped 42% of severe molten droplet anomalies, corrupting solidity calculations.",
         "GLCM Energy and Entropy exhibit strong collinearity (Pearson r = -0.94), providing redundant but mutually validating measures of weld surface roughness.",
@@ -758,14 +766,14 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     for ob in obs:
         p_bullet(ob)
 
-    p_hdr("4.10 DEEP CONVOLUTIONAL VALIDATION", size=12, bold=True, center=False, before=6, after=4)
+    p_hdr("4.10 DEEP CONVOLUTIONAL VALIDATION", size=13, bold=True, center=False, before=6, after=4)
     p_body("To complement the hand-crafted mathematical descriptors, a deep convolutional neural network (MobileNetV3-Small) was fine-tuned on the cropped weld dataset. The network acts as a high-capacity visual validator, capturing subtle spatial dependencies that transcend hand-crafted feature formulations.")
     doc.add_page_break()
 
     # =========================================================================
     # PAGE 26: 4.11 MATLAB EXPLORATORY SIGNAL PROCESSING PIPELINE
     # =========================================================================
-    p_hdr("4.11 MATLAB EXPLORATORY SIGNAL & IMAGE PROCESSING PIPELINE", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("4.11 MATLAB EXPLORATORY SIGNAL & IMAGE PROCESSING PIPELINE", size=13, bold=True, center=False, before=0, after=4)
     p_body("In the foundational laboratory investigation, signal and image processing routines were implemented in MATLAB Online (matlab.mathworks.com) to examine raw luminance characteristics and spatial intensity distributions. Two primary scripts were authored: badrotorimagemean.m and Statisticalanalysis_goodrotor.m.")
 
     p_body("The mathematical formulations for 1D spatial intensity profiling are defined by:")
@@ -786,7 +794,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 27: FIG 5.1 WEB INSPECTION DASHBOARD
     # =========================================================================
-    p_hdr("WEB INSPECTION STUDIO AND AI DIAGNOSTIC DASHBOARD", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("WEB INSPECTION STUDIO AND AI DIAGNOSTIC DASHBOARD", size=13, bold=True, center=False, before=0, after=4)
     p_body("Figure 5.1 illustrates the responsive HTML5/JavaScript web inspection studio developed for operational deployment. The interface provides interactive canvas ROI verification, real-time diagnostic feature display, multi-model consensus readouts, and one-click ISO certificate generation.")
 
     add_img('analysis_output/report_assets/fig_web_dashboard.png', width_in=6.2)
@@ -796,13 +804,13 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 28: CHAPTER 5 - EXPERIMENTAL SETUP & 5.2 TESTING PROCEDURE
     # =========================================================================
-    p_hdr("CHAPTER 5", size=16, before=0, after=2)
+    p_hdr("CHAPTER 5", size=17, before=0, after=2)
     p_hdr("EXPERIMENTAL SETUP AND TESTING", size=14, before=0, after=12)
 
-    p_hdr("5.1 EXPERIMENTAL SETUP", size=12, bold=True, center=False, before=4, after=4)
+    p_hdr("5.1 EXPERIMENTAL SETUP", size=13, bold=True, center=False, before=4, after=4)
     p_body("The experimental setup comprises an industrial rotor inspection testbed featuring a 12 MP CMOS optical sensor mounted orthogonally over a precision rotary chuck. Diffuse 5500K LED ring illumination with cross-polarizing filters illuminates the rotor end-ring.")
 
-    p_hdr("5.2 TESTING PROCEDURE", size=12, bold=True, center=False, before=6, after=4)
+    p_hdr("5.2 TESTING PROCEDURE", size=13, bold=True, center=False, before=6, after=4)
     p_steps = [
         "1. Mount the rotor specimen onto the indexing spindle under polarized LED illumination.",
         "2. Trigger optical frame capture via the web inspection studio or camera API.",
@@ -844,7 +852,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 30: 5.4 OBSERVATIONS & 5.5 TEST RECORD (Part 1 - TABLE 5.5)
     # =========================================================================
-    p_hdr("5.4 OBSERVATIONS DURING TESTING", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("5.4 OBSERVATIONS DURING TESTING", size=13, bold=True, center=False, before=0, after=4)
     p_body("During experimental trials across all 81 specimens, the saliency Sobel cropper demonstrated superior robustness compared to fixed coordinate cropping. Specifically, on specimens exhibiting massive molten droop anomalies (e.g., bad_1.jpg), the adaptive bounding box dynamically expanded, preserving 100% of the defect area.")
 
     p_hdr("5.5 TEST RECORD (TABLE 5.5 - PART 1)", size=12, bold=True, center=False, before=6, after=4)
@@ -878,10 +886,10 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 32: 5.6 SCOPE OF VERIFICATION & 5.7 VISUAL ANALYSIS
     # =========================================================================
-    p_hdr("5.6 SCOPE OF EXPERIMENTAL VERIFICATION", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("5.6 SCOPE OF EXPERIMENTAL VERIFICATION", size=13, bold=True, center=False, before=0, after=4)
     p_body("Experimental validation was conducted across the standardized 81-sample rotor weld dataset under controlled laboratory lighting. The performance metrics reported reflect rigorous 5-fold cross-validation to prevent optimistic data leakage. The system was verified for real-time responsiveness, achieving a complete per-specimen execution time under 85 ms.")
 
-    p_hdr("5.7 VISUAL ANALYSIS PROCEDURE AND FEATURE PROJECTIONS", size=12, bold=True, center=False, before=6, after=4)
+    p_hdr("5.7 VISUAL ANALYSIS PROCEDURE AND FEATURE PROJECTIONS", size=13, bold=True, center=False, before=6, after=4)
     p_body("To rigorously analyze the underlying data distribution and validate feature separability, diagnostic visual projections were generated using Python in a Jupyter environment. The procedure includes:")
     v_proc = [
         "1. Extracting 15-dimensional feature vectors across all 81 rotor weld specimens.",
@@ -919,7 +927,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 35: 5.8 MATLAB EXPERIMENTAL FIGURES (FIG 5.6 & FIG 5.7)
     # =========================================================================
-    p_hdr("5.8 MATLAB IMAGE INTENSITY PROFILING AND STATISTICAL EXPERIMENTS", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("5.8 MATLAB IMAGE INTENSITY PROFILING AND STATISTICAL EXPERIMENTS", size=13, bold=True, center=False, before=0, after=4)
     p_body("To establish preliminary empirical baselines, the rotor specimens were analyzed in MATLAB Online. Figure 5.6 illustrates defective rotor image ingestion and row-wise mean computation (badrotorimagemean.m), yielding an overall image mean of 147.65.")
 
     add_img('analysis_output/report_assets/matlab_bad_rotor_mean.jpg', width_in=5.5)
@@ -964,10 +972,10 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 39: CHAPTER 6 - RESULTS & 6.2 FUNCTIONAL VERIFICATION (Part 1)
     # =========================================================================
-    p_hdr("CHAPTER 6", size=16, before=0, after=2)
+    p_hdr("CHAPTER 6", size=17, before=0, after=2)
     p_hdr("RESULTS AND DISCUSSION", size=14, before=0, after=12)
 
-    p_hdr("6.1 IMPLEMENTATION RESULTS", size=12, bold=True, center=False, before=4, after=4)
+    p_hdr("6.1 IMPLEMENTATION RESULTS", size=13, bold=True, center=False, before=4, after=4)
     p_body("The automated rotor weld inspection prototype was fully implemented and benchmarked on 81 high-resolution macro specimens. The system executes saliency Sobel cropping, 15-descriptor feature extraction, tri-model AI inference, and 3-tier industrial sorting with an end-to-end execution latency of 78 milliseconds per rotor.")
 
     p_hdr("6.2 FUNCTIONAL VERIFICATION (TABLE 6.2 - PART 1)", size=12, bold=True, center=False, before=6, after=4)
@@ -997,17 +1005,17 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     ]
     make_table(fn2_rows, [Inches(1.8), Inches(3.0), Inches(1.9)], align_center_cols=())
 
-    p_hdr("6.3 ANALYSIS OF SALIENCY-GUIDED PREPROCESSING", size=12, bold=True, center=False, before=8, after=4)
+    p_hdr("6.3 ANALYSIS OF SALIENCY-GUIDED PREPROCESSING", size=13, bold=True, center=False, before=8, after=4)
     p_body("A rigorous ablation study demonstrates the critical impact of saliency-guided adaptive cropping. When evaluated on raw uncropped images, MobileNetV3 achieves only 74.1% classification accuracy due to distracting background features. Isolating the active weld seam via Sobel gradient cropping delivers a +16.1% empirical accuracy boost, elevating classification performance to 90.2%.")
     doc.add_page_break()
 
     # =========================================================================
     # PAGE 41: 6.4 PCA ANALYSIS, 6.5 MODEL ANALYSIS & FIG 6.1 (DECISION TREE)
     # =========================================================================
-    p_hdr("6.4 ANALYSIS OF FEATURE EXTRACTION AND PCA DIMENSIONALITY", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("6.4 ANALYSIS OF FEATURE EXTRACTION AND PCA DIMENSIONALITY", size=13, bold=True, center=False, before=0, after=4)
     p_body("Principal Component Analysis demonstrates that the first two principal components capture 74.2% of total cumulative variance (PC1 = 52.6%, PC2 = 21.6%). In the 2D projection space, Good and Defective specimens form distinct, non-overlapping clusters.")
 
-    p_hdr("6.5 ANALYSIS OF CLASSIFICATION OUTPUT AND MODEL BENCHMARKING", size=12, bold=True, center=False, before=6, after=4)
+    p_hdr("6.5 ANALYSIS OF CLASSIFICATION OUTPUT AND MODEL BENCHMARKING", size=13, bold=True, center=False, before=6, after=4)
     p_body("The white-box Decision Tree achieves 80.2% accuracy with an inference latency of just 2.1 ms. Its initial split on Solidity (threshold = 0.842) cleanly isolates all severe molten droop anomalies.")
 
     add_img('analysis_output/report_assets/fig_decision_tree.png', width_in=5.8)
@@ -1043,7 +1051,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     add_img('analysis_output/report_assets/fig_confusion_matrix.png', width_in=6.2)
     p_fig_caption("Fig. 6.2 MobileNetV3 confusion matrix and model benchmark comparison")
 
-    p_hdr("6.7 LIMITATIONS IDENTIFIED", size=12, bold=True, center=False, before=6, after=4)
+    p_hdr("6.7 LIMITATIONS IDENTIFIED", size=13, bold=True, center=False, before=6, after=4)
     p_body("The following limitations were identified during experimental testing:")
     lims = [
         "1. Optical surface inspection cannot detect subsurface internal voids or incomplete root penetration.",
@@ -1059,7 +1067,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 44: 6.8 DISCUSSION & 6.9 COMPARATIVE BENCHMARK RESULTS (TABLE 6.5)
     # =========================================================================
-    p_hdr("6.8 DISCUSSION", size=12, bold=True, center=False, before=0, after=4)
+    p_hdr("6.8 DISCUSSION", size=13, bold=True, center=False, before=0, after=4)
     p_body("The experimental results demonstrate that combining saliency-guided preprocessing with a hybrid tri-model architecture addresses the core trade-off in industrial machine vision: accuracy versus explainability.")
 
     p_body("While MobileNetV3 achieves the highest classification accuracy (90.2%) and defect recall (94.4%), its deep representations are non-invertible. In contrast, the explainable Decision Tree (80.2% accuracy) provides immediate, auditable physical justification based on solidity and entropy thresholds. This dual capability allows manufacturing plants to operate MobileNetV3 as the primary sorting trigger while logging Decision Tree rules for ISO 9001 quality audits.")
@@ -1079,13 +1087,13 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 45: CHAPTER 7 - CONCLUSION AND FUTURE SCOPE
     # =========================================================================
-    p_hdr("CHAPTER 7", size=16, before=0, after=2)
+    p_hdr("CHAPTER 7", size=17, before=0, after=2)
     p_hdr("CONCLUSION AND FUTURE SCOPE", size=14, before=0, after=12)
 
-    p_hdr("7.1 CONCLUSION", size=12, bold=True, center=False, before=4, after=4)
+    p_hdr("7.1 CONCLUSION", size=13, bold=True, center=False, before=4, after=4)
     p_body("An automated computer-vision and machine-learning inspection system for rotor squirrel-cage weld defect classification was successfully designed, implemented, and validated. Preliminary exploratory signal and image processing in MATLAB established essential statistical moments (Mean: 74.83, Std Dev: 60.68) and 1D spatial intensity profiles that demonstrated the physical necessity of ROI cropping. Saliency-guided adaptive cropping using Sobel gradient operators resolved the challenge of background clutter while ensuring 100% preservation of anomalous molten droop morphology. The mathematical feature extraction pipeline derived 15 descriptors whose separability was confirmed through 2D PCA (74.2% variance explained). MobileNetV3 achieved 90.2% classification accuracy with 94.4% defect recall, supported by a +16.1% empirical gain from saliency cropping. The operational web dashboard and 3-tier industrial sorting establish a complete, production-ready solution.")
 
-    p_hdr("7.2 FUTURE SCOPE", size=12, bold=True, center=False, before=6, after=4)
+    p_hdr("7.2 FUTURE SCOPE", size=13, bold=True, center=False, before=6, after=4)
     p_body("The following enhancements are proposed for future development:")
     futs = [
         "1. Multi-Modal Sensing: Integrate long-wave infrared (LWIR) thermography to detect sub-surface cooling rate anomalies.",
@@ -1099,7 +1107,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     for ft in futs:
         p_bullet(ft)
 
-    p_hdr("REFERENCES", size=12, bold=True, center=False, before=10, after=4)
+    p_hdr("REFERENCES", size=13, bold=True, center=False, before=10, after=4)
     refs = [
         "[1] Haralick, R. M., Shanmugam, K., & Dinstein, I. (1973). Textural features for image classification. IEEE Transactions on Systems, Man, and Cybernetics, SMC-3(6), 610-621.",
         "[2] Howard, A., et al. (2019). Searching for MobileNetV3. Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV), 1314-1324.",

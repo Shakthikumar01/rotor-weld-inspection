@@ -26,6 +26,12 @@ class AcademicCanvas(canvas.Canvas):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.pages = []
+        self._fontname = 'Times-Roman'
+        self.setFont('Times-Roman', 11)
+
+    def _startPage(self):
+        super()._startPage()
+        self.setFont('Times-Roman', 11)
 
     def showPage(self):
         self.pages.append(dict(self.__dict__))
@@ -57,70 +63,72 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     )
 
     styles = getSampleStyleSheet()
+    for s in styles.byName.values():
+        s.fontName = 'Times-Roman' 
 
     title_cover = ParagraphStyle(
         'TitleCover', parent=styles['Normal'],
-        fontName='Times-Bold', fontSize=14, leading=20, alignment=1, textColor=colors.black
+        fontName='Times-Bold', fontSize=14.5, leading=21, alignment=1, textColor=colors.black
     )
     college_hdr = ParagraphStyle(
         'CollegeHdr', parent=styles['Normal'],
-        fontName='Times-Bold', fontSize=16, leading=22, alignment=1, textColor=colors.black
+        fontName='Times-Bold', fontSize=17, leading=23, alignment=1, textColor=colors.black
     )
     college_sub = ParagraphStyle(
         'CollegeSub', parent=styles['Normal'],
-        fontName='Times-Roman', fontSize=11, leading=16, alignment=1, textColor=colors.black
+        fontName='Times-Roman', fontSize=11.5, leading=16.5, alignment=1, textColor=colors.black
     )
     student_cover = ParagraphStyle(
         'StudentCover', parent=styles['Normal'],
-        fontName='Times-Bold', fontSize=11.5, leading=16, alignment=1, textColor=colors.black
+        fontName='Times-Bold', fontSize=12, leading=17, alignment=1, textColor=colors.black
     )
     meta_cover = ParagraphStyle(
         'MetaCover', parent=styles['Normal'],
-        fontName='Times-Bold', fontSize=11, leading=17, alignment=1, textColor=colors.black
+        fontName='Times-Bold', fontSize=11.5, leading=17, alignment=1, textColor=colors.black
     )
     chapter_hdr = ParagraphStyle(
         'ChapterHdr', parent=styles['Normal'],
-        fontName='Times-Bold', fontSize=16, leading=22, alignment=1, spaceAfter=5, textColor=colors.black
+        fontName='Times-Bold', fontSize=17, leading=23, alignment=1, spaceAfter=4, textColor=colors.black
     )
     chapter_sub = ParagraphStyle(
         'ChapterSub', parent=styles['Normal'],
-        fontName='Times-Bold', fontSize=13.5, leading=18, alignment=1, spaceAfter=12, textColor=colors.black
+        fontName='Times-Bold', fontSize=14, leading=19, alignment=1, spaceAfter=10, textColor=colors.black
     )
     sec_hdr = ParagraphStyle(
         'SecHdr', parent=styles['Normal'],
-        fontName='Times-Bold', fontSize=12, leading=16, spaceBefore=9, spaceAfter=4, textColor=colors.black
+        fontName='Times-Bold', fontSize=13, leading=17, spaceBefore=8, spaceAfter=4, textColor=colors.black
     )
     body_text = ParagraphStyle(
         'BodyTextCustom', parent=styles['Normal'],
-        fontName='Times-Roman', fontSize=11, leading=15.5, alignment=4, spaceAfter=6, textColor=colors.black
+        fontName='Times-Roman', fontSize=12, leading=16.5, alignment=4, spaceAfter=5, textColor=colors.black
     )
     body_bullet = ParagraphStyle(
         'BodyBulletCustom', parent=styles['Normal'],
-        fontName='Times-Roman', fontSize=11, leading=15, leftIndent=15, spaceAfter=3.5, textColor=colors.black
+        fontName='Times-Roman', fontSize=12, leading=16, leftIndent=15, spaceAfter=3, textColor=colors.black
     )
     fig_caption = ParagraphStyle(
         'FigCaption', parent=styles['Normal'],
-        fontName='Times-Roman', fontSize=10.5, leading=14, alignment=1, spaceBefore=4, spaceAfter=7, textColor=colors.black
+        fontName='Times-BoldItalic', fontSize=11, leading=15, alignment=1, spaceBefore=4, spaceAfter=6, textColor=colors.black
     )
     formula_style = ParagraphStyle(
         'FormulaStyle', parent=styles['Normal'],
-        fontName='Times-BoldItalic', fontSize=11.5, leading=16, alignment=1, spaceBefore=5, spaceAfter=5, textColor=colors.black
+        fontName='Times-BoldItalic', fontSize=12, leading=16.5, alignment=1, spaceBefore=4, spaceAfter=4, textColor=colors.black
     )
     code_block = ParagraphStyle(
         'CodeBlock', parent=styles['Normal'],
-        fontName='Courier', fontSize=9, leading=13, leftIndent=16, spaceBefore=4, spaceAfter=5, textColor=colors.black
+        fontName='Times-Roman', fontSize=10, leading=14, leftIndent=16, spaceBefore=4, spaceAfter=4, textColor=colors.black
     )
     table_cell = ParagraphStyle(
         'TableCell', parent=styles['Normal'],
-        fontName='Times-Roman', fontSize=9.5, leading=13, textColor=colors.black
+        fontName='Times-Roman', fontSize=10, leading=13.5, textColor=colors.black
     )
     table_cell_hdr = ParagraphStyle(
         'TableCellHdr', parent=styles['Normal'],
-        fontName='Times-Bold', fontSize=9.5, leading=13.5, alignment=1, textColor=colors.black
+        fontName='Times-Bold', fontSize=10.5, leading=14, alignment=1, textColor=colors.black
     )
     table_cell_bold = ParagraphStyle(
         'TableCellBold', parent=styles['Normal'],
-        fontName='Times-Bold', fontSize=9.5, leading=13, textColor=colors.black
+        fontName='Times-Bold', fontSize=10, leading=13.5, textColor=colors.black
     )
 
     story = []
