@@ -303,7 +303,6 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         ("2.5", "Saliency and gradient-based edge methods", "12"),
         ("2.6", "Machine learning and deep classifiers", "13"),
         ("2.7", "Research gap and project motivation", "13"),
-        ("2.8", "Summary", "13"),
         ("3.0", "CHAPTER 3: SYSTEM DESIGN AND HARDWARE", "14"),
         ("3.1", "System architecture", "14"),
     ]
@@ -377,7 +376,8 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("LIST OF FIGURES", size=15, before=0, after=6)
     figs_meta = [
         ("Figure index", "Title", "Pg. no."),
-        ("1.1", "Overview of the proposed system architecture", "10"),
+        ("1.1", "Physical rotor squirrel-cage weld inspection specimens", "10"),
+        ("2.1", "Optical defect morphology and feature comparison", "13"),
         ("3.1", "Experimental hardware and rotor inspection setup", "15"),
         ("3.2", "Isolated weld seam ROI macro specimen", "15"),
         ("4.1", "Saliency Sobel filter edge detection map", "19"),
@@ -472,8 +472,8 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
 
     p_body("These industrial applications benefit from 100% in-line inspection coverage, eliminating the risks of catastrophic field failures in safety-critical rotating machinery.")
 
-    add_img('analysis_output/report_assets/fig_pipeline_arch.png', width_in=6.2)
-    p_fig_caption("Fig. 1.1 Overview of the proposed system architecture")
+    add_img('analysis_output/report_assets/fig_rotor_specimens_ch1.png', width_in=5.8)
+    p_fig_caption("Fig. 1.1 Physical rotor squirrel-cage weld inspection specimens: (a) Sound fusion joint, (b) Defective joint with molten droop anomaly")
     doc.add_page_break()
 
     # =========================================================================
@@ -513,8 +513,8 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
 
     p_body("This project bridges these critical gaps by combining an exploratory MATLAB statistical analysis phase with an adaptive saliency-guided cropper, an explainable white-box Decision Tree, and a transfer-learned MobileNetV3 classifier in a unified architecture.")
 
-    p_hdr("2.8 SUMMARY", size=13, bold=True, center=False, before=8, after=4)
-    p_body("The literature survey establishes the technical foundation for selecting polarized optical macro imaging, Sobel-based saliency cropping, 15 mathematical feature descriptors, and a dual-tier classification pipeline combining explainable tree models with deep vision networks.")
+    add_img('analysis_output/report_assets/fig_weld_comparison_analysis.png', width_in=6.0)
+    p_fig_caption("Fig. 2.1 Optical defect morphology and feature comparison: Sound vs. defective weld specimens with contour, void cavity, and slag inclusion masks")
     doc.add_page_break()
 
     # =========================================================================

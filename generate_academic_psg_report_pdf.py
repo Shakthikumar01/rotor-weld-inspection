@@ -275,7 +275,6 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         [Paragraph("2.5", table_cell_hdr), Paragraph("Saliency and gradient-based edge methods", table_cell), Paragraph("12", table_cell_hdr)],
         [Paragraph("2.6", table_cell_hdr), Paragraph("Machine learning and deep classifiers", table_cell), Paragraph("13", table_cell_hdr)],
         [Paragraph("2.7", table_cell_hdr), Paragraph("Research gap and project motivation", table_cell), Paragraph("13", table_cell_hdr)],
-        [Paragraph("2.8", table_cell_hdr), Paragraph("Summary", table_cell), Paragraph("13", table_cell_hdr)],
         [Paragraph("3.0", table_cell_hdr), Paragraph("<b>CHAPTER 3: SYSTEM DESIGN AND HARDWARE</b>", table_cell_bold), Paragraph("14", table_cell_hdr)],
         [Paragraph("3.1", table_cell_hdr), Paragraph("System architecture", table_cell), Paragraph("14", table_cell_hdr)],
     ]
@@ -378,7 +377,8 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     fig_data = [
         [Paragraph("<b>Figure index</b>", table_cell_hdr), Paragraph("<b>Title</b>", table_cell_hdr), Paragraph("<b>Pg. no.</b>", table_cell_hdr)],
-        [Paragraph("1.1", table_cell_hdr), Paragraph("Overview of the proposed system architecture", table_cell), Paragraph("10", table_cell_hdr)],
+        [Paragraph("1.1", table_cell_hdr), Paragraph("Physical rotor squirrel-cage weld inspection specimens", table_cell), Paragraph("10", table_cell_hdr)],
+        [Paragraph("2.1", table_cell_hdr), Paragraph("Optical defect morphology and feature comparison", table_cell), Paragraph("13", table_cell_hdr)],
         [Paragraph("3.1", table_cell_hdr), Paragraph("Experimental hardware and rotor inspection setup", table_cell), Paragraph("15", table_cell_hdr)],
         [Paragraph("3.2", table_cell_hdr), Paragraph("Isolated weld seam ROI macro specimen", table_cell), Paragraph("15", table_cell_hdr)],
         [Paragraph("4.1", table_cell_hdr), Paragraph("Saliency Sobel filter edge detection map", table_cell), Paragraph("19", table_cell_hdr)],
@@ -510,10 +510,10 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     ))
     story.append(Spacer(1, 8))
 
-    img_p10 = 'analysis_output/report_assets/fig_pipeline_arch.png'
+    img_p10 = 'analysis_output/report_assets/fig_rotor_specimens_ch1.png'
     if os.path.exists(img_p10):
-        story.append(Image(img_p10, width=6.5*72, height=2.4*72))
-        story.append(Paragraph("Fig. 1.1 Overview of the proposed system architecture", fig_caption))
+        story.append(Image(img_p10, width=5.8*72, height=2.8*72))
+        story.append(Paragraph("Fig. 1.1 Physical rotor squirrel-cage weld inspection specimens: (a) Sound fusion joint, (b) Defective joint with molten droop anomaly", fig_caption))
     story.append(PageBreak())
 
     # =========================================================================
@@ -575,13 +575,12 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         "This project bridges these critical gaps by combining an exploratory MATLAB statistical analysis phase with an adaptive saliency-guided cropper, an explainable white-box Decision Tree, and a transfer-learned MobileNetV3 classifier in a unified architecture.",
         body_text
     ))
-    story.append(Spacer(1, 8))
+    story.append(Spacer(1, 6))
 
-    story.append(Paragraph("2.8 SUMMARY", sec_hdr))
-    story.append(Paragraph(
-        "The literature survey establishes the technical foundation for selecting polarized optical macro imaging, Sobel-based saliency cropping, 15 mathematical feature descriptors, and a dual-tier classification pipeline combining explainable tree models with deep vision networks.",
-        body_text
-    ))
+    img_p13 = 'analysis_output/report_assets/fig_weld_comparison_analysis.png'
+    if os.path.exists(img_p13):
+        story.append(Image(img_p13, width=6.0*72, height=3.0*72))
+        story.append(Paragraph("Fig. 2.1 Optical defect morphology and feature comparison: Sound vs. defective weld specimens with contour, void cavity, and slag inclusion masks", fig_caption))
     story.append(PageBreak())
 
     # =========================================================================
