@@ -231,6 +231,9 @@ def serve_analysis(filename):
 
 @app.route("/api/download_pdf")
 def download_pdf():
+    psg_pdf = os.path.join(BASE_DIR, "Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf")
+    if os.path.exists(psg_pdf):
+        return send_from_directory(BASE_DIR, "Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf", as_attachment=True)
     a4_pdf = os.path.join(BASE_DIR, "Rotor_Weld_Defect_Inspection_Comprehensive_Report_A4.pdf")
     if os.path.exists(a4_pdf):
         return send_from_directory(BASE_DIR, "Rotor_Weld_Defect_Inspection_Comprehensive_Report_A4.pdf", as_attachment=True)
@@ -244,6 +247,9 @@ def download_pdf():
 
 @app.route("/api/download_word")
 def download_word():
+    psg_docx = os.path.join(BASE_DIR, "Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
+    if os.path.exists(psg_docx):
+        return send_from_directory(BASE_DIR, "Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx", as_attachment=True)
     a4_docx = os.path.join(BASE_DIR, "Rotor_Weld_Defect_Inspection_Comprehensive_Report_A4.docx")
     if os.path.exists(a4_docx):
         return send_from_directory(BASE_DIR, "Rotor_Weld_Defect_Inspection_Comprehensive_Report_A4.docx", as_attachment=True)
