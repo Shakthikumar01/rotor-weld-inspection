@@ -255,11 +255,10 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         [Paragraph("-", table_cell_hdr), Paragraph("<b>List of figures</b>", table_cell_bold), Paragraph("7", table_cell_hdr)],
         [Paragraph("-", table_cell_hdr), Paragraph("<b>List of tables</b>", table_cell_bold), Paragraph("7", table_cell_hdr)],
         [Paragraph("1.0", table_cell_hdr), Paragraph("<b>CHAPTER 1: INTRODUCTION</b>", table_cell_bold), Paragraph("8", table_cell_hdr)],
-        [Paragraph("1.1", table_cell_hdr), Paragraph("Problem statement", table_cell), Paragraph("8", table_cell_hdr)],
-        [Paragraph("1.2", table_cell_hdr), Paragraph("Aim", table_cell), Paragraph("9", table_cell_hdr)],
-        [Paragraph("1.3", table_cell_hdr), Paragraph("Objectives", table_cell), Paragraph("9", table_cell_hdr)],
-        [Paragraph("1.4", table_cell_hdr), Paragraph("Scope of the Project", table_cell), Paragraph("9", table_cell_hdr)],
-        [Paragraph("1.5", table_cell_hdr), Paragraph("Applications", table_cell), Paragraph("10", table_cell_hdr)],
+        [Paragraph("1.1", table_cell_hdr), Paragraph("Aim", table_cell), Paragraph("8", table_cell_hdr)],
+        [Paragraph("1.2", table_cell_hdr), Paragraph("Objectives", table_cell), Paragraph("9", table_cell_hdr)],
+        [Paragraph("1.3", table_cell_hdr), Paragraph("Scope of the Project", table_cell), Paragraph("9", table_cell_hdr)],
+        [Paragraph("1.4", table_cell_hdr), Paragraph("Applications", table_cell), Paragraph("10", table_cell_hdr)],
         [Paragraph("2.0", table_cell_hdr), Paragraph("<b>CHAPTER 2: LITERATURE REVIEW</b>", table_cell_bold), Paragraph("11", table_cell_hdr)],
         [Paragraph("2.1", table_cell_hdr), Paragraph("Overview of industrial weld defect inspection", table_cell), Paragraph("11", table_cell_hdr)],
         [Paragraph("2.2", table_cell_hdr), Paragraph("Optical acquisition and lighting geometry", table_cell), Paragraph("11", table_cell_hdr)],
@@ -429,7 +428,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 8: CHAPTER 1 - INTRODUCTION & 1.1 PROBLEM STATEMENT
+    # PAGE 8: CHAPTER 1 - INTRODUCTION & 1.1 AIM
     # =========================================================================
     story.append(Paragraph("CHAPTER 1", chapter_hdr))
     story.append(Paragraph("INTRODUCTION", chapter_sub))
@@ -446,30 +445,19 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         "Automated Visual Inspection (AVI) using computer vision and machine learning offers a non-contact, rapid, and objective methodology to inspect 100% of manufactured rotors in line with modern Industry 4.0 standards.",
         body_text
     ))
-    story.append(Spacer(1, 6))
+    story.append(Spacer(1, 8))
 
-    story.append(Paragraph("1.1 PROBLEM STATEMENT", sec_hdr))
+    story.append(Paragraph("1.1 AIM", sec_hdr))
     story.append(Paragraph(
-        "Manual human inspection of rotor welds on high-speed manufacturing lines suffers from severe fatigue-induced error rates, operator subjectivity, and an inability to reliably detect micro-scale surface flaws under variable factory lighting. Furthermore, raw optical macro images capture extensive irrelevant background context-including rotor teeth laminations, central shaft bores, mounting fixtures, and reflective metallic shadows. Conventional fixed-size bounding box cropping frequently severs protruding molten dripping anomalies or fails to center the fusion seam.",
-        body_text
-    ))
-    story.append(Paragraph(
-        "An automated quality assurance pipeline is required that can dynamically isolate the true weld bead Region-of-Interest (ROI) via saliency edge detection, extract robust mathematical descriptors, and deploy a multi-model machine learning architecture to achieve high defect recall while maintaining transparent explainability.",
+        "To design, develop, and experimentally evaluate an automated computer-vision and machine-learning system for rotor weld defect inspection, incorporating saliency-guided adaptive cropping, mathematical feature extraction, multi-model classification, and an industrial 3-tier sorting web dashboard.",
         body_text
     ))
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 9: 1.2 AIM, 1.3 OBJECTIVES, 1.4 SCOPE
+    # PAGE 9: 1.2 OBJECTIVES & 1.3 SCOPE OF THE PROJECT
     # =========================================================================
-    story.append(Paragraph("1.2 AIM", sec_hdr))
-    story.append(Paragraph(
-        "To design, develop, and experimentally evaluate an automated computer-vision and machine-learning system for rotor weld defect inspection, incorporating saliency-guided adaptive cropping, mathematical feature extraction, multi-model classification, and an industrial 3-tier sorting web dashboard.",
-        body_text
-    ))
-    story.append(Spacer(1, 4))
-
-    story.append(Paragraph("1.3 OBJECTIVES", sec_hdr))
+    story.append(Paragraph("1.2 OBJECTIVES", sec_hdr))
     objs = [
         "1. Acquire high-resolution optical macro images of rotor squirrel-cage weld rings.",
         "2. Perform exploratory image analysis, statistical moment profiling, and 1D spatial intensity evaluation in MATLAB.",
@@ -485,8 +473,8 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     for obj in objs:
         story.append(Paragraph(obj, body_bullet))
 
-    story.append(Spacer(1, 4))
-    story.append(Paragraph("1.4 SCOPE OF THE PROJECT", sec_hdr))
+    story.append(Spacer(1, 6))
+    story.append(Paragraph("1.3 SCOPE OF THE PROJECT", sec_hdr))
     story.append(Paragraph(
         "The project focuses on external surface weld defect inspection of cylindrical rotor end-ring assemblies. It encompasses automated optical preprocessing, spatial ROI isolation, statistical and Haralick texture feature extraction, exploratory dimensionality reduction, multi-model AI benchmarking, and industrial cyber-physical deployment with tamper-proof ISO quality reporting.",
         body_text
@@ -494,9 +482,9 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 10: 1.5 APPLICATIONS & FIG 1.1
+    # PAGE 10: 1.4 APPLICATIONS & FIG 1.1
     # =========================================================================
-    story.append(Paragraph("1.5 APPLICATIONS", sec_hdr))
+    story.append(Paragraph("1.4 APPLICATIONS", sec_hdr))
     story.append(Paragraph("Potential industrial application areas include:", body_text))
     apps = [
         "Automated quality assurance on high-volume electric vehicle (EV) traction motor production lines.",
