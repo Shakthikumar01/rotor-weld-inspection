@@ -899,27 +899,44 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     ))
     story.append(Spacer(1, 4))
 
-    code_text = (
-        "// Embedded Decision Tree Classification Logic\n"
-        "if (solidity <= 0.842) {\n"
-        "    if (glcm_entropy > 4.621) {\n"
-        "        classification = \"DEFECTIVE (Molten Drip / Porosity)\";\n"
-        "        industrial_tier = TIER_3_SCRAP;\n"
-        "    } else {\n"
-        "        classification = \"DEFECTIVE (Cold Joint / Incomplete Fusion)\";\n"
-        "        industrial_tier = TIER_2_REWORK;\n"
-        "    }\n"
-        "} else {\n"
-        "    if (mean_intensity >= 118.4) {\n"
-        "        classification = \"GOOD (Uniform Fusion Seam)\";\n"
-        "        industrial_tier = TIER_1_ACCEPT;\n"
-        "    } else {\n"
-        "        classification = \"DEFECTIVE (Oxidized Discoloration)\";\n"
-        "        industrial_tier = TIER_2_REWORK;\n"
-        "    }\n"
-        "}"
+    code_style = ParagraphStyle(
+        'ColoredCode', parent=styles['Normal'],
+        fontName='Courier', fontSize=9.5, leading=14.0, textColor=colors.HexColor('#24292E')
     )
-    story.append(Paragraph(code_text.replace("\n", "<br/>").replace(" ", "&nbsp;"), code_block))
+
+    html_code = (
+        '<font color="#6A737D"><i>// Embedded Decision Tree Classification Logic</i></font><br/>'
+        '<font color="#D73A49"><b>if</b></font> (<font color="#005CC5">solidity</font> &lt;= <font color="#005FB8"><b>0.842</b></font>) {<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;<font color="#D73A49"><b>if</b></font> (<font color="#005CC5">glcm_entropy</font> &gt; <font color="#005FB8"><b>4.621</b></font>) {<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#005CC5">classification</font> = <font color="#B71C1C"><b>"DEFECTIVE (Molten Drip / Porosity)"</b></font>;<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#005CC5">industrial_tier</font> = <font color="#B71C1C"><b>TIER_3_SCRAP</b></font>;<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;} <font color="#D73A49"><b>else</b></font> {<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#005CC5">classification</font> = <font color="#E65100"><b>"DEFECTIVE (Cold Joint / Incomplete Fusion)"</b></font>;<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#005CC5">industrial_tier</font> = <font color="#E65100"><b>TIER_2_REWORK</b></font>;<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;}<br/>'
+        '} <font color="#D73A49"><b>else</b></font> {<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;<font color="#D73A49"><b>if</b></font> (<font color="#005CC5">mean_intensity</font> &gt;= <font color="#005FB8"><b>118.4</b></font>) {<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#005CC5">classification</font> = <font color="#1B5E20"><b>"GOOD (Uniform Fusion Seam)"</b></font>;<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#005CC5">industrial_tier</font> = <font color="#1B5E20"><b>TIER_1_ACCEPT</b></font>;<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;} <font color="#D73A49"><b>else</b></font> {<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#005CC5">classification</font> = <font color="#E65100"><b>"DEFECTIVE (Oxidized Discoloration)"</b></font>;<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#005CC5">industrial_tier</font> = <font color="#E65100"><b>TIER_2_REWORK</b></font>;<br/>'
+        '&nbsp;&nbsp;&nbsp;&nbsp;}<br/>'
+        '}'
+    )
+
+    p_dt_code = Paragraph(html_code, code_style)
+    t_dt_code = Table([[p_dt_code]], colWidths=[475])
+    t_dt_code.setStyle(TableStyle([
+        ('BACKGROUND', (0,0), (-1,-1), colors.HexColor('#F6F8FA')),
+        ('BOX', (0,0), (-1,-1), 0.8, colors.HexColor('#D0D7DE')),
+        ('LINELEFT', (0,0), (0,0), 3.5, colors.HexColor('#1F4E79')),
+        ('TOPPADDING', (0,0), (-1,-1), 7),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 7),
+        ('LEFTPADDING', (0,0), (-1,-1), 12),
+        ('RIGHTPADDING', (0,0), (-1,-1), 12),
+    ]))
+    story.append(t_dt_code)
     story.append(Spacer(1, 6))
 
     story.append(Paragraph(

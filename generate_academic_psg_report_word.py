@@ -28,8 +28,8 @@ from docx import Document
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_TABLE_ALIGNMENT
-from docx.oxml import OxmlElement
-from docx.oxml.ns import qn
+from docx.oxml import OxmlElement, parse_xml
+from docx.oxml.ns import nsdecls, qn
 
 def set_cell_margins(cell, top=50, bottom=50, left=70, right=70):
     """Set inner padding for table cells."""
@@ -724,33 +724,57 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("4.5 MACHINE LEARNING CLASSIFICATION LOGIC", size=13, bold=True, center=False, before=0, after=4)
     p_body("The white-box Decision Tree evaluates the extracted mathematical descriptors using trained hierarchical splitting conditions. The decision logic is expressed directly in code:")
 
-    p_code = doc.add_paragraph()
-    p_code.paragraph_format.left_indent = Inches(0.4)
-    p_code.paragraph_format.space_before = Pt(4)
-    p_code.paragraph_format.space_after = Pt(6)
-    code_str = (
-        "// Embedded Decision Tree Classification Logic\n"
-        "if (solidity <= 0.842) {\n"
-        "    if (glcm_entropy > 4.621) {\n"
-        "        classification = \"DEFECTIVE (Molten Drip / Porosity)\";\n"
-        "        industrial_tier = TIER_3_SCRAP;\n"
-        "    } else {\n"
-        "        classification = \"DEFECTIVE (Cold Joint / Incomplete Fusion)\";\n"
-        "        industrial_tier = TIER_2_REWORK;\n"
-        "    }\n"
-        "} else {\n"
-        "    if (mean_intensity >= 118.4) {\n"
-        "        classification = \"GOOD (Uniform Fusion Seam)\";\n"
-        "        industrial_tier = TIER_1_ACCEPT;\n"
-        "    } else {\n"
-        "        classification = \"DEFECTIVE (Oxidized Discoloration)\";\n"
-        "        industrial_tier = TIER_2_REWORK;\n"
-        "    }\n"
-        "}"
-    )
-    r_code = p_code.add_run(code_str)
-    r_code.font.name = 'Times New Roman'
-    r_code.font.size = Pt(10.5)
+    t_code = doc.add_table(rows=1, cols=1)
+    cell_c = t_code.cell(0, 0)
+    shd_c = parse_xml(r'<w:shd {} w:fill="F6F8FA"/>'.format(nsdecls('w')))
+    cell_c._tc.get_or_add_tcPr().append(shd_c)
+    borders_c = parse_xml(r'''
+        <w:tcBorders {} >
+            <w:top w:val="single" w:sz="4" w:space="0" w:color="D0D7DE"/>
+            <w:left w:val="single" w:sz="24" w:space="0" w:color="1F4E79"/>
+            <w:bottom w:val="single" w:sz="4" w:space="0" w:color="D0D7DE"/>
+            <w:right w:val="single" w:sz="4" w:space="0" w:color="D0D7DE"/>
+        </w:tcBorders>
+    '''.format(nsdecls('w')))
+    cell_c._tc.get_or_add_tcPr().append(borders_c)
+
+    code_tokens = [
+        [("// Embedded Decision Tree Classification Logic", RGBColor(0x6A, 0x73, 0x7D), False, True)],
+        [("if", RGBColor(0xD7, 0x3A, 0x49), True, False), (" (", RGBColor(0x24, 0x29, 0x2E), False, False), ("solidity", RGBColor(0x00, 0x5C, 0xC5), False, False), (" <= ", RGBColor(0xD7, 0x3A, 0x49), False, False), ("0.842", RGBColor(0x00, 0x5F, 0xB8), True, False), (") {", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("    if", RGBColor(0xD7, 0x3A, 0x49), True, False), (" (", RGBColor(0x24, 0x29, 0x2E), False, False), ("glcm_entropy", RGBColor(0x00, 0x5C, 0xC5), False, False), (" > ", RGBColor(0xD7, 0x3A, 0x49), False, False), ("4.621", RGBColor(0x00, 0x5F, 0xB8), True, False), (") {", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("        classification", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = ", RGBColor(0x24, 0x29, 0x2E), False, False), ('"DEFECTIVE (Molten Drip / Porosity)"', RGBColor(0xB7, 0x1C, 0x1C), True, False), (";", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("        industrial_tier", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("TIER_3_SCRAP", RGBColor(0xB7, 0x1C, 0x1C), True, False), (";", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("    } ", RGBColor(0x24, 0x29, 0x2E), False, False), ("else", RGBColor(0xD7, 0x3A, 0x49), True, False), (" {", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("        classification", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = ", RGBColor(0x24, 0x29, 0x2E), False, False), ('"DEFECTIVE (Cold Joint / Incomplete Fusion)"', RGBColor(0xE6, 0x51, 0x00), True, False), (";", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("        industrial_tier", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("TIER_2_REWORK", RGBColor(0xE6, 0x51, 0x00), True, False), (";", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("    }", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("} ", RGBColor(0x24, 0x29, 0x2E), False, False), ("else", RGBColor(0xD7, 0x3A, 0x49), True, False), (" {", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("    if", RGBColor(0xD7, 0x3A, 0x49), True, False), (" (", RGBColor(0x24, 0x29, 0x2E), False, False), ("mean_intensity", RGBColor(0x00, 0x5C, 0xC5), False, False), (" >= ", RGBColor(0xD7, 0x3A, 0x49), False, False), ("118.4", RGBColor(0x00, 0x5F, 0xB8), True, False), (") {", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("        classification", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = ", RGBColor(0x24, 0x29, 0x2E), False, False), ('"GOOD (Uniform Fusion Seam)"', RGBColor(0x1B, 0x5E, 0x20), True, False), (";", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("        industrial_tier", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("TIER_1_ACCEPT", RGBColor(0x1B, 0x5E, 0x20), True, False), (";", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("    } ", RGBColor(0x24, 0x29, 0x2E), False, False), ("else", RGBColor(0xD7, 0x3A, 0x49), True, False), (" {", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("        classification", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = ", RGBColor(0x24, 0x29, 0x2E), False, False), ('"DEFECTIVE (Oxidized Discoloration)"', RGBColor(0xE6, 0x51, 0x00), True, False), (";", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("        industrial_tier", RGBColor(0x00, 0x5C, 0xC5), False, False), (" = ", RGBColor(0x24, 0x29, 0x2E), False, False), ("TIER_2_REWORK", RGBColor(0xE6, 0x51, 0x00), True, False), (";", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("    }", RGBColor(0x24, 0x29, 0x2E), False, False)],
+        [("}", RGBColor(0x24, 0x29, 0x2E), False, False)]
+    ]
+
+    p_init = cell_c.paragraphs[0]
+    p_init.paragraph_format.space_before = Pt(4)
+    p_init.paragraph_format.space_after = Pt(1.5)
+    p_init.paragraph_format.line_spacing = 1.15
+    for idx, line in enumerate(code_tokens):
+        p_curr = p_init if idx == 0 else cell_c.add_paragraph()
+        p_curr.paragraph_format.space_before = Pt(0)
+        p_curr.paragraph_format.space_after = Pt(1.5)
+        p_curr.paragraph_format.line_spacing = 1.15
+        for text, color, bold, italic in line:
+            run = p_curr.add_run(text)
+            run.font.name = 'Consolas'
+            run.font.size = Pt(9.5)
+            run.font.color.rgb = color
+            run.bold = bold
+            run.italic = italic
 
     p_body("This transparent decision boundary provides complete physical interpretability: welds with low solidity (irregular protruding drip contours) and high entropy (micro-porosity roughness) are conclusively flagged as defective without relying on opaque heuristics.")
     doc.add_page_break()
