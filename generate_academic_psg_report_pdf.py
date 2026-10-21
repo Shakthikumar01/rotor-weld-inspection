@@ -379,8 +379,9 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         [Paragraph("<b>Figure index</b>", table_cell_hdr), Paragraph("<b>Title</b>", table_cell_hdr), Paragraph("<b>Pg. no.</b>", table_cell_hdr)],
         [Paragraph("1.1", table_cell_hdr), Paragraph("Physical rotor squirrel-cage weld inspection specimens", table_cell), Paragraph("10", table_cell_hdr)],
         [Paragraph("2.1", table_cell_hdr), Paragraph("Optical defect morphology and feature comparison", table_cell), Paragraph("13", table_cell_hdr)],
-        [Paragraph("3.1", table_cell_hdr), Paragraph("Experimental hardware and rotor inspection setup", table_cell), Paragraph("15", table_cell_hdr)],
-        [Paragraph("3.2", table_cell_hdr), Paragraph("Isolated weld seam ROI macro specimen", table_cell), Paragraph("15", table_cell_hdr)],
+        [Paragraph("3.1", table_cell_hdr), Paragraph("Proposed cyber-physical system architecture and 4-stage inspection workflow", table_cell), Paragraph("14", table_cell_hdr)],
+        [Paragraph("3.2", table_cell_hdr), Paragraph("Experimental hardware and rotor inspection setup", table_cell), Paragraph("15", table_cell_hdr)],
+        [Paragraph("3.3", table_cell_hdr), Paragraph("Isolated weld seam ROI macro specimen", table_cell), Paragraph("15", table_cell_hdr)],
         [Paragraph("4.1", table_cell_hdr), Paragraph("Saliency Sobel filter edge detection map", table_cell), Paragraph("19", table_cell_hdr)],
         [Paragraph("4.2", table_cell_hdr), Paragraph("Smart weld ROI cropper multi-specimen comparison", table_cell), Paragraph("20", table_cell_hdr)],
         [Paragraph("4.3", table_cell_hdr), Paragraph("Full molten droop anomaly boundary preservation", table_cell), Paragraph("21", table_cell_hdr)],
@@ -591,34 +592,39 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     story.append(Paragraph("3.1 SYSTEM ARCHITECTURE", sec_hdr))
     story.append(Paragraph(
-        "The proposed cyber-physical inspection system is structured into four tightly integrated sequential stages:",
+        "The rotor weld defect inspection system is designed as an automated cyber-physical pipeline that inspects squirrel-cage induction motor rotor welds step-by-step-from optical image acquisition to physical reject sorting. The inspection workflow operates across four sequential stages:",
         body_text
     ))
     arch_stages = [
-        "<b>Stage 1: Optical Acquisition & Exploratory Signal Analysis</b> - Industrial macro imaging sensor paired with diffuse polarized LED illumination, complemented by MATLAB Online for statistical moment decomposition and spatial intensity profiling.",
-        "<b>Stage 2: Saliency-Guided Preprocessing and Adaptive ROI Cropping</b> - Automatic conversion to gray, HSV, and LAB spaces, Sobel gradient edge filtering, morphological closure, and bounding box expansion to isolate the fusion bead while retaining full droplet protrusions.",
-        "<b>Stage 3: Multi-Domain Feature Extraction and Tri-Model Inference Engine</b> - Extraction of 15 intensity, morphological, and GLCM texture descriptors, fed to an explainable Decision Tree, Random Forest ensemble, and MobileNetV3 deep vision network.",
-        "<b>Stage 4: Industrial 3-Tier Sorting and ISO Compliance Web Dashboard</b> - Automated routing into Accept, Rework, or Scrap categories, complete with real-time canvas visualization and tamper-proof SHA-256 ISO 9001:2015 inspection certificates."
+        "<b>Stage 1: Image Acquisition & Exploratory Analysis</b> - An industrial 12 MP CMOS camera captures high-resolution macro images of the cylindrical rotor weld ring. Cross-polarized LED ring lighting eliminates specular glare from reflective copper surfaces, and initial intensity profiles are analyzed in MATLAB Online.",
+        "<b>Stage 2: Weld Region Extraction (Adaptive Cropping)</b> - The system automatically isolates the active weld seam from background noise (rotor teeth and mounting fixtures) using Sobel gradient edge maps and Otsu binarization, with bounding box padding to retain protruding molten droop defects without clipping.",
+        "<b>Stage 3: Feature Extraction & AI Defect Detection</b> - The system extracts 15 physical descriptors (intensity, contour shape, and GLCM surface texture) and feeds them to an explainable Decision Tree, Random Forest ensemble, and MobileNetV3 deep vision CNN to classify weld soundness.",
+        "<b>Stage 4: Industrial 3-Tier Sorting & Quality Reporting</b> - The part is automatically categorized into Tier 1 (Accept / Pass), Tier 2 (Rework / Repair), or Tier 3 (Scrap / Reject), and results are logged on a real-time web dashboard with tamper-proof SHA-256 ISO 9001:2015 certificates."
     ]
     for stg in arch_stages:
         story.append(Paragraph(f"&bull; {stg}", body_bullet))
 
+    story.append(Spacer(1, 4))
+    img_p14 = 'analysis_output/report_assets/fig_system_architecture_diagram.png'
+    if os.path.exists(img_p14):
+        story.append(Image(img_p14, width=6.2*72, height=2.48*72))
+        story.append(Paragraph("Fig. 3.1 Proposed cyber-physical system architecture and 4-stage inspection workflow", fig_caption))
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 15: FIG 3.1 & FIG 3.2
+    # PAGE 15: FIG 3.2 & FIG 3.3
     # =========================================================================
-    story.append(Spacer(1, 8))
+    story.append(Spacer(1, 6))
     img_p15_1 = 'analysis_output/report_assets/fig_rotor_specimen_raw.jpg'
     if os.path.exists(img_p15_1):
         story.append(Image(img_p15_1, width=4.8*72, height=2.3*72))
-        story.append(Paragraph("Fig. 3.1 Experimental hardware and rotor inspection setup", fig_caption))
-    story.append(Spacer(1, 10))
+        story.append(Paragraph("Fig. 3.2 Experimental hardware and rotor inspection setup", fig_caption))
+    story.append(Spacer(1, 8))
 
     img_p15_2 = 'analysis_output/report_assets/fig_weld_seam_crop.jpg'
     if os.path.exists(img_p15_2):
         story.append(Image(img_p15_2, width=4.8*72, height=2.3*72))
-        story.append(Paragraph("Fig. 3.2 Isolated weld seam ROI macro specimen", fig_caption))
+        story.append(Paragraph("Fig. 3.3 Isolated weld seam ROI macro specimen", fig_caption))
     story.append(PageBreak())
 
     # =========================================================================

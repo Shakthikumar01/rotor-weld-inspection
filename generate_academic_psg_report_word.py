@@ -378,8 +378,9 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         ("Figure index", "Title", "Pg. no."),
         ("1.1", "Physical rotor squirrel-cage weld inspection specimens", "10"),
         ("2.1", "Optical defect morphology and feature comparison", "13"),
-        ("3.1", "Experimental hardware and rotor inspection setup", "15"),
-        ("3.2", "Isolated weld seam ROI macro specimen", "15"),
+        ("3.1", "Proposed cyber-physical system architecture and 4-stage inspection workflow", "14"),
+        ("3.2", "Experimental hardware and rotor inspection setup", "15"),
+        ("3.3", "Isolated weld seam ROI macro specimen", "15"),
         ("4.1", "Saliency Sobel filter edge detection map", "19"),
         ("4.2", "Smart weld ROI cropper multi-specimen comparison", "20"),
         ("4.3", "Full molten droop anomaly boundary preservation", "21"),
@@ -524,25 +525,28 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("SYSTEM DESIGN AND HARDWARE DESCRIPTION", size=14, before=0, after=12)
 
     p_hdr("3.1 SYSTEM ARCHITECTURE", size=13, bold=True, center=False, before=4, after=4)
-    p_body("The proposed cyber-physical inspection system is structured into four tightly integrated sequential stages:")
+    p_body("The rotor weld defect inspection system is designed as an automated cyber-physical pipeline that inspects squirrel-cage induction motor rotor welds step-by-step-from optical image acquisition to physical reject sorting. The inspection workflow operates across four sequential stages:")
     arch_s = [
-        "Stage 1: Optical Acquisition & Exploratory Signal Analysis - Industrial macro imaging sensor paired with diffuse polarized LED illumination, complemented by MATLAB Online for statistical moment decomposition and spatial intensity profiling.",
-        "Stage 2: Saliency-Guided Preprocessing and Adaptive ROI Cropping - Automatic conversion to gray, HSV, and LAB spaces, Sobel gradient edge filtering, morphological closure, and bounding box expansion to isolate the fusion bead while retaining full droplet protrusions.",
-        "Stage 3: Multi-Domain Feature Extraction and Tri-Model Inference Engine - Extraction of 15 intensity, morphological, and GLCM texture descriptors, fed to an explainable Decision Tree, Random Forest ensemble, and MobileNetV3 deep vision network.",
-        "Stage 4: Industrial 3-Tier Sorting and ISO Compliance Web Dashboard - Automated routing into Accept, Rework, or Scrap categories, complete with real-time canvas visualization and tamper-proof SHA-256 ISO 9001:2015 inspection certificates."
+        "Stage 1: Image Acquisition & Exploratory Analysis - An industrial 12 MP CMOS camera captures high-resolution macro images of the cylindrical rotor weld ring. Cross-polarized LED ring lighting eliminates specular glare from reflective copper surfaces, and initial intensity profiles are analyzed in MATLAB Online.",
+        "Stage 2: Weld Region Extraction (Adaptive Cropping) - The system automatically isolates the active weld seam from background noise (rotor teeth and mounting fixtures) using Sobel gradient edge maps and Otsu binarization, with bounding box padding to retain protruding molten droop defects without clipping.",
+        "Stage 3: Feature Extraction & AI Defect Detection - The system extracts 15 physical descriptors (intensity, contour shape, and GLCM surface texture) and feeds them to an explainable Decision Tree, Random Forest ensemble, and MobileNetV3 deep vision CNN to classify weld soundness.",
+        "Stage 4: Industrial 3-Tier Sorting & Quality Reporting - The part is automatically categorized into Tier 1 (Accept / Pass), Tier 2 (Rework / Repair), or Tier 3 (Scrap / Reject), and results are logged on a real-time web dashboard with tamper-proof SHA-256 ISO 9001:2015 certificates."
     ]
     for as_step in arch_s:
         p_bullet(as_step)
+
+    add_img('analysis_output/report_assets/fig_system_architecture_diagram.png', width_in=6.2)
+    p_fig_caption("Fig. 3.1 Proposed cyber-physical system architecture and 4-stage inspection workflow")
     doc.add_page_break()
 
     # =========================================================================
-    # PAGE 15: FIG 3.1 & FIG 3.2
+    # PAGE 15: FIG 3.2 & FIG 3.3
     # =========================================================================
     add_img('analysis_output/report_assets/fig_rotor_specimen_raw.jpg', width_in=4.8)
-    p_fig_caption("Fig. 3.1 Experimental hardware and rotor inspection setup")
+    p_fig_caption("Fig. 3.2 Experimental hardware and rotor inspection setup")
 
     add_img('analysis_output/report_assets/fig_weld_seam_crop.jpg', width_in=4.8)
-    p_fig_caption("Fig. 3.2 Isolated weld seam ROI macro specimen")
+    p_fig_caption("Fig. 3.3 Isolated weld seam ROI macro specimen")
     doc.add_page_break()
 
     # =========================================================================
