@@ -212,25 +212,25 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 1: OUTER COVER PAGE
     # =========================================================================
-    p_hdr("PSG COLLEGE OF TECHNOLOGY", size=16, before=0, after=2)
+    p_hdr("PSG COLLEGE OF TECHNOLOGY", size=16, before=10, after=2)
     p_hdr("(Autonomous Institution)", size=11, bold=False, before=0, after=2)
-    p_hdr("COIMBATORE - 641 004", size=11, bold=False, before=0, after=14)
+    p_hdr("COIMBATORE - 641 004", size=11, bold=False, before=0, after=36)
 
-    p_hdr("AI BASED ROTOR WELD DETECTION", size=16, before=0, after=12)
+    p_hdr("AI BASED ROTOR WELD DETECTION", size=16, before=0, after=28)
 
-    p_hdr("SIGNAL PROCESSING AND DIGITAL CONTROL LABORATORY (23U510)", size=11, bold=True, before=0, after=10)
+    p_hdr("SIGNAL PROCESSING AND DIGITAL CONTROL LABORATORY (23U510)", size=11, bold=True, before=0, after=22)
 
     for mem in team_members:
         p_hdr(mem, size=11.5, bold=True, before=0, after=2)
 
-    p_hdr("3RD YEAR (V SEMESTER)", size=11, bold=True, before=4, after=12)
+    p_hdr("3RD YEAR (V SEMESTER)", size=11, bold=True, before=8, after=36)
 
     if has_logo:
-        add_img(logo_path, width_in=1.35)
-    doc.add_paragraph().paragraph_format.space_after = Pt(8)
+        add_img(logo_path, width_in=1.45)
+    doc.add_paragraph().paragraph_format.space_after = Pt(36)
 
-    p_hdr("Programme: B.E. Instrumentation and Control Engineering", size=11, bold=True, before=0, after=3)
-    p_hdr("Branch: DEPARTMENT OF INSTRUMENTATION AND CONTROL SYSTEMS ENGINEERING", size=11, bold=True, before=0, after=8)
+    p_hdr("Programme: B.E. Instrumentation and Control Engineering", size=11, bold=True, before=0, after=4)
+    p_hdr("Branch: DEPARTMENT OF INSTRUMENTATION AND CONTROL SYSTEMS ENGINEERING", size=11, bold=True, before=0, after=34)
     p_hdr("PSG COLLEGE OF TECHNOLOGY", size=15, before=0, after=2)
     p_hdr("COIMBATORE - 641 004", size=11, bold=False, before=0, after=0)
     doc.add_page_break()
@@ -238,25 +238,25 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     # PAGE 2: INNER SUBMISSION PAGE
     # =========================================================================
-    p_hdr("PSG COLLEGE OF TECHNOLOGY", size=16, before=0, after=2)
+    p_hdr("PSG COLLEGE OF TECHNOLOGY", size=16, before=10, after=2)
     p_hdr("(Government aided autonomous college affiliated to Anna university, Chennai)", size=11, bold=False, before=0, after=2)
-    p_hdr("COIMBATORE - 641 004", size=11, bold=False, before=0, after=14)
+    p_hdr("COIMBATORE - 641 004", size=11, bold=False, before=0, after=32)
 
-    p_hdr("AI BASED ROTOR WELD DETECTION", size=16, before=0, after=12)
+    p_hdr("AI BASED ROTOR WELD DETECTION", size=16, before=0, after=24)
 
     p_hdr("A REPORT", size=11.5, before=0, after=2)
-    p_hdr("SUBMITTED BY", size=10.5, before=0, after=6)
+    p_hdr("SUBMITTED BY", size=10.5, before=0, after=18)
 
     for mem in team_members:
         p_hdr(mem, size=11, bold=True, before=0, after=2)
 
-    p_hdr("In partial fulfilment of the requirement for Signal Processing (23U510)", size=11, bold=False, before=6, after=12)
+    p_hdr("In partial fulfilment of the requirement for Signal Processing (23U510)", size=11, bold=False, before=14, after=28)
 
     if has_logo:
-        add_img(logo_path, width_in=1.35)
-    doc.add_paragraph().paragraph_format.space_after = Pt(10)
+        add_img(logo_path, width_in=1.4)
+    doc.add_paragraph().paragraph_format.space_after = Pt(28)
 
-    p_hdr("DEPARTMENT OF INSTRUMENTATION AND CONTROL SYSTEMS ENGINEERING", size=11, bold=True, before=0, after=24)
+    p_hdr("DEPARTMENT OF INSTRUMENTATION AND CONTROL SYSTEMS ENGINEERING", size=11, bold=True, before=0, after=56)
 
     p_fac = doc.add_paragraph()
     p_fac.alignment = WD_ALIGN_PARAGRAPH.RIGHT
