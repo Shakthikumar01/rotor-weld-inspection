@@ -104,7 +104,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     )
     body_bullet = ParagraphStyle(
         'BodyBulletCustom', parent=styles['Normal'],
-        fontName='Times-Roman', fontSize=12, leading=16, leftIndent=15, spaceAfter=3, textColor=colors.black
+        fontName='Times-Roman', fontSize=12, leading=16, leftIndent=15, alignment=4, spaceAfter=3, textColor=colors.black
     )
     fig_caption = ParagraphStyle(
         'FigCaption', parent=styles['Normal'],
@@ -1245,7 +1245,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     prm_cell_bold = ParagraphStyle('PrmCellB', fontName='Times-Bold', fontSize=9, leading=11, textColor=colors.black)
     prm_cell_hdr = ParagraphStyle('PrmCellH', fontName='Times-Bold', fontSize=9.5, leading=12, alignment=1, textColor=colors.black)
     sec_sub_hdr = ParagraphStyle('SecSubHdr', fontName='Times-Bold', fontSize=11, leading=14, spaceBefore=4, spaceAfter=2, textColor=colors.black)
-    body_text_p29 = ParagraphStyle('BodyP29', fontName='Times-Roman', fontSize=10.5, leading=13.5, spaceAfter=3, textColor=colors.black)
+    body_text_p29 = ParagraphStyle('BodyP29', fontName='Times-Roman', fontSize=11.5, leading=15.0, alignment=4, spaceAfter=3, textColor=colors.black)
 
     story.append(Paragraph("5.3 PARAMETERS USED DURING TESTING", sec_hdr))
     story.append(Paragraph(
@@ -1317,7 +1317,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     # =========================================================================
     rec_cell = ParagraphStyle('RecCell', fontName='Times-Roman', fontSize=8.0, leading=10.0, textColor=colors.black)
     rec_cell_hdr = ParagraphStyle('RecCellH', fontName='Times-Bold', fontSize=8.5, leading=11.0, alignment=1, textColor=colors.black)
-    body_text_p30 = ParagraphStyle('BodyP30', fontName='Times-Roman', fontSize=9.5, leading=12.5, spaceAfter=2, textColor=colors.black)
+    body_text_p30 = ParagraphStyle('BodyP30', fontName='Times-Roman', fontSize=11.0, leading=14.5, alignment=4, spaceAfter=2, textColor=colors.black)
 
     story.append(Paragraph("5.4 OBSERVATIONS DURING TESTING", sec_hdr))
     story.append(Paragraph(
@@ -1408,7 +1408,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     # =========================================================================
     # PAGE 32: 5.7.1 SAMPLE FEATURE IMPORTANCE & INTER-CLASS DISTRIBUTIONS
     # =========================================================================
-    p32_body = ParagraphStyle('P32Body', fontName='Times-Roman', fontSize=10.0, leading=13.5, spaceAfter=2, textColor=colors.black)
+    p32_body = ParagraphStyle('P32Body', fontName='Times-Roman', fontSize=11.5, leading=15.5, alignment=4, spaceAfter=2, textColor=colors.black)
 
     story.append(Paragraph("5.7.1 Sample Feature Importance Ranking and Discriminative Analysis", sec_hdr))
     story.append(Paragraph(
@@ -1462,7 +1462,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     # =========================================================================
     # PAGE 34: 5.8 MATLAB IMAGE INTENSITY PROFILING AND STATISTICAL EXPERIMENTS
     # =========================================================================
-    body_matlab = ParagraphStyle('BodyMatlab', fontName='Times-Roman', fontSize=10.5, leading=14.0, spaceAfter=2, textColor=colors.black)
+    body_matlab = ParagraphStyle('BodyMatlab', fontName='Times-Roman', fontSize=11.5, leading=15.5, alignment=4, spaceAfter=2, textColor=colors.black)
 
     story.append(Paragraph("5.8 MATLAB IMAGE INTENSITY PROFILING AND STATISTICAL EXPERIMENTS", sec_hdr))
     story.append(Paragraph(
@@ -1568,7 +1568,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     # =========================================================================
     # PAGE 38: 5.9 COMPARATIVE STATISTICAL SUMMARY OF ROTOR SPECIMENS (TABLE 5.9)
     # =========================================================================
-    p38_body = ParagraphStyle('P38Body', fontName='Times-Roman', fontSize=9.5, leading=12.5, spaceAfter=2, textColor=colors.black)
+    p38_body = ParagraphStyle('P38Body', fontName='Times-Roman', fontSize=11.5, leading=15.0, alignment=4, spaceAfter=2, textColor=colors.black)
     p38_cell = ParagraphStyle('P38Cell', fontName='Times-Roman', fontSize=8.0, leading=10.5, textColor=colors.black)
     p38_cell_hdr = ParagraphStyle('P38CellH', fontName='Times-Bold', fontSize=8.5, leading=11.0, alignment=1, textColor=colors.black)
 
@@ -1697,7 +1697,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     # =========================================================================
     # PAGE 41: 6.4 SAMPLE FEATURE ANALYSIS, FIG 6.1 (DECISION TREE), 6.5 MODEL
     # =========================================================================
-    p41_body = ParagraphStyle('P41Body', fontName='Times-Roman', fontSize=9.0, leading=11.8, spaceAfter=2, textColor=colors.black)
+    p41_body = ParagraphStyle('P41Body', fontName='Times-Roman', fontSize=11.5, leading=15.0, alignment=4, spaceAfter=2, textColor=colors.black)
     p41_hdr = ParagraphStyle('P41Hdr', fontName='Times-Bold', fontSize=11.0, leading=14.0, spaceBefore=2, spaceAfter=2, textColor=colors.black)
 
     story.append(Paragraph("6.4 ANALYSIS OF SAMPLE FEATURE EXTRACTION AND DECISION TREE LOGIC", p41_hdr))
