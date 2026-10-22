@@ -72,7 +72,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     title_cover = ParagraphStyle(
         'TitleCover', parent=styles['Normal'],
-        fontName='Times-Bold', fontSize=14.5, leading=21, alignment=1, textColor=colors.black
+        fontName='Times-Bold', fontSize=16, leading=22, alignment=1, textColor=colors.black
     )
     college_hdr = ParagraphStyle(
         'CollegeHdr', parent=styles['Normal'],
@@ -156,7 +156,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(Spacer(1, 14))
 
     story.append(Paragraph(
-        "ROTOR WELD DEFECT INSPECTION AND QUALITY CLASSIFICATION USING COMPUTER VISION AND MACHINE LEARNING WITH SALIENCY-GUIDED WELD SEAM ANALYSIS",
+        "AI BASED ROTOR WELD DETECTION",
         title_cover
     ))
     story.append(Spacer(1, 12))
@@ -196,7 +196,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(Spacer(1, 14))
 
     story.append(Paragraph(
-        "ROTOR WELD DEFECT INSPECTION AND QUALITY CLASSIFICATION USING COMPUTER VISION AND MACHINE LEARNING WITH SALIENCY-GUIDED WELD SEAM ANALYSIS",
+        "AI BASED ROTOR WELD DETECTION",
         title_cover
     ))
     story.append(Spacer(1, 12))
@@ -246,7 +246,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         body_text
     ))
     story.append(Paragraph(
-        "This project develops an automated quality assurance system integrating exploratory signal and statistical image processing in MATLAB with computer vision and machine learning in Python. In the preliminary laboratory phase, MATLAB Online was utilized for optical ingestion, RGB-to-grayscale conversion, statistical moment decomposition (Mean: 74.83, Median: 68.0, Std Dev: 60.68, Variance: 3682.64, Skewness: 0.7761, Kurtosis: 2.6271), multi-modal pixel intensity histogramming, and 1D spatial intensity profiling (row-wise and column-wise mean and variance). These spatial profiles identified that background fixture noise occupies a narrow low-intensity band (mode: 20) while the active weld fusion zone spans intensities between 140 and 160, establishing the physical justification for automated Region-of-Interest (ROI) segmentation.",
+        "This project develops an AI-based rotor weld detection and automated quality assurance system integrating exploratory signal and statistical image processing in MATLAB with computer vision and machine learning in Python. In the preliminary laboratory phase, MATLAB Online was utilized for optical ingestion, RGB-to-grayscale conversion, statistical moment decomposition (Mean: 74.83, Median: 68.0, Std Dev: 60.68, Variance: 3682.64, Skewness: 0.7761, Kurtosis: 2.6271), multi-modal pixel intensity histogramming, and 1D spatial intensity profiling (row-wise and column-wise mean and variance). These spatial profiles identified that background fixture noise occupies a narrow low-intensity band (mode: 20) while the active weld fusion zone spans intensities between 140 and 160, establishing the physical justification for automated Region-of-Interest (ROI) segmentation.",
         body_text
     ))
     story.append(Paragraph(
@@ -472,7 +472,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     story.append(Paragraph("1.1 AIM", sec_hdr))
     story.append(Paragraph(
-        "To design, develop, and experimentally evaluate an automated computer-vision and machine-learning system for rotor weld defect inspection, incorporating saliency-guided adaptive cropping, mathematical feature extraction, multi-model classification, and an industrial 3-tier sorting web dashboard.",
+        "To design, develop, and experimentally evaluate an AI-based rotor weld detection and automated quality inspection system, incorporating saliency-guided adaptive cropping, mathematical feature extraction, multi-model classification, and an industrial 3-tier sorting web dashboard.",
         body_text
     ))
     story.append(PageBreak())
@@ -606,7 +606,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     story.append(Paragraph("3.1 SYSTEM ARCHITECTURE", sec_hdr))
     story.append(Paragraph(
-        "The rotor weld defect inspection system is designed as an automated cyber-physical pipeline that inspects squirrel-cage induction motor rotor welds step-by-step-from optical image acquisition to physical reject sorting. The inspection workflow operates across four sequential stages:",
+        "The AI-based rotor weld detection system is designed as an automated cyber-physical pipeline that inspects squirrel-cage induction motor rotor welds step-by-step-from optical image acquisition to physical reject sorting. The inspection workflow operates across four sequential stages:",
         body_text
     ))
     arch_stages = [
@@ -1842,7 +1842,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     story.append(Paragraph("7.1 CONCLUSION", sec_hdr))
     story.append(Paragraph(
-        "An automated computer-vision and machine-learning inspection system for rotor squirrel-cage weld defect classification was successfully designed, implemented, and validated. Preliminary exploratory signal and image processing in MATLAB established essential statistical moments (Mean: 74.83, Std Dev: 60.68) and 1D spatial intensity profiles that demonstrated the physical necessity of ROI cropping. Saliency-guided adaptive cropping using Sobel gradient operators resolved the challenge of background clutter while ensuring 100% preservation of anomalous molten droop morphology. The mathematical feature extraction pipeline derived 15 physical sample descriptors whose discriminative separability was confirmed through Gini feature importance profiling and distribution analysis. MobileNetV3 achieved 90.2% classification accuracy with 94.4% defect recall, supported by a +16.1% empirical gain from saliency cropping. The operational web dashboard and 3-tier industrial sorting establish a complete, production-ready solution.",
+        "The AI-based rotor weld detection and classification system for rotor squirrel-cage welds was successfully designed, implemented, and validated. Preliminary exploratory signal and image processing in MATLAB established essential statistical moments (Mean: 74.83, Std Dev: 60.68) and 1D spatial intensity profiles that demonstrated the physical necessity of ROI cropping. Saliency-guided adaptive cropping using Sobel gradient operators resolved the challenge of background clutter while ensuring 100% preservation of anomalous molten droop morphology. The mathematical feature extraction pipeline derived 15 physical sample descriptors whose discriminative separability was confirmed through Gini feature importance profiling and distribution analysis. MobileNetV3 achieved 90.2% classification accuracy with 94.4% defect recall, supported by a +16.1% empirical gain from saliency cropping. The operational web dashboard and 3-tier industrial sorting establish a complete, production-ready solution.",
         body_text
     ))
     story.append(Spacer(1, 6))
