@@ -14,7 +14,7 @@ incorporating:
 Authors:
 - SHAKTHI KUMAR M V (24U243)
 - PRAVESH V (24U256)
-- TANUSH SAAI KUMAR S (24U243)
+- TANUSH SAAI KUMAR S (24U251)
 - DEVAMURUGAN P (25U432)
 
 Department: Department of Instrumentation and Control Systems Engineering
@@ -115,7 +115,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     team_members = [
         "SHAKTHI KUMAR M V (24U243)",
         "PRAVESH V (24U256)",
-        "TANUSH SAAI KUMAR S (24U243)",
+        "TANUSH SAAI KUMAR S (24U251)",
         "DEVAMURUGAN P (25U432)"
     ]
 
@@ -945,8 +945,8 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("5.1 EXPERIMENTAL SETUP", size=13, bold=True, center=False, before=4, after=4)
     p_body("The experimental setup comprises squirrel-cage induction motor rotor specimens examined under controlled optical conditions. Optical images of the rotor end-ring and weld seams are captured using a high-resolution mobile camera positioned over the rotor inspection stand under uniform diffused ambient illumination.")
 
-    add_img('analysis_output/report_assets/fig_experimental_setup.png', width_in=5.8)
-    p_fig_caption("Fig. 5.1 Laboratory experimental setup and optical rotor inspection test bench arrangement: (a) Hardware schematic layout, (b) Physical rotor specimen on inspection stand")
+    add_img('analysis_output/report_assets/fig_experimental_setup.png', width_in=3.8)
+    p_fig_caption("Fig. 5.1 Laboratory experimental setup: Physical rotor specimen on inspection stand")
 
     p_hdr("5.2 TESTING PROCEDURE", size=13, bold=True, center=False, before=6, after=4)
     proc = [

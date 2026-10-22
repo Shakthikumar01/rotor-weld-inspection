@@ -15,7 +15,7 @@ with:
 Authors:
 - SHAKTHI KUMAR M V (24U243)
 - PRAVESH V (24U256)
-- TANUSH SAAI KUMAR S (24U243)
+- TANUSH SAAI KUMAR S (24U251)
 - DEVAMURUGAN P (25U432)
 """
 
@@ -163,7 +163,7 @@ def build_pdf_story(registry, is_final=False):
     team_members = [
         "SHAKTHI KUMAR M V (24U243)",
         "PRAVESH V (24U256)",
-        "TANUSH SAAI KUMAR S (24U243)",
+        "TANUSH SAAI KUMAR S (24U251)",
         "DEVAMURUGAN P (25U432)"
     ]
 
@@ -1179,8 +1179,8 @@ def build_pdf_story(registry, is_final=False):
     if os.path.exists(img_p24):
         story.append(Spacer(1, 4))
         story.append(KeepTogether([
-            Image(img_p24, width=5.8*72, height=3.0*72),
-            Paragraph("Fig. 5.1 Laboratory experimental setup and optical rotor inspection test bench arrangement: (a) Hardware schematic layout, (b) Physical rotor specimen on inspection stand", fig_caption)
+            Image(img_p24, width=3.6*72, height=3.15*72, hAlign='CENTER'),
+            Paragraph("Fig. 5.1 Laboratory experimental setup: Physical rotor specimen on inspection stand", fig_caption)
         ]))
 
     story.append(Bookmark('sec5_2', registry))
