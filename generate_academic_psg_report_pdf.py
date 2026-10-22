@@ -1568,13 +1568,13 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     # =========================================================================
     # PAGE 38: 5.9 COMPARATIVE STATISTICAL SUMMARY OF ROTOR SPECIMENS (TABLE 5.9)
     # =========================================================================
-    p38_body = ParagraphStyle('P38Body', fontName='Times-Roman', fontSize=10.0, leading=13.5, spaceAfter=2, textColor=colors.black)
-    p38_cell = ParagraphStyle('P38Cell', fontName='Times-Roman', fontSize=8.5, leading=11.0, textColor=colors.black)
-    p38_cell_hdr = ParagraphStyle('P38CellH', fontName='Times-Bold', fontSize=9.0, leading=11.5, alignment=1, textColor=colors.black)
+    p38_body = ParagraphStyle('P38Body', fontName='Times-Roman', fontSize=9.5, leading=12.5, spaceAfter=2, textColor=colors.black)
+    p38_cell = ParagraphStyle('P38Cell', fontName='Times-Roman', fontSize=8.0, leading=10.5, textColor=colors.black)
+    p38_cell_hdr = ParagraphStyle('P38CellH', fontName='Times-Bold', fontSize=8.5, leading=11.0, alignment=1, textColor=colors.black)
 
     story.append(Paragraph("5.9 COMPARATIVE STATISTICAL SUMMARY OF ROTOR SPECIMENS", sec_hdr))
     story.append(Paragraph(
-        "This section compares the 10 statistical values computed by the MATLAB scripts for a sound (normal) rotor versus a defective rotor with weld anomalies. Comparing these numbers proves mathematically how image processing detects physical defects such as excess molten droop, spatter, and surface irregularity.",
+        "<b>Why Statistical Image Analysis is Performed:</b> A digital camera captures an image as a numerical matrix of pixels ranging from 0 (pure black) to 255 (pure white). An automated vision algorithm cannot visually 'see' weld quality like human eyes; it must quantify physical characteristics into concrete numbers. By running the MATLAB statistical script on both sound and defective rotors, 10 foundational statistical moments are derived. Comparing these values mathematically proves how physical anomalies - including molten droop, spatter, and porosity - produce distinct, unmistakable shifts in brightness, roughness, and distribution symmetry.",
         p38_body
     ))
     story.append(Spacer(1, 2))
@@ -1583,17 +1583,17 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(Spacer(1, 2))
 
     stat_rows = [
-        ("STATISTICAL MOMENT / METRIC", "SOUND ROTOR (BASELINE)", "DEFECTIVE ROTOR (ANOMALY)", "DIAGNOSTIC SIGNIFICANCE (IN SIMPLE TERMS)"),
-        ("Mean Pixel Intensity", "121.4320", "147.6512", "Overall brightness increases (+21.6%) due to shiny molten metal droplets"),
-        ("Median Intensity", "118.0000", "144.0000", "Middle brightness shifts higher from 118 to 144 across the entire specimen"),
-        ("Standard Deviation", "42.1850", "58.9240", "Texture variation increases by 39.7% due to bumpy, uneven weld metal"),
-        ("Intensity Variance", "1779.57", "3472.04", "Brightness variance nearly doubles (+95.1%), reflecting severe roughness"),
-        ("Minimum Pixel Intensity", "12.0000", "8.0000", "Darkest background pixels stay consistent between both specimens"),
-        ("Maximum Pixel Intensity", "248.0000", "255.0000", "Reaches pure white saturation (255) on sharp reflective metal crests"),
-        ("Dynamic Intensity Range", "236.0000", "247.0000", "Wider contrast spread between darkest and brightest spots on defective welds"),
-        ("Intensity Mode", "115.0000", "141.0000", "Most frequent surface tone shifts higher from 115 to 141 due to spatter dust"),
-        ("Pixel Skewness", "+0.2140", "-0.4820", "Tilts negative (-0.48), showing a heavy tail of bright specular droplets"),
-        ("Pixel Kurtosis", "2.8450", "4.1280", "Jumps from 2.85 to 4.13 (sharp spike), proving localized defect blobs exist"),
+        ("STATISTICAL MOMENT / METRIC", "SOUND ROTOR (BASELINE)", "DEFECTIVE ROTOR (ANOMALY)", "PHYSICAL SIGNIFICANCE IN SIMPLE TERMS"),
+        ("Mean Pixel Intensity", "121.4320", "147.6512", "Overall brightness jumps (+21.6%) because shiny melted slag blobs act like curved mirrors reflecting direct camera light."),
+        ("Median Intensity", "118.0000", "144.0000", "Middle brightness shifts higher from 118 to 144, proving the entire defective body is brighter, not just an isolated spot."),
+        ("Standard Deviation", "42.1850", "58.9240", "Pixel spread increases by 39.7%, reflecting an irregular, bumpy, and non-uniform weld surface."),
+        ("Intensity Variance", "1779.57", "3472.04", "Surface roughness nearly doubles (+95.1%), jumping wildly between bright specular glares and deep shadow crevices."),
+        ("Minimum Intensity", "12.0000", "8.0000", "Deepest background shadows remain virtually identical, demonstrating that ambient lighting remained tightly controlled."),
+        ("Maximum Intensity", "248.0000", "255.0000", "Reaches pure white saturation (255) on sharp reflective crests of protruding molten droplets."),
+        ("Dynamic Intensity Range", "236.0000", "247.0000", "Contrast spread expands, indicating extreme optical disparity between highlights and weld voids."),
+        ("Intensity Mode", "115.0000", "141.0000", "Most frequent surface tone shifts higher from 115 to 141 due to reflective spatter dust coating the copper bars."),
+        ("Pixel Skewness", "+0.2140", "-0.4820", "Flips negative (-0.48), mathematically capturing an asymmetric heavy tail of bright specular reflections."),
+        ("Pixel Kurtosis", "2.8450", "4.1280", "Spikes from 2.85 to 4.13, mathematically proving the physical presence of sudden protruding defect lumps rather than a flat surface."),
     ]
     stat_table_data = []
     for idx, r in enumerate(stat_rows):
@@ -1611,27 +1611,27 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
                 Paragraph(r[2], p38_cell_hdr),
                 Paragraph(r[3], p38_cell),
             ])
-    stat_table = Table(stat_table_data, colWidths=[120, 75, 75, 205])
+    stat_table = Table(stat_table_data, colWidths=[115, 75, 75, 210])
     stat_table.setStyle(TableStyle([
         ('GRID', (0,0), (-1,-1), 0.5, colors.black),
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
-        ('TOPPADDING', (0,0), (-1,-1), 1.5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 1.5),
+        ('TOPPADDING', (0,0), (-1,-1), 1.2),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 1.2),
         ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(stat_table)
     story.append(Spacer(1, 3))
 
     story.append(Paragraph(
-        "<b>Simple Summary of Key Physical Differences:</b><br/>"
-        "• <b>Defects Make the Surface Brighter (Mean 121 -> 147):</b> Irregular molten metal blobs reflect light like mirrors, raising the average brightness.<br/>"
-        "• <b>Defects Double the Surface Roughness (Variance 1779 -> 3472):</b> A healthy weld has smooth, even light, whereas a defective weld has wild jumps between shiny highlights and deep shadows.<br/>"
-        "• <b>Defects Create Sharp Statistical Spikes (Kurtosis 2.85 -> 4.13):</b> A sharp increase in kurtosis mathematically proves the presence of sudden defect bumps rather than a uniform surface.",
+        "<b>Engineering Takeaways &amp; Physical Defect Signatures:</b><br/>"
+        "&bull; <b>Surface Brightness (Mean 121 -> 148):</b> Sound welds absorb and scatter light evenly across a smooth matte finish, while molten slag defects create high-reflectance mirrors that push average brightness up by +21.6%.<br/>"
+        "&bull; <b>Surface Roughness (Variance 1779 -> 3472):</b> A healthy joint has smooth, consistent lighting. Defective welds have wild transitions between intense specular highlights and dark shadow pockets, nearly doubling overall variance (+95.1%).<br/>"
+        "&bull; <b>Structural Anomaly Peaks (Kurtosis 2.85 -> 4.13):</b> A normal surface yields a standard bell-curve distribution (kurtosis approx. 3.0). The dramatic leap to 4.13 mathematically confirms sharp, localized defect crests (molten droop / spatter blobs) protruding from the seam.<br/>"
+        "&bull; <b>Diagnostic Automation Value:</b> These measurable gaps allow simple, high-speed thresholding rules (e.g., Variance &gt; 2500 and Kurtosis &gt; 3.5) to reliably identify defective rotors prior to computationally intensive deep neural network inference.",
         p38_body
     ))
     story.append(PageBreak())
 
-    # =========================================================================
     # PAGE 39: CHAPTER 6 - RESULTS & 6.2 FUNCTIONAL VERIFICATION (TABLE 6.2)
     # =========================================================================
     story.append(Paragraph("CHAPTER 6", chapter_hdr))
