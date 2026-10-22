@@ -431,7 +431,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         [Paragraph("5.5", table_cell_hdr), Paragraph("Subsystem functional verification and empirical test record", table_cell), Paragraph("30", table_cell_hdr)],
         [Paragraph("5.9", table_cell_hdr), Paragraph("Comparative MATLAB statistical moments (Sound vs. Defective)", table_cell), Paragraph("38", table_cell_hdr)],
         [Paragraph("6.2", table_cell_hdr), Paragraph("Functional verification status of inspection pipeline", table_cell), Paragraph("39", table_cell_hdr)],
-        [Paragraph("6.5", table_cell_hdr), Paragraph("Cross-model machine learning benchmark performance", table_cell), Paragraph("44", table_cell_hdr)],
+        [Paragraph("6.5", table_cell_hdr), Paragraph("Cross-model machine learning benchmark performance", table_cell), Paragraph("43", table_cell_hdr)],
         [Paragraph("6.6", table_cell_hdr), Paragraph("Cross-platform statistical verification (MATLAB vs. Python)", table_cell), Paragraph("42", table_cell_hdr)],
     ]
     t_tbl = Table(tbl_data, colWidths=[65, 345, 65])
@@ -484,7 +484,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         "5. Formulate and extract 15 quantitative mathematical descriptors across intensity, geometry, and GLCM texture.",
         "6. Perform exploratory data analysis including Pearson correlation analysis and sample feature importance profiling.",
         "7. Implement an explainable white-box Decision Tree classifier for auditable shop-floor decision making.",
-        "8. Train and benchmark a Random Forest ensemble and a transfer-learned MobileNetV3 deep convolutional network.",
+        "8. Train, benchmark, and deploy a dual-model framework combining an explainable white-box Decision Tree with a transfer-learned MobileNetV3 deep convolutional network.",
         "9. Deploy an asynchronous industrial web inspection dashboard with real-time client-side canvas cropping and 3-tier sorting (Accept, Rework, Scrap).",
         "10. Validate the complete cyber-physical inspection chain against ISO 9001:2015 quality criteria."
     ]
@@ -568,7 +568,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     story.append(Paragraph("2.6 MACHINE LEARNING AND DEEP CONVOLUTIONAL CLASSIFIERS", sec_hdr))
     story.append(Paragraph(
-        "In modern quality inspection, classical machine learning models (Decision Trees, Random Forests, Support Vector Machines) offer highly explainable, auditable decision boundaries with negligible latency. In parallel, deep convolutional neural networks (such as MobileNetV3) provide automated hierarchical feature extraction, delivering superior classification accuracy in complex visual domains.",
+        "In modern quality inspection, classical machine learning models (such as explainable Decision Trees) offer transparent, auditable decision boundaries with negligible latency. In parallel, deep convolutional neural networks (such as MobileNetV3) provide automated hierarchical feature extraction, delivering superior classification accuracy in complex visual domains.",
         body_text
     ))
     story.append(PageBreak())
@@ -607,7 +607,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     arch_stages = [
         "<b>Stage 1: Optical Acquisition & Exploratory Analysis</b> - High-resolution optical images of the squirrel-cage rotor weld joints are captured using a mobile phone camera under uniform diffused lighting. The raw macro images capture the cylindrical weld seam and end-ring surface, which are transferred to the workstation and analyzed in MATLAB Online for intensity distribution and pixel statistics.",
         "<b>Stage 2: Weld Region Extraction (Adaptive Cropping)</b> - The system automatically isolates the active weld seam from background noise (rotor teeth and mounting fixtures) using Sobel gradient edge maps and Otsu binarization, with bounding box padding to retain protruding molten droop defects without clipping.",
-        "<b>Stage 3: Feature Extraction & AI Defect Detection</b> - The system extracts 15 physical descriptors (intensity, contour shape, and GLCM surface texture) and feeds them to an explainable Decision Tree, Random Forest ensemble, and MobileNetV3 deep vision CNN to classify weld soundness.",
+        "<b>Stage 3: Feature Extraction & Dual AI Defect Detection</b> - The system extracts 15 physical descriptors (intensity, contour shape, and GLCM surface texture) and feeds them into a synergistic dual-model architecture: an explainable white-box Decision Tree and a transfer-learned MobileNetV3 deep vision CNN to classify weld soundness.",
         "<b>Stage 4: Industrial 3-Tier Sorting & Quality Reporting</b> - The part is automatically categorized into Tier 1 (Accept / Pass), Tier 2 (Rework / Repair), or Tier 3 (Scrap / Reject), and results are logged on a real-time web dashboard with tamper-proof SHA-256 ISO 9001:2015 certificates."
     ]
     for stg in arch_stages:
@@ -700,7 +700,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         "<b>MATLAB Online (R2024b):</b> Rapid signal profiling, row/column mean intensity sweeps, statistical moments calculation (`mean`, `std`, `var`, `skewness`, `kurtosis`), histogram distribution, and Excel export (`badrotor_pixel_data.xlsx`, `goodrotor_statistical_analysis.xlsx`).",
         "<b>OpenCV (cv2 4.10):</b> Image color-space conversions, dual-axis Sobel gradient edge filtering, Otsu adaptive binarization, and morphological closure.",
         "<b>PyTorch (2.4.1):</b> MobileNetV3 deep vision transfer learning, convolutional tensor inference, and real-time surface defect classification.",
-        "<b>Scikit-Learn (1.5.2) & Scikit-Image (0.24):</b> 15 physical descriptor extraction, GLCM Haralick texture moments, Gini feature importance ranking, Decision Tree, and Random Forest ensemble.",
+        "<b>Scikit-Learn (1.5.2) & Scikit-Image (0.24):</b> 15 physical descriptor extraction, GLCM Haralick texture moments, Gini feature importance ranking, and explainable Decision Tree classifier.",
         "<b>ReportLab & python-docx:</b> Automated generation of ISO 9001:2015 inspection certificates and academic reports.",
         "<b>HTML5 / JavaScript Web Client:</b> Interactive browser inspection interface displaying weld seam overlays and automated sorting results."
     ]
@@ -731,7 +731,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         "3. Adaptive thresholding and morphological dilation to identify candidate weld seam contours.",
         "4. Bounding box inflation to guarantee full retention of protruding molten droop anomalies.",
         "5. Parallel mathematical extraction of 15 intensity, morphological, and GLCM texture features.",
-        "6. Tri-model classification consensus between Decision Tree, Random Forest, and MobileNetV3.",
+        "6. Dual-model classification consensus between the explainable Decision Tree and MobileNetV3.",
         "7. 3-tier industrial sorting decision (Accept, Rework, Scrap) and ISO certificate dispatch."
     ]
     for ms in m_steps:
@@ -982,7 +982,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
             Paragraph("<b>Fatal structural defect.</b> Eject immediately via drop chute to metal recovery and recycling bin. Red tower beacon & siren alert.", table_cell)
         ],
         [
-            Paragraph("Marginal confidence scores, ambiguous boundary or tri-model conflict", table_cell),
+            Paragraph("Marginal confidence scores, ambiguous boundary or dual-model conflict", table_cell),
             Paragraph("<font color='#1A237E'><b>MANUAL<br/>REVIEW</b></font>", table_cell_hdr),
             Paragraph("<b>Quality hold.</b> Indexing table pauses part for QA supervisor physical audit and microscopic verification. Pulsing alert buzzer.", table_cell)
         ]
@@ -1230,7 +1230,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         "2. Capture high-resolution macro optical photographs of the circumferential weld seams using the mobile camera.",
         "3. Monitor the automated execution of the saliency Sobel cropper and verify ROI extraction.",
         "4. Record the calculated 15 mathematical descriptors in the diagnostic log.",
-        "5. Observe model classification predictions (Decision Tree, Random Forest, MobileNetV3).",
+        "5. Observe dual-model classification predictions (Decision Tree and MobileNetV3).",
         "6. Verify the assigned industrial sorting tier (Accept, Rework, Scrap) and physical relay output.",
         "7. Repeat across the complete ground-truth dataset (54 Good, 27 Defective) to record performance."
     ]
@@ -1639,7 +1639,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     story.append(Paragraph("6.1 IMPLEMENTATION RESULTS", sec_hdr))
     story.append(Paragraph(
-        "The automated rotor weld inspection prototype was fully implemented and benchmarked on 81 high-resolution macro specimens. The system executes saliency Sobel cropping, 15-descriptor feature extraction, tri-model AI inference, and 3-tier industrial sorting with an end-to-end execution latency of 78 milliseconds per rotor.",
+        "The automated rotor weld inspection prototype was fully implemented and benchmarked on 81 high-resolution macro specimens. The system executes saliency Sobel cropping, 15-descriptor feature extraction, dual-model AI inference (MobileNetV3 and Decision Tree), and 3-tier industrial sorting with an end-to-end execution latency of 78 milliseconds per rotor.",
         body_text
     ))
     story.append(Spacer(1, 4))
@@ -1671,9 +1671,8 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(Paragraph("6.2 FUNCTIONAL VERIFICATION (TABLE 6.2 - PART 2)", sec_hdr))
     fn_data_p2 = [
         [Paragraph("<b>FUNCTION</b>", table_cell_hdr), Paragraph("<b>IMPLEMENTATION DETAILS</b>", table_cell_hdr), Paragraph("<b>VERIFICATION STATUS</b>", table_cell_hdr)],
-        [Paragraph("Decision Tree Model", table_cell), Paragraph("Explainable Gini-split white-box classifier", table_cell), Paragraph("Verified; 80.2% accuracy", table_cell)],
-        [Paragraph("Random Forest Model", table_cell), Paragraph("Ensemble of 100 bagging decision trees", table_cell), Paragraph("Verified; 74.1% accuracy", table_cell)],
-        [Paragraph("MobileNetV3 Deep Model", table_cell), Paragraph("Transfer-learned PyTorch CNN on cropped welds", table_cell), Paragraph("Verified; 90.2% accuracy", table_cell)],
+        [Paragraph("Explainable Decision Tree", table_cell), Paragraph("White-box Gini rule classifier on 15 physical features", table_cell), Paragraph("Verified; 80.2% accuracy (2.1 ms)", table_cell)],
+        [Paragraph("MobileNetV3 Deep Model", table_cell), Paragraph("Transfer-learned PyTorch CNN on cropped weld ROI", table_cell), Paragraph("Verified; 90.2% accuracy (94.4% recall)", table_cell)],
         [Paragraph("3-Tier Industrial Sorting", table_cell), Paragraph("Accept (Tier 1), Rework (Tier 2), Scrap (Tier 3)", table_cell), Paragraph("Verified; zero fatal escapes", table_cell)],
         [Paragraph("Web Dashboard & ISO", table_cell), Paragraph("Flask REST API, HTML5 Canvas, SHA-256 PDF", table_cell), Paragraph("Verified; fully operational", table_cell)],
     ]
@@ -1781,10 +1780,9 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
 
     story.append(Paragraph("MODEL BENCHMARK PERFORMANCE (TABLE 6.5)", sec_hdr))
     bench_data = [
-        [Paragraph("<b>MODEL</b>", table_cell_hdr), Paragraph("<b>ACCURACY</b>", table_cell_hdr), Paragraph("<b>RECALL</b>", table_cell_hdr), Paragraph("<b>SPECIFICITY</b>", table_cell_hdr), Paragraph("<b>LATENCY</b>", table_cell_hdr)],
-        [Paragraph("MobileNetV3 Deep Vision", table_cell), Paragraph("90.2%", table_cell_hdr), Paragraph("94.4%", table_cell_hdr), Paragraph("81.5%", table_cell_hdr), Paragraph("42.5 ms", table_cell_hdr)],
-        [Paragraph("Explainable Decision Tree", table_cell), Paragraph("80.2%", table_cell_hdr), Paragraph("85.2%", table_cell_hdr), Paragraph("77.8%", table_cell_hdr), Paragraph("2.1 ms", table_cell_hdr)],
-        [Paragraph("Random Forest (100 Trees)", table_cell), Paragraph("74.1%", table_cell_hdr), Paragraph("77.8%", table_cell_hdr), Paragraph("72.2%", table_cell_hdr), Paragraph("8.6 ms", table_cell_hdr)],
+        [Paragraph("<b>DEPLOYED MODEL</b>", table_cell_hdr), Paragraph("<b>ACCURACY</b>", table_cell_hdr), Paragraph("<b>RECALL</b>", table_cell_hdr), Paragraph("<b>SPECIFICITY</b>", table_cell_hdr), Paragraph("<b>LATENCY</b>", table_cell_hdr)],
+        [Paragraph("MobileNetV3 Deep Vision (Primary Detector)", table_cell), Paragraph("90.2%", table_cell_hdr), Paragraph("94.4%", table_cell_hdr), Paragraph("81.5%", table_cell_hdr), Paragraph("42.5 ms", table_cell_hdr)],
+        [Paragraph("Explainable Decision Tree (Auditable Rule Engine)", table_cell), Paragraph("80.2%", table_cell_hdr), Paragraph("85.2%", table_cell_hdr), Paragraph("77.8%", table_cell_hdr), Paragraph("2.1 ms", table_cell_hdr)],
     ]
     bench_table = Table(bench_data, colWidths=[140, 80, 80, 90, 85])
     bench_table.setStyle(TableStyle([
@@ -1815,7 +1813,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     # =========================================================================
     story.append(Paragraph("6.8 DISCUSSION", sec_hdr))
     story.append(Paragraph(
-        "The experimental results demonstrate that combining saliency-guided preprocessing with a hybrid tri-model architecture addresses the core trade-off in industrial machine vision: <b>accuracy versus explainability</b>.",
+        "The experimental results demonstrate that combining saliency-guided preprocessing with a synergistic dual-model architecture addresses the core trade-off in industrial machine vision: <b>accuracy versus explainability</b>.",
         body_text
     ))
     story.append(Paragraph(

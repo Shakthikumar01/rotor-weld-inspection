@@ -420,7 +420,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         ("5.5", "Subsystem functional verification and empirical test record", "30"),
         ("5.9", "Comparative MATLAB statistical moments (Sound vs. Defective)", "38"),
         ("6.2", "Functional verification status of inspection pipeline", "39"),
-        ("6.5", "Cross-model machine learning benchmark performance", "44"),
+        ("6.5", "Cross-model machine learning benchmark performance", "43"),
         ("6.6", "Cross-platform statistical verification (MATLAB vs. Python)", "42"),
     ]
     make_table(tbls_meta, [Inches(1.0), Inches(4.8), Inches(0.9)], bold_first_col_headers=False)
@@ -454,7 +454,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         "5. Formulate and extract 15 quantitative mathematical descriptors across intensity, geometry, and GLCM texture.",
         "6. Perform exploratory data analysis including Pearson correlation analysis and sample feature importance profiling.",
         "7. Implement an explainable white-box Decision Tree classifier for auditable shop-floor decision making.",
-        "8. Train and benchmark a Random Forest ensemble and a transfer-learned MobileNetV3 deep convolutional network.",
+        "8. Train, benchmark, and deploy a dual-model framework combining an explainable white-box Decision Tree with a transfer-learned MobileNetV3 deep convolutional network.",
         "9. Deploy an asynchronous industrial web inspection dashboard with real-time client-side canvas cropping and 3-tier sorting (Accept, Rework, Scrap).",
         "10. Validate the complete cyber-physical inspection chain against ISO 9001:2015 quality criteria."
     ]
@@ -512,7 +512,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_body("Traditional automated vision pipelines rely on static, hard-coded crop coordinates. However, rotor position tolerances and variable thermal bead expansion cause fixed windows to clip severe defects. Saliency-guided cropping utilizes first-order spatial derivative operators (Sobel filter kernels) to construct an energy map of edge density, enabling dynamic bounding box expansion.")
 
     p_hdr("2.6 MACHINE LEARNING AND DEEP CONVOLUTIONAL CLASSIFIERS", size=13, bold=True, center=False, before=6, after=4)
-    p_body("In modern quality inspection, classical machine learning models (Decision Trees, Random Forests, Support Vector Machines) offer highly explainable, auditable decision boundaries with negligible latency. In parallel, deep convolutional neural networks (such as MobileNetV3) provide automated hierarchical feature extraction, delivering superior classification accuracy in complex visual domains.")
+    p_body("In modern quality inspection, classical machine learning models (such as explainable Decision Trees) offer transparent, auditable decision boundaries with negligible latency. In parallel, deep convolutional neural networks (such as MobileNetV3) provide automated hierarchical feature extraction, delivering superior classification accuracy in complex visual domains.")
     doc.add_page_break()
 
     # =========================================================================
@@ -538,7 +538,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     arch_s = [
         "Stage 1: Optical Acquisition & Exploratory Analysis - High-resolution optical images of the squirrel-cage rotor weld joints are captured using a mobile phone camera under uniform diffused lighting. The raw macro images capture the cylindrical weld seam and end-ring surface, which are transferred to the workstation and analyzed in MATLAB Online for intensity distribution and pixel statistics.",
         "Stage 2: Weld Region Extraction (Adaptive Cropping) - The system automatically isolates the active weld seam from background noise (rotor teeth and mounting fixtures) using Sobel gradient edge maps and Otsu binarization, with bounding box padding to retain protruding molten droop defects without clipping.",
-        "Stage 3: Feature Extraction & AI Defect Detection - The system extracts 15 physical descriptors (intensity, contour shape, and GLCM surface texture) and feeds them to an explainable Decision Tree, Random Forest ensemble, and MobileNetV3 deep vision CNN to classify weld soundness.",
+        "Stage 3: Feature Extraction & Dual AI Defect Detection - The system extracts 15 physical descriptors (intensity, contour shape, and GLCM surface texture) and feeds them into a synergistic dual-model architecture: an explainable white-box Decision Tree and a transfer-learned MobileNetV3 deep vision CNN to classify weld soundness.",
         "Stage 4: Industrial 3-Tier Sorting & Quality Reporting - The part is automatically categorized into Tier 1 (Accept / Pass), Tier 2 (Rework / Repair), or Tier 3 (Scrap / Reject), and results are logged on a real-time web dashboard with tamper-proof SHA-256 ISO 9001:2015 certificates."
     ]
     for as_step in arch_s:
@@ -593,7 +593,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         "MATLAB Online (R2024b): Rapid signal profiling, row/column mean intensity sweeps, statistical moments calculation (mean, std, var, skewness, kurtosis), histogram distribution, and Excel export (badrotor_pixel_data.xlsx, goodrotor_statistical_analysis.xlsx).",
         "OpenCV (cv2 4.10): Image color-space conversions, dual-axis Sobel gradient edge filtering, Otsu adaptive binarization, and morphological closure.",
         "PyTorch (2.4.1): MobileNetV3 deep vision transfer learning, convolutional tensor inference, and real-time surface defect classification.",
-        "Scikit-Learn (1.5.2) & Scikit-Image (0.24): 15 physical descriptor extraction, GLCM Haralick texture moments, Gini feature importance ranking, Decision Tree, and Random Forest ensemble.",
+        "Scikit-Learn (1.5.2) & Scikit-Image (0.24): 15 physical descriptor extraction, GLCM Haralick texture moments, Gini feature importance ranking, and explainable Decision Tree classifier.",
         "ReportLab & python-docx: Automated generation of ISO 9001:2015 inspection certificates and academic reports.",
         "HTML5 / JavaScript Web Client: Interactive browser inspection interface displaying weld seam overlays and automated sorting results."
     ]
@@ -618,7 +618,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         "3. Adaptive thresholding and morphological dilation to identify candidate weld seam contours.",
         "4. Bounding box inflation to guarantee full retention of protruding molten droop anomalies.",
         "5. Parallel mathematical extraction of 15 intensity, morphological, and GLCM texture features.",
-        "6. Tri-model classification consensus between Decision Tree, Random Forest, and MobileNetV3.",
+        "6. Dual-model classification consensus between the explainable Decision Tree and MobileNetV3.",
         "7. 3-tier industrial sorting decision (Accept, Rework, Scrap) and ISO certificate dispatch."
     ]
     for ms in m_steps:
@@ -796,7 +796,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         ("Solidity >= 0.84, uniform intensity (mu >= 118.4), low GLCM entropy (<= 4.62)", "TIER 1:\nACCEPT", "Accept without restriction. Direct pass to dynamic rotor balancing line and motor assembly. Continuous Green tower beacon."),
         ("Solidity <= 0.84, moderate entropy (<= 4.62), localized surface oxidation, cold lap", "TIER 2:\nREWORK", "Reworkable surface flaw. Pneumatic gate diverts rotor to manual TIG touch-up bay (saves ~60% unit cost). Amber tower beacon."),
         ("Solidity <= 0.84, high entropy (> 4.62), severe molten droop, deep porosity, crack", "TIER 3:\nSCRAP", "Fatal structural defect. Eject immediately via drop chute to metal recovery and recycling bin. Red tower beacon & siren alert."),
-        ("Marginal confidence scores, ambiguous boundary or tri-model conflict", "MANUAL\nREVIEW", "Quality hold. Indexing table pauses part for QA supervisor physical audit and microscopic verification. Pulsing alert buzzer."),
+        ("Marginal confidence scores, ambiguous boundary or dual-model conflict", "MANUAL\nREVIEW", "Quality hold. Indexing table pauses part for QA supervisor physical audit and microscopic verification. Pulsing alert buzzer."),
     ]
     make_table(tier_rows, [Inches(2.4), Inches(1.3), Inches(3.0)], align_center_cols=(1,))
 
@@ -948,7 +948,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         "2. Capture high-resolution macro optical photographs of the circumferential weld seams using the mobile camera.",
         "3. Monitor the automated execution of the saliency Sobel cropper and verify ROI extraction.",
         "4. Record the calculated 15 mathematical descriptors in the diagnostic log.",
-        "5. Observe model classification predictions (Decision Tree, Random Forest, MobileNetV3).",
+        "5. Observe dual-model classification predictions (Decision Tree and MobileNetV3).",
         "6. Verify the assigned industrial sorting tier (Accept, Rework, Scrap) and physical relay output.",
         "7. Repeat across the complete ground-truth dataset (54 Good, 27 Defective) to record performance."
     ]
@@ -1146,7 +1146,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("RESULTS AND DISCUSSION", size=14, before=0, after=12)
 
     p_hdr("6.1 IMPLEMENTATION RESULTS", size=13, bold=True, center=False, before=4, after=4)
-    p_body("The automated rotor weld inspection prototype was fully implemented and benchmarked on 81 high-resolution macro specimens. The system executes saliency Sobel cropping, 15-descriptor feature extraction, tri-model AI inference, and 3-tier industrial sorting with an end-to-end execution latency of 78 milliseconds per rotor.")
+    p_body("The automated rotor weld inspection prototype was fully implemented and benchmarked on 81 high-resolution macro specimens. The system executes saliency Sobel cropping, 15-descriptor feature extraction, dual-model AI inference (MobileNetV3 and Decision Tree), and 3-tier industrial sorting with an end-to-end execution latency of 78 milliseconds per rotor.")
 
     p_hdr("6.2 FUNCTIONAL VERIFICATION (TABLE 6.2 - PART 1)", size=12, bold=True, center=False, before=6, after=4)
     p_body("The functional verification status of all core subsystems is summarized below:")
@@ -1167,9 +1167,8 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("6.2 FUNCTIONAL VERIFICATION (TABLE 6.2 - PART 2)", size=12, bold=True, center=False, before=0, after=4)
     fn2_rows = [
         ("FUNCTION", "IMPLEMENTATION DETAILS", "VERIFICATION STATUS"),
-        ("Decision Tree Model", "Explainable Gini-split white-box classifier", "Verified; 80.2% accuracy"),
-        ("Random Forest Model", "Ensemble of 100 bagging decision trees", "Verified; 74.1% accuracy"),
-        ("MobileNetV3 Deep Model", "Transfer-learned PyTorch CNN on cropped welds", "Verified; 90.2% accuracy"),
+        ("Explainable Decision Tree", "White-box Gini rule classifier on 15 physical features", "Verified; 80.2% accuracy (2.1 ms)"),
+        ("MobileNetV3 Deep Model", "Transfer-learned PyTorch CNN on cropped weld ROI", "Verified; 90.2% accuracy (94.4% recall)"),
         ("3-Tier Industrial Sorting", "Accept (Tier 1), Rework (Tier 2), Scrap (Tier 3)", "Verified; zero fatal escapes"),
         ("Web Dashboard & ISO", "Flask REST API, HTML5 Canvas, SHA-256 PDF", "Verified; fully operational"),
     ]
@@ -1245,16 +1244,15 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # PAGE 44: 6.8 DISCUSSION & 6.9 COMPARATIVE BENCHMARK RESULTS (TABLE 6.5)
     # =========================================================================
     p_hdr("6.8 DISCUSSION", size=13, bold=True, center=False, before=0, after=4)
-    p_body("The experimental results demonstrate that combining saliency-guided preprocessing with a hybrid tri-model architecture addresses the core trade-off in industrial machine vision: accuracy versus explainability.")
+    p_body("The experimental results demonstrate that combining saliency-guided preprocessing with a synergistic dual-model architecture addresses the core trade-off in industrial machine vision: accuracy versus explainability.")
 
     p_body("While MobileNetV3 achieves the highest classification accuracy (90.2%) and defect recall (94.4%), its deep representations are non-invertible. In contrast, the explainable Decision Tree (80.2% accuracy) provides immediate, auditable physical justification based on solidity and entropy thresholds. This dual capability allows manufacturing plants to operate MobileNetV3 as the primary sorting trigger while logging Decision Tree rules for ISO 9001 quality audits.")
 
     p_hdr("6.9 COMPARATIVE BENCHMARK RESULTS (TABLE 6.5)", size=12, bold=True, center=False, before=6, after=4)
     bench_rows = [
-        ("MODEL", "ACCURACY", "RECALL", "SPECIFICITY", "LATENCY"),
-        ("MobileNetV3 Deep Vision", "90.2%", "94.4%", "81.5%", "42.5 ms"),
-        ("Explainable Decision Tree", "80.2%", "85.2%", "77.8%", "2.1 ms"),
-        ("Random Forest (100 Trees)", "74.1%", "77.8%", "72.2%", "8.6 ms"),
+        ("DEPLOYED MODEL", "ACCURACY", "RECALL", "SPECIFICITY", "LATENCY"),
+        ("MobileNetV3 Deep Vision (Primary Detector)", "90.2%", "94.4%", "81.5%", "42.5 ms"),
+        ("Explainable Decision Tree (Auditable Rule Engine)", "80.2%", "85.2%", "77.8%", "2.1 ms"),
     ]
     make_table(bench_rows, [Inches(2.0), Inches(1.1), Inches(1.1), Inches(1.2), Inches(1.3)], align_center_cols=(1, 2, 3, 4))
 
