@@ -390,7 +390,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         ("4.2", "Multi-specimen adaptive weld ROI cropper verification", "20"),
         ("4.3", "Full molten droop anomaly boundary preservation without clipping", "21"),
         ("4.4", "Industrial 3-tier sorting decision logic and automated quality reporting pipeline", "24"),
-        ("5.1", "Web inspection studio and AI diagnostic interface", "28"),
+        ("5.1", "Laboratory experimental setup and optical rotor inspection test bench", "28"),
         ("5.2", "Raw vs. cropped feature distribution comparison", "33"),
         ("5.3", "2D Principal Component Analysis (PCA) cluster separation", "33"),
         ("5.4", "PCA feature loading vectors biplot", "33"),
@@ -938,8 +938,8 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("5.1 EXPERIMENTAL SETUP", size=13, bold=True, center=False, before=4, after=4)
     p_body("The experimental setup comprises squirrel-cage induction motor rotor specimens examined under controlled optical conditions. Optical images of the rotor end-ring and weld seams are captured using a high-resolution mobile camera positioned over the rotor inspection stand under uniform diffused ambient illumination.")
 
-    add_img('analysis_output/report_assets/fig_web_dashboard.png', width_in=5.8)
-    p_fig_caption("Fig. 5.1 Web inspection studio and AI diagnostic interface")
+    add_img('analysis_output/report_assets/fig_experimental_setup.png', width_in=5.8)
+    p_fig_caption("Fig. 5.1 Laboratory experimental setup and optical rotor inspection test bench arrangement: (a) Hardware schematic layout, (b) Physical rotor specimen on inspection stand")
 
     p_hdr("5.2 TESTING PROCEDURE", size=13, bold=True, center=False, before=6, after=4)
     proc = [

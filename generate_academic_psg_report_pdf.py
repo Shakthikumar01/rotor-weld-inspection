@@ -391,7 +391,7 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
         [Paragraph("4.2", table_cell_hdr), Paragraph("Multi-specimen adaptive weld ROI cropper verification", table_cell), Paragraph("20", table_cell_hdr)],
         [Paragraph("4.3", table_cell_hdr), Paragraph("Full molten droop anomaly boundary preservation without clipping", table_cell), Paragraph("21", table_cell_hdr)],
         [Paragraph("4.4", table_cell_hdr), Paragraph("Industrial 3-tier sorting decision logic and automated quality reporting pipeline", table_cell), Paragraph("24", table_cell_hdr)],
-        [Paragraph("5.1", table_cell_hdr), Paragraph("Web inspection studio and AI diagnostic interface", table_cell), Paragraph("28", table_cell_hdr)],
+        [Paragraph("5.1", table_cell_hdr), Paragraph("Laboratory experimental setup and optical rotor inspection test bench", table_cell), Paragraph("28", table_cell_hdr)],
         [Paragraph("5.2", table_cell_hdr), Paragraph("Raw vs. cropped feature distribution comparison", table_cell), Paragraph("33", table_cell_hdr)],
         [Paragraph("5.3", table_cell_hdr), Paragraph("2D Principal Component Analysis (PCA) cluster separation", table_cell), Paragraph("33", table_cell_hdr)],
         [Paragraph("5.4", table_cell_hdr), Paragraph("PCA feature loading vectors biplot", table_cell), Paragraph("33", table_cell_hdr)],
@@ -1217,10 +1217,10 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     ))
     story.append(Spacer(1, 4))
 
-    img_p24 = 'analysis_output/report_assets/fig_web_dashboard.png'
+    img_p24 = 'analysis_output/report_assets/fig_experimental_setup.png'
     if os.path.exists(img_p24):
-        story.append(Image(img_p24, width=5.8*72, height=2.2*72))
-        story.append(Paragraph("Fig. 5.1 Web inspection studio and AI diagnostic interface", fig_caption))
+        story.append(Image(img_p24, width=5.7*72, height=2.45*72))
+        story.append(Paragraph("Fig. 5.1 Laboratory experimental setup and optical rotor inspection test bench arrangement: (a) Hardware schematic layout, (b) Physical rotor specimen on inspection stand", fig_caption))
     story.append(Spacer(1, 4))
 
     story.append(Paragraph("5.2 TESTING PROCEDURE", sec_hdr))
