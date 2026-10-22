@@ -28,6 +28,7 @@ from docx import Document
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_TABLE_ALIGNMENT
+from docx.enum.section import WD_SECTION_START
 from docx.oxml import OxmlElement, parse_xml
 from docx.oxml.ns import nsdecls, qn
 
@@ -103,14 +104,10 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         section.left_margin = Inches(0.75)
         section.right_margin = Inches(0.75)
 
-        # Configure centered footer page numbers
+        # Section 1 (Cover & Certificate): No footer page numbers
         footer = section.footer
         f_p = footer.paragraphs[0]
-        f_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        f_run = f_p.add_run()
-        f_run.font.name = 'Times New Roman'
-        f_run.font.size = Pt(11)
-        add_page_number(f_run)
+        f_p.text = ""
 
     logo_path = 'analysis_output/report_assets/fig_logo.jpg'
     has_logo = os.path.exists(logo_path)
@@ -266,7 +263,26 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     r_fac = p_fac.add_run("........................................\nFaculty in charge")
     r_fac.font.name = 'Times New Roman'
     r_fac.font.size = Pt(11)
-    doc.add_page_break()
+    
+    # Section break for Section 2 (Abstract onwards: page numbering starts at 1)
+    sec2 = doc.add_section(WD_SECTION_START.NEW_PAGE)
+    sec2.top_margin = Inches(0.75)
+    sec2.bottom_margin = Inches(0.75)
+    sec2.left_margin = Inches(0.75)
+    sec2.right_margin = Inches(0.75)
+    sec2.footer.is_linked_to_previous = False
+    
+    f_p2 = sec2.footer.paragraphs[0]
+    f_p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    f_run2 = f_p2.add_run()
+    f_run2.font.name = 'Times New Roman'
+    f_run2.font.size = Pt(11)
+    add_page_number(f_run2)
+
+    w_sectPr = sec2._sectPr
+    pgNumType = OxmlElement('w:pgNumType')
+    pgNumType.set(qn('w:start'), '1')
+    w_sectPr.append(pgNumType)
 
     # =========================================================================
     # PAGE 3: ABSTRACT
@@ -287,24 +303,24 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
 
     toc_rows_p1 = [
         ("Index", "Title / Topic", "Pg. no."),
-        ("-", "Abstract", "3"),
-        ("-", "List of figures", "7"),
-        ("-", "List of tables", "7"),
-        ("1.0", "CHAPTER 1: INTRODUCTION", "8"),
-        ("1.1", "Aim", "8"),
-        ("1.2", "Objectives", "9"),
-        ("1.3", "Scope of the Project", "9"),
-        ("1.4", "Applications", "10"),
-        ("2.0", "CHAPTER 2: LITERATURE REVIEW", "11"),
-        ("2.1", "Overview of industrial weld defect inspection", "11"),
-        ("2.2", "Optical acquisition and lighting geometry", "11"),
-        ("2.3", "Spatial and morphological features", "11"),
-        ("2.4", "Texture analysis and GLCM", "12"),
-        ("2.5", "Saliency and gradient-based edge methods", "12"),
-        ("2.6", "Machine learning and deep classifiers", "12"),
-        ("2.7", "Research gap and project motivation", "13"),
-        ("3.0", "CHAPTER 3: SYSTEM DESIGN AND HARDWARE", "14"),
-        ("3.1", "System architecture", "14"),
+        ("-", "Abstract", "1"),
+        ("-", "List of figures", "5"),
+        ("-", "List of tables", "5"),
+        ("1.0", "CHAPTER 1: INTRODUCTION", "6"),
+        ("1.1", "Aim", "6"),
+        ("1.2", "Objectives", "7"),
+        ("1.3", "Scope of the Project", "7"),
+        ("1.4", "Applications", "8"),
+        ("2.0", "CHAPTER 2: LITERATURE REVIEW", "9"),
+        ("2.1", "Overview of industrial weld defect inspection", "9"),
+        ("2.2", "Optical acquisition and lighting geometry", "9"),
+        ("2.3", "Spatial and morphological features", "9"),
+        ("2.4", "Texture analysis and GLCM", "10"),
+        ("2.5", "Saliency and gradient-based edge methods", "10"),
+        ("2.6", "Machine learning and deep classifiers", "10"),
+        ("2.7", "Research gap and project motivation", "11"),
+        ("3.0", "CHAPTER 3: SYSTEM DESIGN AND HARDWARE", "12"),
+        ("3.1", "System architecture", "12"),
     ]
     make_table(toc_rows_p1, [Inches(0.9), Inches(4.9), Inches(0.9)])
     doc.add_page_break()
@@ -314,37 +330,37 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     toc_rows_p2 = [
         ("Index", "Title / Topic", "Pg. no."),
-        ("3.2", "Hardware components", "16"),
-        ("3.2.1", "High-resolution optical camera", "16"),
-        ("3.2.2", "Processing workstation and edge engine", "16"),
-        ("3.2.3", "Industrial lighting and fixture rig", "16"),
-        ("3.2.4", "Web-based inspection dashboard", "16"),
-        ("3.3", "Hardware connections and specifications", "16"),
-        ("3.4", "Software requirements and dual environment", "17"),
-        ("4.0", "CHAPTER 4: METHODOLOGY AND SOFTWARE", "18"),
-        ("4.1", "Overall methodology", "18"),
-        ("4.2", "Configuration parameters", "18"),
-        ("4.3", "Saliency-guided weld ROI cropper", "19"),
-        ("4.3.1", "Adaptive smart cropping verification", "20"),
-        ("4.3.2", "Molten droop defect preservation", "21"),
-        ("4.4", "Mathematical feature extraction formulation", "22"),
-        ("4.4.1", "Intensity and density descriptors", "22"),
-        ("4.4.2", "Morphological and geometric contours", "22"),
-        ("4.4.3", "GLCM Haralick texture descriptors", "22"),
-        ("4.5", "Machine learning classification logic", "23"),
-        ("4.6", "Industrial 3-tier sorting and reject actuation logic", "24"),
-        ("4.7", "Output indication and ISO 9001:2015 audit compliance", "25"),
-        ("4.8", "Software implementation summary", "25"),
-        ("4.9", "Important technical observations and insights", "25"),
-        ("4.10", "Deep convolutional validation (MobileNetV3)", "25"),
-        ("4.11", "MATLAB exploratory signal & image processing pipeline", "26"),
-        ("4.11.1", "MATLAB script implementations and statistical profiling", "27"),
-        ("5.0", "CHAPTER 5: EXPERIMENTAL SETUP AND TESTING", "28"),
-        ("5.1", "Experimental setup", "28"),
-        ("5.2", "Testing procedure", "28"),
-        ("5.3", "Parameters used during testing", "29"),
-        ("5.4", "Observations during testing", "30"),
-        ("5.5", "Test record", "30"),
+        ("3.2", "Hardware components", "14"),
+        ("3.2.1", "High-resolution optical camera", "14"),
+        ("3.2.2", "Processing workstation and edge engine", "14"),
+        ("3.2.3", "Industrial lighting and fixture rig", "14"),
+        ("3.2.4", "Web-based inspection dashboard", "14"),
+        ("3.3", "Hardware connections and specifications", "14"),
+        ("3.4", "Software requirements and dual environment", "15"),
+        ("4.0", "CHAPTER 4: METHODOLOGY AND SOFTWARE", "16"),
+        ("4.1", "Overall methodology", "16"),
+        ("4.2", "Configuration parameters", "16"),
+        ("4.3", "Saliency-guided weld ROI cropper", "17"),
+        ("4.3.1", "Adaptive smart cropping verification", "18"),
+        ("4.3.2", "Molten droop defect preservation", "19"),
+        ("4.4", "Mathematical feature extraction formulation", "20"),
+        ("4.4.1", "Intensity and density descriptors", "20"),
+        ("4.4.2", "Morphological and geometric contours", "20"),
+        ("4.4.3", "GLCM Haralick texture descriptors", "20"),
+        ("4.5", "Machine learning classification logic", "21"),
+        ("4.6", "Industrial 3-tier sorting and reject actuation logic", "22"),
+        ("4.7", "Output indication and ISO 9001:2015 audit compliance", "23"),
+        ("4.8", "Software implementation summary", "23"),
+        ("4.9", "Important technical observations and insights", "23"),
+        ("4.10", "Deep convolutional validation (MobileNetV3)", "23"),
+        ("4.11", "MATLAB exploratory signal & image processing pipeline", "24"),
+        ("4.11.1", "MATLAB script implementations and statistical profiling", "25"),
+        ("5.0", "CHAPTER 5: EXPERIMENTAL SETUP AND TESTING", "26"),
+        ("5.1", "Experimental setup", "26"),
+        ("5.2", "Testing procedure", "26"),
+        ("5.3", "Parameters used during testing", "27"),
+        ("5.4", "Observations during testing", "28"),
+        ("5.5", "Test record", "28"),
     ]
     make_table(toc_rows_p2, [Inches(0.9), Inches(4.9), Inches(0.9)])
     doc.add_page_break()
@@ -354,23 +370,23 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     toc_rows_p3 = [
         ("Index", "Title / Topic", "Pg. no."),
-        ("5.6", "Scope of experimental verification", "31"),
-        ("5.7", "Visual analysis and diagnostic plots", "31"),
-        ("5.8", "MATLAB image intensity profiling & statistical experiments", "34"),
-        ("5.9", "Comparative statistical summary of rotor specimens", "38"),
-        ("6.0", "CHAPTER 6: RESULTS AND DISCUSSION", "39"),
-        ("6.1", "Implementation results", "39"),
-        ("6.2", "Functional verification", "39"),
-        ("6.3", "Analysis of preprocessing and saliency cropper", "40"),
-        ("6.4", "Analysis of sample feature extraction and decision logic", "41"),
-        ("6.5", "Analysis of classification output", "41"),
-        ("6.6", "Cross-platform statistical verification (MATLAB vs Python)", "42"),
-        ("6.7", "Limitations identified", "43"),
-        ("6.8", "Discussion", "44"),
-        ("6.9", "Comparative benchmark results", "44"),
-        ("7.0", "CHAPTER 7: CONCLUSION AND FUTURE SCOPE", "45"),
-        ("7.1", "Conclusion", "45"),
-        ("7.2", "Future scope", "45"),
+        ("5.6", "Scope of experimental verification", "29"),
+        ("5.7", "Visual analysis and diagnostic plots", "29"),
+        ("5.8", "MATLAB image intensity profiling & statistical experiments", "32"),
+        ("5.9", "Comparative statistical summary of rotor specimens", "36"),
+        ("6.0", "CHAPTER 6: RESULTS AND DISCUSSION", "37"),
+        ("6.1", "Implementation results", "37"),
+        ("6.2", "Functional verification", "37"),
+        ("6.3", "Analysis of preprocessing and saliency cropper", "38"),
+        ("6.4", "Analysis of sample feature extraction and decision logic", "39"),
+        ("6.5", "Analysis of classification output", "39"),
+        ("6.6", "Cross-platform statistical verification (MATLAB vs Python)", "40"),
+        ("6.7", "Limitations identified", "41"),
+        ("6.8", "Discussion", "42"),
+        ("6.9", "Comparative benchmark results", "42"),
+        ("7.0", "CHAPTER 7: CONCLUSION AND FUTURE SCOPE", "43"),
+        ("7.1", "Conclusion", "43"),
+        ("7.2", "Future scope", "43"),
     ]
     make_table(toc_rows_p3, [Inches(0.9), Inches(4.9), Inches(0.9)])
     doc.add_page_break()
@@ -381,30 +397,30 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("LIST OF FIGURES", size=15, before=0, after=6)
     figs_meta = [
         ("Figure index", "Title", "Pg. no."),
-        ("1.1", "Physical rotor squirrel-cage weld inspection specimens", "10"),
-        ("2.1", "Optical defect morphology and feature comparison", "13"),
-        ("3.1", "Proposed cyber-physical system architecture and 4-stage inspection workflow", "14"),
-        ("3.2", "Mobile optical acquisition of rotor specimen with candidate weld seam bounding box", "15"),
-        ("3.3", "Isolated annular weld seam region of interest (ROI) preserved for feature extraction", "15"),
-        ("3.4", "Dual computational software environment and integrated technology stack", "17"),
-        ("4.1", "Saliency Sobel filter edge detection map", "19"),
-        ("4.2", "Multi-specimen adaptive weld ROI cropper verification", "20"),
-        ("4.3", "Full molten droop anomaly boundary preservation without clipping", "21"),
-        ("4.4", "Industrial 3-tier sorting decision logic and automated quality reporting pipeline", "24"),
-        ("5.1", "Laboratory experimental setup and optical rotor inspection test bench", "28"),
-        ("5.2", "Raw vs. cropped feature distribution comparison across key descriptors", "31"),
-        ("5.3", "Sample feature importance ranking across 15 visual descriptors", "32"),
-        ("5.4", "Primary sample feature distribution and inter-class separation", "32"),
-        ("5.5", "Pearson correlation heatmap matrix across 15 extracted descriptors", "33"),
-        ("5.6", "MATLAB defective rotor image analysis and grayscale conversion", "34"),
-        ("5.7", "MATLAB sound rotor image and statistical moments in command window", "34"),
-        ("5.8", "MATLAB multimodal pixel intensity histogram of rotor specimen", "35"),
-        ("5.9", "MATLAB row-wise mean pixel intensity profile across image rows", "35"),
-        ("5.10", "MATLAB column-wise mean pixel intensity profile across image columns", "36"),
-        ("5.11", "MATLAB row-wise pixel variation (standard deviation) profile", "36"),
-        ("5.12", "MATLAB column-wise pixel variation (standard deviation) profile", "37"),
-        ("6.1", "Explainable Decision Tree classification architecture", "41"),
-        ("6.2", "MobileNetV3 confusion matrix and model benchmark comparison", "43"),
+        ("1.1", "Physical rotor squirrel-cage weld inspection specimens", "8"),
+        ("2.1", "Optical defect morphology and feature comparison", "11"),
+        ("3.1", "Proposed cyber-physical system architecture and 4-stage inspection workflow", "12"),
+        ("3.2", "Mobile optical acquisition of rotor specimen with candidate weld seam bounding box", "13"),
+        ("3.3", "Isolated annular weld seam region of interest (ROI) preserved for feature extraction", "13"),
+        ("3.4", "Dual computational software environment and integrated technology stack", "15"),
+        ("4.1", "Saliency Sobel filter edge detection map", "17"),
+        ("4.2", "Multi-specimen adaptive weld ROI cropper verification", "18"),
+        ("4.3", "Full molten droop anomaly boundary preservation without clipping", "19"),
+        ("4.4", "Industrial 3-tier sorting decision logic and automated quality reporting pipeline", "22"),
+        ("5.1", "Laboratory experimental setup and optical rotor inspection test bench", "26"),
+        ("5.2", "Raw vs. cropped feature distribution comparison across key descriptors", "29"),
+        ("5.3", "Sample feature importance ranking across 15 visual descriptors", "30"),
+        ("5.4", "Primary sample feature distribution and inter-class separation", "30"),
+        ("5.5", "Pearson correlation heatmap matrix across 15 extracted descriptors", "31"),
+        ("5.6", "MATLAB defective rotor image analysis and grayscale conversion", "32"),
+        ("5.7", "MATLAB sound rotor image and statistical moments in command window", "32"),
+        ("5.8", "MATLAB multimodal pixel intensity histogram of rotor specimen", "33"),
+        ("5.9", "MATLAB row-wise mean pixel intensity profile across image rows", "33"),
+        ("5.10", "MATLAB column-wise mean pixel intensity profile across image columns", "34"),
+        ("5.11", "MATLAB row-wise pixel variation (standard deviation) profile", "34"),
+        ("5.12", "MATLAB column-wise pixel variation (standard deviation) profile", "35"),
+        ("6.1", "Explainable Decision Tree classification architecture", "39"),
+        ("6.2", "MobileNetV3 confusion matrix and model benchmark comparison", "41"),
     ]
     make_table(figs_meta, [Inches(1.0), Inches(4.8), Inches(0.9)], bold_first_col_headers=False)
 
@@ -412,17 +428,17 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_hdr("LIST OF TABLES", size=15, before=4, after=6)
     tbls_meta = [
         ("Table index", "Title", "Pg. no."),
-        ("3.3", "Hardware connections and interface specifications", "16"),
-        ("4.2", "Preprocessing and model configuration parameters", "18"),
-        ("4.4", "Mathematical formulation of the 15 extracted visual feature descriptors", "22"),
-        ("4.6", "Industrial 3-tier sorting and reject actuation logic", "24"),
-        ("4.11", "Computed MATLAB statistical moments and spatial signal distribution metrics", "26"),
-        ("5.3", "Experimental testing parameters and operational configuration", "29"),
-        ("5.5", "Subsystem functional verification and empirical test record", "30"),
-        ("5.9", "Comparative MATLAB statistical moments (Sound vs. Defective)", "38"),
-        ("6.2", "Functional verification status of inspection pipeline", "39"),
-        ("6.5", "Cross-model machine learning benchmark performance", "43"),
-        ("6.6", "Cross-platform statistical verification (MATLAB vs. Python)", "42"),
+        ("3.3", "Hardware connections and interface specifications", "14"),
+        ("4.2", "Preprocessing and model configuration parameters", "16"),
+        ("4.4", "Mathematical formulation of the 15 extracted visual feature descriptors", "20"),
+        ("4.6", "Industrial 3-tier sorting and reject actuation logic", "22"),
+        ("4.11", "Computed MATLAB statistical moments and spatial signal distribution metrics", "24"),
+        ("5.3", "Experimental testing parameters and operational configuration", "27"),
+        ("5.5", "Subsystem functional verification and empirical test record", "28"),
+        ("5.9", "Comparative MATLAB statistical moments (Sound vs. Defective)", "36"),
+        ("6.2", "Functional verification status of inspection pipeline", "37"),
+        ("6.5", "Cross-model machine learning benchmark performance", "41"),
+        ("6.6", "Cross-platform statistical verification (MATLAB vs. Python)", "40"),
     ]
     make_table(tbls_meta, [Inches(1.0), Inches(4.8), Inches(0.9)], bold_first_col_headers=False)
     doc.add_page_break()
