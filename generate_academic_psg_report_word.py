@@ -307,10 +307,11 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         ("-", "List of figures", "5"),
         ("-", "List of tables", "5"),
         ("1.0", "CHAPTER 1: INTRODUCTION", "6"),
-        ("1.1", "Aim", "6"),
-        ("1.2", "Objectives", "7"),
-        ("1.3", "Scope of the Project", "7"),
-        ("1.4", "Applications", "8"),
+        ("1.1", "Problem statement", "6"),
+        ("1.2", "Aim", "6"),
+        ("1.3", "Objectives", "7"),
+        ("1.4", "Scope of the Project", "7"),
+        ("1.5", "Applications", "8"),
         ("2.0", "CHAPTER 2: LITERATURE REVIEW", "9"),
         ("2.1", "Overview of industrial weld defect inspection", "9"),
         ("2.2", "Optical acquisition and lighting geometry", "9"),
@@ -444,10 +445,10 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     doc.add_page_break()
 
     # =========================================================================
-    # PAGE 8: CHAPTER 1 - INTRODUCTION & 1.1 AIM
+    # PAGE 8: CHAPTER 1 - INTRODUCTION, 1.1 PROBLEM STATEMENT & 1.2 AIM
     # =========================================================================
     p_hdr("CHAPTER 1", size=17, before=0, after=2)
-    p_hdr("INTRODUCTION", size=14, before=0, after=12)
+    p_hdr("INTRODUCTION", size=14, before=0, after=10)
 
     p_body("Rotor squirrel-cage induction motors represent the foundational workhorses of modern electrified industry, powering electric vehicle drivetrains, high-volume fluid pumps, precision CNC machine tools, and industrial ventilation systems. The operational reliability of these high-speed rotating machines depends directly on the structural integrity of the electrical joints connecting the conductive copper or aluminium rotor bars to the outer short-circuiting end-rings.")
 
@@ -455,14 +456,18 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
 
     p_body("Automated Visual Inspection (AVI) using computer vision and machine learning offers a non-contact, rapid, and objective methodology to inspect 100% of manufactured rotors in line with modern Industry 4.0 standards.")
 
-    p_hdr("1.1 AIM", size=13, bold=True, center=False, before=8, after=4)
+    p_hdr("1.1 PROBLEM STATEMENT", size=13, bold=True, center=False, before=6, after=3)
+    p_body("Manual human inspection of rotor welds on high-speed manufacturing lines suffers from severe fatigue-induced error rates, operator subjectivity, and an inability to reliably detect micro-scale surface flaws under variable factory lighting. Furthermore, raw optical macro images capture extensive irrelevant background context-including rotor teeth laminations, central shaft bores, mounting fixtures, and reflective metallic shadows. Conventional fixed-size bounding box cropping frequently severs protruding molten dripping anomalies or fails to center the fusion seam.")
+    p_body("An automated quality assurance pipeline is required that can dynamically isolate the true weld bead Region-of-Interest (ROI) via saliency edge detection, extract robust mathematical descriptors, and deploy a multi-model machine learning architecture to achieve high defect recall while maintaining transparent explainability.")
+
+    p_hdr("1.2 AIM", size=13, bold=True, center=False, before=6, after=3)
     p_body("To design, develop, and experimentally evaluate an AI-based rotor weld detection and automated quality inspection system, incorporating saliency-guided adaptive cropping, mathematical feature extraction, multi-model classification, and an industrial 3-tier sorting web dashboard.")
     doc.add_page_break()
 
     # =========================================================================
-    # PAGE 9: 1.2 OBJECTIVES & 1.3 SCOPE OF THE PROJECT
+    # PAGE 9: 1.3 OBJECTIVES & 1.4 SCOPE OF THE PROJECT
     # =========================================================================
-    p_hdr("1.2 OBJECTIVES", size=13, bold=True, center=False, before=0, after=4)
+    p_hdr("1.3 OBJECTIVES", size=13, bold=True, center=False, before=0, after=4)
     objs = [
         "1. Acquire high-resolution optical macro images of rotor squirrel-cage weld rings.",
         "2. Perform exploratory image analysis, statistical moment profiling, and 1D spatial intensity evaluation in MATLAB.",
@@ -478,14 +483,14 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     for ob in objs:
         p_bullet(ob)
 
-    p_hdr("1.3 SCOPE OF THE PROJECT", size=13, bold=True, center=False, before=6, after=4)
+    p_hdr("1.4 SCOPE OF THE PROJECT", size=13, bold=True, center=False, before=6, after=4)
     p_body("The project focuses on external surface weld defect inspection of cylindrical rotor end-ring assemblies. It encompasses automated optical preprocessing, spatial ROI isolation, statistical and Haralick texture feature extraction, sample feature discriminative profiling, multi-model AI benchmarking, and industrial cyber-physical deployment with tamper-proof ISO quality reporting.")
     doc.add_page_break()
 
     # =========================================================================
-    # PAGE 10: 1.4 APPLICATIONS & FIG 1.1
+    # PAGE 10: 1.5 APPLICATIONS & FIG 1.1
     # =========================================================================
-    p_hdr("1.4 APPLICATIONS", size=13, bold=True, center=False, before=0, after=4)
+    p_hdr("1.5 APPLICATIONS", size=13, bold=True, center=False, before=0, after=4)
     p_body("Potential industrial application areas include:")
     apps = [
         "Automated quality assurance on high-volume electric vehicle (EV) traction motor production lines.",
