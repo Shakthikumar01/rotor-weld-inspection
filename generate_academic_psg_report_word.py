@@ -301,7 +301,7 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
         ("2.3", "Spatial and morphological features", "11"),
         ("2.4", "Texture analysis and GLCM", "12"),
         ("2.5", "Saliency and gradient-based edge methods", "12"),
-        ("2.6", "Machine learning and deep classifiers", "13"),
+        ("2.6", "Machine learning and deep classifiers", "12"),
         ("2.7", "Research gap and project motivation", "13"),
         ("3.0", "CHAPTER 3: SYSTEM DESIGN AND HARDWARE", "14"),
         ("3.1", "System architecture", "14"),
@@ -354,9 +354,10 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     # =========================================================================
     toc_rows_p3 = [
         ("Index", "Title / Topic", "Pg. no."),
-        ("5.6", "Scope of experimental verification", "32"),
-        ("5.7", "Visual analysis and diagnostic plots", "32"),
-        ("5.8", "MATLAB image intensity profiling & statistical experiments", "35"),
+        ("5.6", "Scope of experimental verification", "31"),
+        ("5.7", "Visual analysis and diagnostic plots", "31"),
+        ("5.8", "MATLAB image intensity profiling & statistical experiments", "34"),
+        ("5.9", "Comparative statistical summary of rotor specimens", "38"),
         ("6.0", "CHAPTER 6: RESULTS AND DISCUSSION", "39"),
         ("6.1", "Implementation results", "39"),
         ("6.2", "Functional verification", "39"),
