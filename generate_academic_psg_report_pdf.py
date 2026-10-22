@@ -1564,12 +1564,16 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 38: 5.9 COMPARATIVE STATISTICAL MOMENTS SUMMARY (TABLE 5.9)
+    # PAGE 38: 5.9 COMPARATIVE STATISTICAL SUMMARY OF ROTOR SPECIMENS (TABLE 5.9)
     # =========================================================================
+    p38_body = ParagraphStyle('P38Body', fontName='Times-Roman', fontSize=10.0, leading=13.5, spaceAfter=2, textColor=colors.black)
+    p38_cell = ParagraphStyle('P38Cell', fontName='Times-Roman', fontSize=8.5, leading=11.0, textColor=colors.black)
+    p38_cell_hdr = ParagraphStyle('P38CellH', fontName='Times-Bold', fontSize=9.0, leading=11.5, alignment=1, textColor=colors.black)
+
     story.append(Paragraph("5.9 COMPARATIVE STATISTICAL SUMMARY OF ROTOR SPECIMENS", sec_hdr))
     story.append(Paragraph(
-        "To rigorously quantify the empirical differences observed across sound and defective specimens, the 10 fundamental statistical moments calculated in MATLAB are summarized side-by-side in Table 5.9. These moments provide the physical feature foundation utilized by the downstream machine learning classifiers.",
-        body_text
+        "This section compares the 10 statistical values computed by the MATLAB scripts for a sound (normal) rotor versus a defective rotor with weld anomalies. Comparing these numbers proves mathematically how image processing detects physical defects such as excess molten droop, spatter, and surface irregularity.",
+        p38_body
     ))
     story.append(Spacer(1, 2))
 
@@ -1577,48 +1581,51 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     story.append(Spacer(1, 2))
 
     stat_rows = [
-        ("STATISTICAL MOMENT / METRIC", "SOUND ROTOR (BASELINE)", "DEFECTIVE ROTOR (ANOMALY)", "DIAGNOSTIC SIGNIFICANCE"),
-        ("Mean Pixel Intensity", "121.4320", "147.6512", "Elevated in defective welds due to specular droplet spatter"),
-        ("Median Intensity", "118.0000", "144.0000", "Robust central tendency reflecting global surface brightness"),
-        ("Standard Deviation", "42.1850", "58.9240", "Significantly higher (+39.7%) due to severe droplet sag"),
-        ("Intensity Variance", "1779.57", "3472.04", "Reflects non-uniform molten metal dispersion"),
-        ("Minimum Pixel Intensity", "12.0000", "8.0000", "Background non-metallic ambient baseline"),
-        ("Maximum Pixel Intensity", "248.0000", "255.0000", "Specular reflection saturation on defective molten crests"),
-        ("Dynamic Intensity Range", "236.0000", "247.0000", "Broader dynamic span across defective specimens"),
-        ("Intensity Mode", "115.0000", "141.0000", "Dominant surface tone across active lamination stack"),
-        ("Pixel Skewness", "+0.2140", "-0.4820", "Negative shift indicates heavy tail of bright specular droplets"),
-        ("Pixel Kurtosis", "2.8450", "4.1280", "Leptokurtic spike reflects sharp localized defect anomalies"),
+        ("STATISTICAL MOMENT / METRIC", "SOUND ROTOR (BASELINE)", "DEFECTIVE ROTOR (ANOMALY)", "DIAGNOSTIC SIGNIFICANCE (IN SIMPLE TERMS)"),
+        ("Mean Pixel Intensity", "121.4320", "147.6512", "Overall brightness increases (+21.6%) due to shiny molten metal droplets"),
+        ("Median Intensity", "118.0000", "144.0000", "Middle brightness shifts higher from 118 to 144 across the entire specimen"),
+        ("Standard Deviation", "42.1850", "58.9240", "Texture variation increases by 39.7% due to bumpy, uneven weld metal"),
+        ("Intensity Variance", "1779.57", "3472.04", "Brightness variance nearly doubles (+95.1%), reflecting severe roughness"),
+        ("Minimum Pixel Intensity", "12.0000", "8.0000", "Darkest background pixels stay consistent between both specimens"),
+        ("Maximum Pixel Intensity", "248.0000", "255.0000", "Reaches pure white saturation (255) on sharp reflective metal crests"),
+        ("Dynamic Intensity Range", "236.0000", "247.0000", "Wider contrast spread between darkest and brightest spots on defective welds"),
+        ("Intensity Mode", "115.0000", "141.0000", "Most frequent surface tone shifts higher from 115 to 141 due to spatter dust"),
+        ("Pixel Skewness", "+0.2140", "-0.4820", "Tilts negative (-0.48), showing a heavy tail of bright specular droplets"),
+        ("Pixel Kurtosis", "2.8450", "4.1280", "Jumps from 2.85 to 4.13 (sharp spike), proving localized defect blobs exist"),
     ]
     stat_table_data = []
     for idx, r in enumerate(stat_rows):
         if idx == 0:
             stat_table_data.append([
-                Paragraph(f"<b>{r[0]}</b>", table_cell_hdr),
-                Paragraph(f"<b>{r[1]}</b>", table_cell_hdr),
-                Paragraph(f"<b>{r[2]}</b>", table_cell_hdr),
-                Paragraph(f"<b>{r[3]}</b>", table_cell_hdr),
+                Paragraph(f"<b>{r[0]}</b>", p38_cell_hdr),
+                Paragraph(f"<b>{r[1]}</b>", p38_cell_hdr),
+                Paragraph(f"<b>{r[2]}</b>", p38_cell_hdr),
+                Paragraph(f"<b>{r[3]}</b>", p38_cell_hdr),
             ])
         else:
             stat_table_data.append([
-                Paragraph(r[0], table_cell),
-                Paragraph(r[1], table_cell_hdr),
-                Paragraph(r[2], table_cell_hdr),
-                Paragraph(r[3], table_cell),
+                Paragraph(r[0], p38_cell),
+                Paragraph(r[1], p38_cell_hdr),
+                Paragraph(r[2], p38_cell_hdr),
+                Paragraph(r[3], p38_cell),
             ])
-    stat_table = Table(stat_table_data, colWidths=[125, 75, 75, 200])
+    stat_table = Table(stat_table_data, colWidths=[120, 75, 75, 205])
     stat_table.setStyle(TableStyle([
-        ('GRID', (0,0), (-1,-1), 0.6, colors.black),
+        ('GRID', (0,0), (-1,-1), 0.5, colors.black),
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
-        ('TOPPADDING', (0,0), (-1,-1), 2.2),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 2.2),
+        ('TOPPADDING', (0,0), (-1,-1), 1.5),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 1.5),
         ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#F2F2F2')),
     ]))
     story.append(stat_table)
-    story.append(Spacer(1, 4))
+    story.append(Spacer(1, 3))
 
     story.append(Paragraph(
-        "<b>Failure Mode Correlation:</b> The substantial increase in variance (+95.1%) and the sharp shift in skewness from positive (+0.214) to negative (-0.482) provide unequivocal mathematical proof of defect presence. Excess molten droop creates localized high-reflectance regions that distort the intensity distribution, confirming that low-order statistical moments provide powerful discriminative features for industrial quality assurance.",
-        body_text
+        "<b>Simple Summary of Key Physical Differences:</b><br/>"
+        "• <b>Defects Make the Surface Brighter (Mean 121 -> 147):</b> Irregular molten metal blobs reflect light like mirrors, raising the average brightness.<br/>"
+        "• <b>Defects Double the Surface Roughness (Variance 1779 -> 3472):</b> A healthy weld has smooth, even light, whereas a defective weld has wild jumps between shiny highlights and deep shadows.<br/>"
+        "• <b>Defects Create Sharp Statistical Spikes (Kurtosis 2.85 -> 4.13):</b> A sharp increase in kurtosis mathematically proves the presence of sudden defect bumps rather than a uniform surface.",
+        p38_body
     ))
     story.append(PageBreak())
 

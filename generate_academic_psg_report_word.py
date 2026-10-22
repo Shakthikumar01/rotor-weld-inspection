@@ -1112,28 +1112,31 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     doc.add_page_break()
 
     # =========================================================================
-    # PAGE 38: 5.9 COMPARATIVE STATISTICAL MOMENTS SUMMARY (TABLE 5.9)
+    # PAGE 38: 5.9 COMPARATIVE STATISTICAL SUMMARY OF ROTOR SPECIMENS (TABLE 5.9)
     # =========================================================================
     p_hdr("5.9 COMPARATIVE STATISTICAL SUMMARY OF ROTOR SPECIMENS", size=13, bold=True, center=False, before=4, after=4)
-    p_body("To rigorously quantify the empirical differences observed across sound and defective specimens, the 10 fundamental statistical moments calculated in MATLAB are summarized side-by-side in Table 5.9. These moments provide the physical feature foundation utilized by the downstream machine learning classifiers.")
+    p_body("This section compares the 10 statistical values computed by the MATLAB scripts for a sound (normal) rotor versus a defective rotor with weld anomalies. Comparing these numbers proves mathematically how image processing detects physical defects such as excess molten droop, spatter, and surface irregularity.")
 
     p_fig_caption("Table 5.9 Comparative MATLAB statistical moments and spatial metrics (Sound vs. Defective)")
     stat_rows = [
-        ("STATISTICAL MOMENT / METRIC", "SOUND ROTOR (BASELINE)", "DEFECTIVE ROTOR (ANOMALY)", "DIAGNOSTIC SIGNIFICANCE"),
-        ("Mean Pixel Intensity", "121.4320", "147.6512", "Elevated in defective welds due to specular droplet spatter"),
-        ("Median Intensity", "118.0000", "144.0000", "Robust central tendency reflecting global surface brightness"),
-        ("Standard Deviation", "42.1850", "58.9240", "Significantly higher (+39.7%) due to severe droplet sag"),
-        ("Intensity Variance", "1779.57", "3472.04", "Reflects non-uniform molten metal dispersion"),
-        ("Minimum Pixel Intensity", "12.0000", "8.0000", "Background non-metallic ambient baseline"),
-        ("Maximum Pixel Intensity", "248.0000", "255.0000", "Specular reflection saturation on defective molten crests"),
-        ("Dynamic Intensity Range", "236.0000", "247.0000", "Broader dynamic span across defective specimens"),
-        ("Intensity Mode", "115.0000", "141.0000", "Dominant surface tone across active lamination stack"),
-        ("Pixel Skewness", "+0.2140", "-0.4820", "Negative shift indicates heavy tail of bright specular droplets"),
-        ("Pixel Kurtosis", "2.8450", "4.1280", "Leptokurtic spike reflects sharp localized defect anomalies"),
+        ("STATISTICAL MOMENT / METRIC", "SOUND ROTOR (BASELINE)", "DEFECTIVE ROTOR (ANOMALY)", "DIAGNOSTIC SIGNIFICANCE (IN SIMPLE TERMS)"),
+        ("Mean Pixel Intensity", "121.4320", "147.6512", "Overall brightness increases (+21.6%) due to shiny molten metal droplets"),
+        ("Median Intensity", "118.0000", "144.0000", "Middle brightness shifts higher from 118 to 144 across the entire specimen"),
+        ("Standard Deviation", "42.1850", "58.9240", "Texture variation increases by 39.7% due to bumpy, uneven weld metal"),
+        ("Intensity Variance", "1779.57", "3472.04", "Brightness variance nearly doubles (+95.1%), reflecting severe roughness"),
+        ("Minimum Pixel Intensity", "12.0000", "8.0000", "Darkest background pixels stay consistent between both specimens"),
+        ("Maximum Pixel Intensity", "248.0000", "255.0000", "Reaches pure white saturation (255) on sharp reflective metal crests"),
+        ("Dynamic Intensity Range", "236.0000", "247.0000", "Wider contrast spread between darkest and brightest spots on defective welds"),
+        ("Intensity Mode", "115.0000", "141.0000", "Most frequent surface tone shifts higher from 115 to 141 due to spatter dust"),
+        ("Pixel Skewness", "+0.2140", "-0.4820", "Tilts negative (-0.48), showing a heavy tail of bright specular droplets"),
+        ("Pixel Kurtosis", "2.8450", "4.1280", "Jumps from 2.85 to 4.13 (sharp spike), proving localized defect blobs exist"),
     ]
     make_table(stat_rows, [Inches(1.8), Inches(1.1), Inches(1.1), Inches(2.7)], align_center_cols=(0, 1, 2), bold_first_col_headers=False)
 
-    p_body("Failure Mode Correlation: The substantial increase in variance (+95.1%) and the sharp shift in skewness from positive (+0.214) to negative (-0.482) provide unequivocal mathematical proof of defect presence. Excess molten droop creates localized high-reflectance regions that distort the intensity distribution, confirming that low-order statistical moments provide powerful discriminative features for industrial quality assurance.")
+    p_body("Simple Summary of Key Physical Differences:\n"
+           "• Defects Make the Surface Brighter (Mean 121 -> 147): Irregular molten metal blobs reflect light like mirrors, raising the average brightness.\n"
+           "• Defects Double the Surface Roughness (Variance 1779 -> 3472): A healthy weld has smooth, even light, whereas a defective weld has wild jumps between shiny highlights and deep shadows.\n"
+           "• Defects Create Sharp Statistical Spikes (Kurtosis 2.85 -> 4.13): A sharp increase in kurtosis mathematically proves the presence of sudden defect bumps rather than a uniform surface.")
     doc.add_page_break()
 
     # =========================================================================
