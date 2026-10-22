@@ -149,41 +149,41 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     # =========================================================================
     # PAGE 1: OUTER COVER PAGE
     # =========================================================================
-    story.append(Spacer(1, 15))
+    story.append(Spacer(1, 20))
     story.append(Paragraph("PSG COLLEGE OF TECHNOLOGY", college_hdr))
     story.append(Spacer(1, 2))
     story.append(Paragraph("(Autonomous Institution)", college_sub))
     story.append(Spacer(1, 4))
     story.append(Paragraph("COIMBATORE - 641 004", college_sub))
-    story.append(Spacer(1, 40))
+    story.append(Spacer(1, 48))
 
     story.append(Paragraph(
         "AI BASED ROTOR WELD DETECTION",
         title_cover
     ))
-    story.append(Spacer(1, 32))
+    story.append(Spacer(1, 40))
 
     story.append(Paragraph("SIGNAL PROCESSING AND DIGITAL CONTROL LABORATORY (23U510)", ParagraphStyle(
         'CourseCover', parent=title_cover, fontSize=11, leading=15
     )))
-    story.append(Spacer(1, 26))
+    story.append(Spacer(1, 32))
 
     for mem in team_members:
         story.append(Paragraph(mem, student_cover))
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 12))
     story.append(Paragraph("3<sup>RD</sup> YEAR (V SEMESTER)", meta_cover))
-    story.append(Spacer(1, 42))
+    story.append(Spacer(1, 48))
 
     if has_logo:
-        story.append(Image(logo_path, width=1.45*72, height=1.85*72))
+        story.append(Image(logo_path, width=1.5*72, height=1.95*72))
     else:
         story.append(Spacer(1, 100))
-    story.append(Spacer(1, 42))
+    story.append(Spacer(1, 48))
 
     story.append(Paragraph("Programme: B.E. Instrumentation and Control Engineering", meta_cover))
     story.append(Spacer(1, 6))
     story.append(Paragraph("Branch: DEPARTMENT OF INSTRUMENTATION AND CONTROL SYSTEMS ENGINEERING", meta_cover))
-    story.append(Spacer(1, 40))
+    story.append(Spacer(1, 46))
     story.append(Paragraph("PSG COLLEGE OF TECHNOLOGY", college_hdr))
     story.append(Spacer(1, 3))
     story.append(Paragraph("COIMBATORE - 641 004", college_sub))
@@ -192,41 +192,41 @@ def build_pdf(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.pdf"):
     # =========================================================================
     # PAGE 2: INNER SUBMISSION PAGE
     # =========================================================================
-    story.append(Spacer(1, 15))
+    story.append(Spacer(1, 20))
     story.append(Paragraph("PSG COLLEGE OF TECHNOLOGY", college_hdr))
     story.append(Spacer(1, 2))
     story.append(Paragraph("(Government aided autonomous college affiliated to Anna university, Chennai)", college_sub))
     story.append(Spacer(1, 4))
     story.append(Paragraph("COIMBATORE - 641 004", college_sub))
-    story.append(Spacer(1, 38))
+    story.append(Spacer(1, 46))
 
     story.append(Paragraph(
         "AI BASED ROTOR WELD DETECTION",
         title_cover
     ))
-    story.append(Spacer(1, 26))
+    story.append(Spacer(1, 36))
 
     story.append(Paragraph("A REPORT", ParagraphStyle('ReportHdr', parent=title_cover, fontSize=11.5, leading=15)))
     story.append(Spacer(1, 2))
     story.append(Paragraph("SUBMITTED BY", ParagraphStyle('SubmittedBy', parent=title_cover, fontSize=10.5, leading=14)))
-    story.append(Spacer(1, 18))
+    story.append(Spacer(1, 26))
     for mem in team_members:
         story.append(Paragraph(mem, ParagraphStyle('StudentCoverP2', parent=student_cover, fontSize=11, leading=15)))
-    story.append(Spacer(1, 24))
+    story.append(Spacer(1, 32))
 
     story.append(Paragraph("In partial fulfilment of the requirement for Signal Processing (23U510)", ParagraphStyle(
         'PartialFulfil', parent=college_sub, fontSize=11, leading=15
     )))
-    story.append(Spacer(1, 32))
+    story.append(Spacer(1, 42))
 
     if has_logo:
-        story.append(Image(logo_path, width=1.4*72, height=1.8*72))
+        story.append(Image(logo_path, width=1.45*72, height=1.88*72))
     else:
         story.append(Spacer(1, 100))
-    story.append(Spacer(1, 32))
+    story.append(Spacer(1, 42))
 
     story.append(Paragraph("DEPARTMENT OF INSTRUMENTATION AND CONTROL SYSTEMS ENGINEERING", meta_cover))
-    story.append(Spacer(1, 58))
+    story.append(Spacer(1, 90))
 
     sig_table = Table([
         ["", "........................................"],
