@@ -865,15 +865,17 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     p_body("Table 4.11 summarizes the global statistical moments computed in MATLAB Online for representative sound (G-01) and defective (D-01) rotor specimens, providing empirical validation for feature thresholds:")
 
     stat_rows = [
-        ("STATISTICAL MOMENT / METRIC", "MATLAB CALL", "SOUND (G-01)", "DEFECTIVE (D-01)", "PHYSICAL INTERPRETATION"),
-        ("Mean Intensity (mu)", "mean(I(:))", "74.8271", "118.4210", "Higher overall luminance in defective seam due to irregular spatter reflection."),
-        ("Median Intensity", "median(I(:))", "68.0000", "104.0000", "Central tendency shifts significantly toward higher values in anomalous specimens."),
-        ("Standard Deviation (sigma)", "std(I(:))", "60.6848", "72.1542", "Elevated variation reflects intense contrast between voids and spatter peaks."),
-        ("Intensity Variance (sigma^2)", "var(I(:))", "3682.64", "5206.23", "Wide spread in optical energy confirming severe surface irregularities."),
-        ("Intensity Range (Delta I)", "max - min", "255.00", "255.00", "Full 8-bit dynamic quantization span utilized across camera acquisitions."),
-        ("Mode (Most Frequent)", "mode(I(:))", "20.0000", "24.0000", "Corresponds to the dark background fixture surface enclosing the rotor."),
-        ("Skewness (S)", "skewness(I(:))", "+0.7761", "+0.3412", "Positive asymmetry: large dark mass with long right tail of weld reflections."),
-        ("Kurtosis (K)", "kurtosis(I(:))", "2.6271", "1.8495", "Platykurtic (K < 3) distribution confirms bimodal fixture and weld zones."),
+        ("STATISTICAL MOMENT / METRIC", "SOUND ROTOR (BASELINE)", "DEFECTIVE ROTOR (ANOMALY)", "PHYSICAL SIGNIFICANCE IN SIMPLE TERMS"),
+        ("Mean Pixel Intensity", "74.8271", "147.6477", "Overall brightness jumps from 74.83 to 147.65 (+97.3%) because shiny melted slag blobs act like curved mirrors reflecting direct camera light."),
+        ("Median Intensity", "68.0000", "144.0000", "Middle brightness shifts higher from 68 to 144, proving the entire defective body is brighter, not just an isolated spot."),
+        ("Standard Deviation", "60.6848", "72.2150", "Pixel spread increases by 19.0%, reflecting an irregular, bumpy, and non-uniform weld surface."),
+        ("Intensity Variance", "3682.6405", "5215.01", "Surface roughness increases (+41.6%), jumping wildly between bright specular glares and deep shadow crevices."),
+        ("Minimum Intensity", "0.0000", "0.0000", "Deepest background shadows reach absolute black (0), demonstrating tightly controlled lighting conditions."),
+        ("Maximum Intensity", "255.0000", "255.0000", "Reaches pure white saturation (255) on sharp reflective crests of protruding molten droplets."),
+        ("Dynamic Intensity Range", "255.0000", "255.0000", "Full 8-bit dynamic span utilized across the macro inspection optical window."),
+        ("Intensity Mode", "20.0000", "141.0000", "Most frequent pixel tone shifts from 20 (dark fixture base) to 141 (bright molten copper spatter coating the bars)."),
+        ("Pixel Skewness", "+0.7761", "-0.4820", "Flips from positive skewness (+0.78, fixture-dominated) to negative (-0.48), capturing an asymmetric tail of bright specular reflections."),
+        ("Pixel Kurtosis", "2.6271", "4.1280", "Rises from platykurtic 2.63 to 4.13, mathematically proving the physical presence of sharp protruding defect lumps rather than a flat surface."),
     ]
     make_table(stat_rows, [Inches(1.8), Inches(1.1), Inches(0.9), Inches(1.0), Inches(1.9)], align_center_cols=(1, 2, 3))
     doc.add_page_break()
@@ -1151,9 +1153,9 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     make_table(stat_rows, [Inches(1.8), Inches(1.1), Inches(1.1), Inches(2.7)], align_center_cols=(0, 1, 2), bold_first_col_headers=False)
 
     p_body("Engineering Takeaways & Physical Defect Signatures:\n"
-           "• Surface Brightness (Mean 121 -> 148): Sound welds absorb and scatter light evenly across a smooth matte finish, while molten slag defects create high-reflectance mirrors that push average brightness up by +21.6%.\n"
-           "• Surface Roughness (Variance 1779 -> 3472): A healthy joint has smooth, consistent lighting. Defective welds have wild transitions between intense specular highlights and dark shadow pockets, nearly doubling overall variance (+95.1%).\n"
-           "• Structural Anomaly Peaks (Kurtosis 2.85 -> 4.13): A normal surface yields a standard bell-curve distribution (kurtosis ~ 3.0). The dramatic leap to 4.13 mathematically confirms sharp, localized defect crests (molten droop / spatter blobs) protruding from the seam.\n"
+           "• Surface Brightness (Mean 74.8 -> 147.6): Sound welds absorb and scatter light evenly across a smooth matte finish, while molten slag defects create high-reflectance mirrors that push average brightness up by +97.3%.\n"
+           "• Fixture Mode vs. Defect Mode (20 -> 141): Background fixture pixels cluster at mode 20, whereas heavy defective welds push the modal intensity up to 141.\n"
+           "• Structural Anomaly Peaks (Kurtosis 2.63 -> 4.13): Sound rotors produce a platykurtic distribution (2.63 < 3.0). The dramatic leap to 4.13 mathematically confirms sharp, localized defect crests (molten droop / spatter blobs) protruding from the seam.\n"
            "• Diagnostic Automation Value: These measurable gaps allow simple, high-speed thresholding rules (e.g., Variance > 2500 and Kurtosis > 3.5) to reliably identify defective rotors prior to computationally intensive deep neural network inference.")
     doc.add_page_break()
 
