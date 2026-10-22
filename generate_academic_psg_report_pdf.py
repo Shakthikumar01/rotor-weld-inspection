@@ -1744,7 +1744,6 @@ def build_pdf_story(registry, is_final=False):
 
     ch7_body = ParagraphStyle('Ch7Body', parent=body_text, fontSize=10.5, leading=14.5, spaceAfter=3)
     fut_bullet = ParagraphStyle('FutBullet', parent=body_bullet, fontSize=9.5, leading=12.5, spaceAfter=1.5)
-    ref_style = ParagraphStyle('RefText', parent=body_text, fontSize=8.5, leading=11, spaceAfter=1.5)
 
     story.append(Bookmark('sec7_1', registry))
     story.append(Paragraph("7.1 CONCLUSION", sec_hdr))
@@ -1771,18 +1770,6 @@ def build_pdf_story(registry, is_final=False):
     ]
     for ft in fut:
         story.append(Paragraph(ft, fut_bullet))
-
-    story.append(Spacer(1, 4))
-    story.append(Paragraph("REFERENCES", sec_hdr))
-    refs = [
-        "[1] Haralick, R. M., Shanmugam, K., & Dinstein, I. (1973). Textural features for image classification. IEEE Transactions on Systems, Man, and Cybernetics, SMC-3(6), 610-621.",
-        "[2] Howard, A., et al. (2019). Searching for MobileNetV3. Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV), 1314-1324.",
-        "[3] Otsu, N. (1979). A threshold selection method from gray-level histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1), 62-66.",
-        "[4] Sobel, I. (2014). An isotropic 3x3 image gradient operator. Machine Vision for Three-Dimensional Scenes, 376-379.",
-        "[5] ISO 9001:2015. Quality management systems - Requirements. International Organization for Standardization."
-    ]
-    for rf in refs:
-        story.append(Paragraph(rf, ref_style))
 
     return story
 

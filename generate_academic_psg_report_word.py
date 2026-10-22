@@ -1280,17 +1280,6 @@ def build_word(filename="Rotor_Weld_Defect_Inspection_Academic_Report_PSG.docx")
     for ft in futs:
         p_bullet(ft)
 
-    p_hdr("REFERENCES", size=13, bold=True, center=False, before=10, after=4)
-    refs = [
-        "[1] Haralick, R. M., Shanmugam, K., & Dinstein, I. (1973). Textural features for image classification. IEEE Transactions on Systems, Man, and Cybernetics, SMC-3(6), 610-621.",
-        "[2] Howard, A., et al. (2019). Searching for MobileNetV3. Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV), 1314-1324.",
-        "[3] Otsu, N. (1979). A threshold selection method from gray-level histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1), 62-66.",
-        "[4] Sobel, I. (2014). An isotropic 3x3 image gradient operator. Machine Vision for Three-Dimensional Scenes, 376-379.",
-        "[5] ISO 9001:2015. Quality management systems - Requirements. International Organization for Standardization."
-    ]
-    for rf in refs:
-        p_bullet(rf, size=9.5)
-
     print(f"Saving comprehensive Word document: {filename}...")
     doc.save(filename)
     print(f"Successfully generated Word document: {filename}")
